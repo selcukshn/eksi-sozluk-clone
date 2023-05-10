@@ -1,0 +1,36 @@
+aside {
+    max-height: calc(100vh - 140px);
+    overflow-x: hidden;
+    overflow-y: scroll;
+    position: fixed;
+    top: 140px;
+    width: 260px;
+}
+
+aside::-webkit-scrollbar {
+    width: 8px;
+    background-color: #F5F5F5;
+}
+
+aside::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background-color: white;
+}
+
+aside::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: #ffffff;
+}
+
+.sidebar-list {
+    max-height: 100%;
+}
+
+.sidebar-list a {
+    padding: 0.6rem 0;
+}
+
+.sidebar-list-item a:hover {
+    background-color: var(--white-50);
+}

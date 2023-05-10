@@ -1,0 +1,76 @@
+@import './theme/other.css';
+@import './theme/white.css';
+@import './theme/red.css';
+@import './theme/deeporange.css';
+
+.bg-theme {
+    background-color: var(--theme);
+}
+
+.color-theme {
+    color: var(--theme);
+}
+
+.border-theme {
+    border-color: var(--theme) !important;
+}
+
+.btn-theme {
+    background-color: var(--theme);
+    color: white;
+}
+
+.btn-theme:hover {
+    background-color: var(--theme);
+    color: white;
+}
+
+.bg-body {
+    background-color: var(--body-bg) !important;
+}
+
+.bg-facebook {
+    background-color: #1877F2;
+}
+
+.bg-twitter {
+    background-color: #1DA1F2;
+}
+
+.bg-instagram {
+    background-color: #E4405F;
+}
+
+/** hover color */
+.hover-color-black:hover {
+    color: var(--bs-black) !important;
+}
+
+.hover-color-white:hover {
+    color: var(--bs-white) !important;
+}
+
+.hover-color-red:hover {
+    color: var(--bs-red) !important;
+}
+
+/** hover background-color */
+.hover-bg-red:hover {
+    background-color: var(--bs-red);
+}
+
+.hover-bg-red500:hover {
+    background-color: var(--red-500) !important;
+}
+
+.hover-bg-red600:hover {
+    background-color: var(--red-600) !important;
+}
+
+.hover-bg-deeporange500:hover {
+    background-color: var(--deeporange-500) !important;
+}
+
+.hover-bg-deeporange600:hover {
+    background-color: var(--deeporange-600) !important;
+}

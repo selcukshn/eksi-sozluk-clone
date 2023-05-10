@@ -1,0 +1,19 @@
+<aside>
+    <div class="color-white500">
+        <h1 class="fs-12 d-inline-block me-2">gündem</h1>
+        <a href="#"><i class="bi bi-gear-fill fs-07"></i></a>
+    </div>
+
+    <ul class="sidebar-list fs-08">
+        @for (int i = 0; i < 50; i++)
+        {
+            <li class="sidebar-list-item d-block">
+                <a href="#" class="d-flex align-items-center">
+                    <p class="w-90 m-0 color-white700 lh-10">Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    </p>
+                    <span class="d-inline-block w-10 color-white500">@(i * 10)</span>
+                </a>
+            </li>
+        }
+    </ul>
+</aside>

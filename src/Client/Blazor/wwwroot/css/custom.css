@@ -1,0 +1,444 @@
+.focus-disable:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+/** width */
+.w-10 {
+    width: 10%;
+}
+
+.w-20 {
+    width: 20%;
+}
+
+.w-30 {
+    width: 30%;
+}
+
+.w-40 {
+    width: 40%;
+}
+
+.w-60 {
+    width: 60%;
+}
+
+.w-70 {
+    width: 70%;
+}
+
+.w-80 {
+    width: 80%;
+}
+
+.w-90 {
+    width: 90%;
+}
+
+/** font-weight */
+.fw-300 {
+    font-weight: 300;
+}
+
+.fw-400 {
+    font-weight: 400;
+}
+
+.fw-500 {
+    font-weight: 500;
+}
+
+.fw-600 {
+    font-weight: 600;
+}
+
+.fw-700 {
+    font-weight: 700;
+}
+
+.fw-800 {
+    font-weight: 800;
+}
+
+.fw-900 {
+    font-weight: 900;
+}
+
+.fw-1000 {
+    font-weight: 1000;
+}
+
+/** font-size */
+.fs-05 {
+    font-size: 0.5rem;
+}
+
+.fs-06 {
+    font-size: 0.6rem;
+}
+
+.fs-07 {
+    font-size: 0.7rem;
+}
+
+.fs-08 {
+    font-size: 0.8rem;
+}
+
+.fs-09 {
+    font-size: 0.9rem;
+}
+
+.fs-10 {
+    font-size: 1rem;
+}
+
+.fs-11 {
+    font-size: 1.1rem;
+}
+
+.fs-12 {
+    font-size: 1.2rem;
+}
+
+.fs-13 {
+    font-size: 1.3rem;
+}
+
+.fs-14 {
+    font-size: 1.4rem;
+}
+
+.fs-15 {
+    font-size: 1.5rem;
+}
+
+.fs-16 {
+    font-size: 1.6rem;
+}
+
+.fs-17 {
+    font-size: 1.7rem;
+}
+
+.fs-18 {
+    font-size: 1.8rem;
+}
+
+.fs-19 {
+    font-size: 1.9rem;
+}
+
+.fs-20 {
+    font-size: 2.0rem;
+}
+
+.fs-21 {
+    font-size: 2.1rem;
+}
+
+.fs-22 {
+    font-size: 2.2rem;
+}
+
+/** object-fit */
+.fill {
+    object-fit: fill;
+}
+
+.contain {
+    object-fit: contain;
+}
+
+.cover {
+    object-fit: cover;
+}
+
+.scale-down {
+    object-fit: scale-down;
+}
+
+.none {
+    object-fit: none;
+}
+
+/** scale */
+.scale-1 {
+    scale: 1;
+}
+
+/** letter-spacing */
+.ls-1 {
+    letter-spacing: 1px;
+}
+
+.ls-2 {
+    letter-spacing: 2px;
+}
+
+.ls-3 {
+    letter-spacing: 3px;
+}
+
+/** line-height */
+.lh-1 {
+    line-height: 1.1;
+}
+
+.lh-2 {
+    line-height: 1.2;
+}
+
+.lh-3 {
+    line-height: 1.3;
+}
+
+.lh-4 {
+    line-height: 1.4;
+}
+
+.lh-5 {
+    line-height: 1.5;
+}
+
+.lh-6 {
+    line-height: 1.6;
+}
+
+.lh-7 {
+    line-height: 1.7;
+}
+
+.lh-8 {
+    line-height: 1.8;
+}
+
+.lh-9 {
+    line-height: 1.9;
+}
+
+.lh-10 {
+    line-height: 2;
+}
+
+/** transition */
+.transition-01 {
+    transition: all 0.1s;
+}
+
+.transition-02 {
+    transition: all 0.2s;
+}
+
+.transition-03 {
+    transition: all 0.3s;
+}
+
+/** padding  */
+.p-6 {
+    padding: 4rem;
+}
+
+.pt-6 {
+    padding-top: 4rem;
+}
+
+.pe-6 {
+    padding-right: 4rem;
+}
+
+.pb-6 {
+    padding-bottom: 4rem;
+}
+
+.ps-6 {
+    padding-left: 4rem;
+}
+
+.py-6 {
+    padding: 4rem 0;
+}
+
+.px-6 {
+    padding: 0 4rem;
+}
+
+.p-7 {
+    padding: 5rem;
+}
+
+.pt-7 {
+    padding-top: 5rem;
+}
+
+.pe-7 {
+    padding-right: 5rem;
+}
+
+.pb-7 {
+    padding-bottom: 5rem;
+}
+
+.ps-7 {
+    padding-left: 5rem;
+}
+
+.py-7 {
+    padding: 5rem 0;
+}
+
+.px-7 {
+    padding: 0 5rem;
+}
+
+.p-8 {
+    padding: 6rem;
+}
+
+.pt-8 {
+    padding-top: 6rem;
+}
+
+.pe-8 {
+    padding-right: 6rem;
+}
+
+.pb-8 {
+    padding-bottom: 6rem;
+}
+
+.ps-8 {
+    padding-left: 6rem;
+}
+
+.py-8 {
+    padding: 6rem 0;
+}
+
+.px-8 {
+    padding: 0 6rem;
+}
+
+/** seperators */
+/* seperator line */
+.sl-1 {
+    display: inline-block;
+    width: 10px;
+    height: 1px;
+    border-radius: 1px;
+}
+
+.sl-2 {
+    display: inline-block;
+    width: 15px;
+    height: 1px;
+    border-radius: 1px;
+}
+
+.sl-3 {
+    display: inline-block;
+    width: 20px;
+    height: 1px;
+    border-radius: 1px;
+}
+
+.sl-4 {
+    display: inline-block;
+    width: 25px;
+    height: 1px;
+    border-radius: 1px;
+}
+
+.sl-5 {
+    display: inline-block;
+    width: 30px;
+    height: 1px;
+    border-radius: 1px;
+}
+
+/* seperator vertical line */
+.svl-50 {
+    display: inline-block;
+    width: 1px;
+    height: 50%;
+    border-radius: 1px;
+}
+
+.svl-100 {
+    display: inline-block;
+    width: 1px;
+    height: 100%;
+    border-radius: 1px;
+}
+
+.svl-1 {
+    display: inline-block;
+    width: 1px;
+    height: 10px;
+    border-radius: 1px;
+}
+
+.svl-2 {
+    display: inline-block;
+    width: 1px;
+    height: 15px;
+    border-radius: 1px;
+}
+
+.svl-3 {
+    display: inline-block;
+    width: 1px;
+    height: 20px;
+    border-radius: 1px;
+}
+
+.svl-4 {
+    display: inline-block;
+    width: 1px;
+    height: 10px;
+    border-radius: 1px;
+}
+
+.svl-5 {
+    display: inline-block;
+    width: 1px;
+    height: 10px;
+    border-radius: 1px;
+}
+
+/* seperator dot */
+.sd-1 {
+    display: inline-block;
+    width: 3px;
+    height: 3px;
+    border-radius: 100%;
+}
+
+.sd-2 {
+    display: inline-block;
+    width: 4px;
+    height: 4px;
+    border-radius: 100%;
+}
+
+.sd-3 {
+    display: inline-block;
+    width: 5px;
+    height: 5px;
+    border-radius: 100%;
+}
+
+.sd-4 {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 100%;
+}
+
+.sd-5 {
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    border-radius: 100%;
+}

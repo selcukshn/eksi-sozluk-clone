@@ -1,0 +1,12 @@
+.header-nav-item {
+    border-bottom: 6px solid transparent;
+}
+
+.header-nav-item:hover {
+    border-color: var(--theme);
+}
+
+.header-nav-item:hover,
+.header-nav-item:hover i {
+    color: var(--theme) !important;
+}

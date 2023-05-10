@@ -1,0 +1,122 @@
+:root {
+    --red-50: #FFEBEE;
+    --red-100: #FFCDD2;
+    --red-200: #EF9A9A;
+    --red-300: #E57373;
+    --red-400: #EF5350;
+    --red-500: #F44336;
+    --red-600: #E53935;
+    --red-700: #D32F2F;
+    --red-800: #C62828;
+    --red-900: #B71C1C;
+}
+
+.bg-red50 {
+    background-color: var(--red-50);
+}
+
+.bg-red100 {
+    background-color: var(--red-100);
+}
+
+.bg-red200 {
+    background-color: var(--red-200);
+}
+
+.bg-red300 {
+    background-color: var(--red-300);
+}
+
+.bg-red400 {
+    background-color: var(--red-400);
+}
+
+.bg-red500 {
+    background-color: var(--red-500);
+}
+
+.bg-red600 {
+    background-color: var(--red-600);
+}
+
+.bg-red700 {
+    background-color: var(--red-700);
+}
+
+.bg-red800 {
+    background-color: var(--red-800);
+}
+
+.bg-red900 {
+    background-color: var(--red-900);
+}
+
+
+.color-red,
+.color-red * {
+    color: var(--red);
+}
+
+.color-red50,
+.color-red50 * {
+    color: var(--red-50);
+}
+
+.color-red100,
+.color-red100 * {
+    color: var(--red-100);
+}
+
+.color-red200,
+.color-red200 * {
+    color: var(--red-200);
+}
+
+.color-red300,
+.color-red300 * {
+    color: var(--red-300);
+}
+
+.color-red400,
+.color-red400 * {
+    color: var(--red-400);
+}
+
+.color-red500,
+.color-red500 * {
+    color: var(--red-500);
+}
+
+.color-red600,
+.color-red600 * {
+    color: var(--red-600);
+}
+
+.color-red700,
+.color-red700 * {
+    color: var(--red-700);
+}
+
+.color-red800,
+.color-red800 * {
+    color: var(--red-800);
+}
+
+.color-red900,
+.color-red900 * {
+    color: var(--red-900);
+}
+
+.color-red1000,
+.color-red1000 * {
+    color: var(--red-1000);
+}
+
+.color-red1100,
+.color-red1100 * {
+    color: var(--red-1100);
+}
+
+.color-black * {
+    color: var(--black);
+}

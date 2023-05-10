@@ -1,0 +1,14 @@
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+    background-color: white;
+    border-top: 4px solid var(--theme);
+    border-bottom: 1px solid var(--white-400);
+}
+
+.header-account-link a:hover {
+    text-decoration: underline !important;
+}

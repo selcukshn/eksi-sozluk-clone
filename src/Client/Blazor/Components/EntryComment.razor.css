@@ -1,0 +1,11 @@
+.entry-buttons a:hover:not(.entry-buttons-down) i {
+    color: var(--theme);
+}
+
+.entry-buttons-down:hover i {
+    color: var(--red-500);
+}
+
+.entry-user a:hover {
+    text-decoration: underline !important;
+}

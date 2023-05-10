@@ -1,0 +1,15 @@
+<nav class="row color-white800 fs-08 fw-600">
+    @foreach (var item in Menu)
+    {
+        <a href="#" class="header-nav-item transition-03 d-inline-block col-auto px-5 py-2 mx-2">@item</a>
+    }
+    <a href="#" class="header-nav-item transition-03 d-inline-block col-auto px-5 py-2 mx-2">
+        @* <BSIcon Name="three-dots"></BSIcon> *@
+        <i class="bi bi-three-dots"></i>
+    </a>
+
+</nav>
+
+@code {
+    List<string> Menu = new List<string>() { "gündem", "debe", "sorunsallar", "#spor", "#ilişkiler", "#siyaset" };
+}

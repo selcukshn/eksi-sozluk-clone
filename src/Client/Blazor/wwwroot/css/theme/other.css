@@ -1,0 +1,24 @@
+:root {
+    --theme: #81c14b;
+    --theme-100: #75b342;
+    --theme-200: #68a338;
+    --theme-300: #5a922c;
+    --theme-400: #4b811f;
+
+    --body-bg: #FAFAFA;
+    --main-container-bg: #FFFFFF;
+    --search-form: #EEEEEE;
+    --search-vignette: #00000075;
+    --home-video: #161616;
+    --bg-header: #101010;
+    --bg-home-banner: #161616;
+    --bg-news-recommended: #eeeeee;
+}
+
+:root[data-bs-theme='dark'] {
+    --body-bg: #202020;
+    --main-container-bg: #181818;
+    --search-form: #212121;
+    --home-video: #161616;
+    --bg-news-recommended: #161616;
+}
