@@ -2,7 +2,6 @@ using System.Linq.Expressions;
 using Application.Interfaces.Repository;
 using Domain;
 using Microsoft.EntityFrameworkCore;
-using Persistence.Context;
 
 namespace Persistence.Repository
 {
@@ -92,6 +91,22 @@ namespace Persistence.Repository
                 entity = entity.AsNoTracking();
             return entity.ToList();
         }
+        public IList<T> GetAll(int count, bool tracking = false)
+        {
+            var entity = this.AsQueryable();
+            if (!tracking)
+                entity = entity.AsNoTracking();
+            return entity.Take(count).ToList();
+        }
+
+        public IList<T> GetAll(int count, bool tracking = false, params Expression<Func<T, object>>[] includes)
+        {
+            var entity = this.AsQueryable();
+            entity = ApplyIncludes(entity, includes);
+            if (!tracking)
+                entity = entity.AsNoTracking();
+            return entity.Take(count).ToList();
+        }
         public IList<T> GetAll(Expression<Func<T, bool>> filter, bool tracking = false)
         {
             var entity = this.AsQueryable();
@@ -111,19 +126,29 @@ namespace Persistence.Repository
                 entity = entity.AsNoTracking();
             return entity.ToList();
         }
-        public async Task<IList<T>> GetAllAsync(bool tracking = false)
-        {
-            var entity = this.AsQueryable();
-            if (!tracking)
-                entity = entity.AsNoTracking();
-            return await entity.ToListAsync();
-        }
-
-        public async Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> filter, bool tracking = false)
+        public IList<T> GetAll(Expression<Func<T, bool>> filter, int count, bool tracking = false)
         {
             var entity = this.AsQueryable();
             if (filter != null)
                 entity = entity.Where(filter);
+            if (!tracking)
+                entity = entity.AsNoTracking();
+            return entity.Take(count).ToList();
+        }
+
+        public IList<T> GetAll(Expression<Func<T, bool>> filter, int count, bool tracking = false, params Expression<Func<T, object>>[] includes)
+        {
+            var entity = this.AsQueryable();
+            entity = ApplyIncludes(entity, includes);
+            if (filter != null)
+                entity = entity.Where(filter);
+            if (!tracking)
+                entity = entity.AsNoTracking();
+            return entity.Take(count).ToList();
+        }
+        public async Task<IList<T>> GetAllAsync(bool tracking = false)
+        {
+            var entity = this.AsQueryable();
             if (!tracking)
                 entity = entity.AsNoTracking();
             return await entity.ToListAsync();
@@ -132,6 +157,31 @@ namespace Persistence.Repository
         {
             var entity = this.AsQueryable();
             entity = ApplyIncludes(entity, includes);
+            if (!tracking)
+                entity = entity.AsNoTracking();
+            return await entity.ToListAsync();
+        }
+        public async Task<IList<T>> GetAllAsync(int count, bool tracking = false)
+        {
+            var entity = this.AsQueryable();
+            if (!tracking)
+                entity = entity.AsNoTracking();
+            return await entity.Take(count).ToListAsync();
+        }
+
+        public async Task<IList<T>> GetAllAsync(int count, bool tracking = false, params Expression<Func<T, object>>[] includes)
+        {
+            var entity = this.AsQueryable();
+            entity = ApplyIncludes(entity, includes);
+            if (!tracking)
+                entity = entity.AsNoTracking();
+            return await entity.Take(count).ToListAsync();
+        }
+        public async Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> filter, bool tracking = false)
+        {
+            var entity = this.AsQueryable();
+            if (filter != null)
+                entity = entity.Where(filter);
             if (!tracking)
                 entity = entity.AsNoTracking();
             return await entity.ToListAsync();
@@ -147,7 +197,26 @@ namespace Persistence.Repository
                 entity = entity.AsNoTracking();
             return await entity.ToListAsync();
         }
+        public async Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> filter, int count, bool tracking = false)
+        {
+            var entity = this.AsQueryable();
+            if (filter != null)
+                entity = entity.Where(filter);
+            if (!tracking)
+                entity = entity.AsNoTracking();
+            return await entity.Take(count).ToListAsync();
+        }
 
+        public async Task<IList<T>> GetAllAsync(Expression<Func<T, bool>> filter, int count, bool tracking = false, params Expression<Func<T, object>>[] includes)
+        {
+            var entity = this.AsQueryable();
+            entity = ApplyIncludes(entity, includes);
+            if (filter != null)
+                entity = entity.Where(filter);
+            if (!tracking)
+                entity = entity.AsNoTracking();
+            return await entity.Take(count).ToListAsync();
+        }
         #endregion
 
         #region GetOne
@@ -212,6 +281,19 @@ namespace Persistence.Repository
             return await SaveAsync();
         }
         #endregion
+
+        #region Have
+        public async Task<bool> HaveAsync(Expression<Func<T, bool>> filter)
+        {
+            return await Entity.Where(filter).AnyAsync();
+        }
+
+        public bool Have(Expression<Func<T, bool>> filter)
+        {
+            return Entity.Where(filter).Any();
+        }
+        #endregion
+
         protected int Save() => Context.SaveChanges();
         protected async Task<int> SaveAsync() => await Context.SaveChangesAsync();
         public IQueryable<T> AsQueryable() => Entity.AsQueryable();
@@ -224,5 +306,7 @@ namespace Persistence.Repository
                 }
             return entity;
         }
+
+
     }
 }

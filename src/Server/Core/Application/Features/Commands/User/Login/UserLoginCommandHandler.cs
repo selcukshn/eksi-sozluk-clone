@@ -13,7 +13,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Application.Features.Commands.User.Login
 {
-    public class UserLoginCommandHandler : GenericRequestHandler<IUserRepository, UserLoginCommand, UserLoginViewModel>
+    public class UserLoginCommandHandler : GenericHandler<IUserRepository, UserLoginCommand, UserLoginViewModel>
     {
         private readonly IConfiguration Configuration;
 

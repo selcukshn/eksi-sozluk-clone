@@ -8,18 +8,19 @@ namespace Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class UserController : BaseApiController
+    public class EntryController : BaseApiController
     {
-        public UserController(IMediator mediator) : base(mediator) { }
+        public EntryController(IMediator mediator) : base(mediator) { }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] UserQuery query)
+        [Route("sidebar")]
+        public async Task<IActionResult> GetSidebarEntities([FromQuery] SidebarEntitiesQuery query)
         {
             return Ok(await base.Mediator.Send(query));
         }
 
-        [HttpPost("Create")]
-        public async Task<IActionResult> CreateAsync([FromBody] UserCreateCommand command)
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] EntryCreateCommand command)
         {
             return Ok(await base.Mediator.Send(command));
         }

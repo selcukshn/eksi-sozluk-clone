@@ -1,11 +1,11 @@
 using Domain;
-using Microsoft.EntityFrameworkCore;
+using Persistence.Context;
 using Persistence.Repository;
 
 namespace Application.Interfaces.Repository
 {
     public class EntryVoteRepository : Repository<EntryVote>, IEntryVoteRepository
     {
-        public EntryVoteRepository(DbContext context) : base(context) { }
+        public EntryVoteRepository(SozlukCloneContext context) : base(context) { }
     }
 }

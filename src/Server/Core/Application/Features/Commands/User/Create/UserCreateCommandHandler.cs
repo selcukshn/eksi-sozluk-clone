@@ -6,7 +6,7 @@ using Common.Models.Command;
 
 namespace Application.Features.Commands.User.Create
 {
-    public class UserCreateCommandHandler : GenericRequestHandler<IUserRepository, UserCreateCommand, Guid>
+    public class UserCreateCommandHandler : GenericHandler<IUserRepository, UserCreateCommand, Guid>
     {
         public UserCreateCommandHandler(IUserRepository repository, IMapper mapper) : base(repository, mapper) { }
         public override async Task<Guid> Handle(UserCreateCommand request, CancellationToken cancellationToken)

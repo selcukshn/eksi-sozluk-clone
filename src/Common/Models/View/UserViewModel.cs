@@ -1,10 +1,11 @@
 namespace Common.Models.View
 {
-    public class UserLoginViewModel
+    public class UserViewModel
     {
         public Guid Id { get; set; }
         public string? Username { get; set; }
         public string? Email { get; set; }
-        public string? Token { get; set; }
+        public bool? EmailConfirmed { get; set; }
+        public string? Image { get; set; }
     }
 }

@@ -5,7 +5,7 @@ using Common.Models.Command;
 
 namespace Application.Features.Commands.User.Update
 {
-    public class UserUpdateCommandHandler : GenericRequestHandler<IUserRepository, UserUpdateCommand, Guid>
+    public class UserUpdateCommandHandler : GenericHandler<IUserRepository, UserUpdateCommand, Guid>
     {
         public UserUpdateCommandHandler(IUserRepository repository, IMapper mapper) : base(repository, mapper) { }
 

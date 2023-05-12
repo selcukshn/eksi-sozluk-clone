@@ -16,6 +16,7 @@ namespace Persistence
             });
 
             service.AddScoped<IUserRepository, UserRepository>();
+            service.AddScoped<IEntryRepository, EntryRepository>();
 
             return service;
         }
