@@ -15,7 +15,8 @@ namespace Application.Mapping
             CreateMap<User, UserViewModel>().ReverseMap();
 
 
-            CreateMap<Entry, EntryCreateCommand>().ReverseMap();
+            CreateMap<Entry, EntryCreateCommand>();
+            CreateMap<Entry, MainPageViewModel>();
             CreateMap<Entry, SidebarViewModel>()
             .ForMember(e => e.CommentCount, a => a.MapFrom(b => b.EntryComments.Count));
         }

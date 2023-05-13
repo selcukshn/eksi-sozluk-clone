@@ -19,6 +19,19 @@ namespace Api.Controllers
             return Ok(await base.Mediator.Send(query));
         }
 
+        [HttpGet]
+        [Route("main")]
+        public async Task<IActionResult> GetMainPageEntities([FromQuery] MainPageEntitiesQuery query)
+        {
+            return Ok(await base.Mediator.Send(query));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> GetEntry([FromBody] EntryQuery query)
+        {
+            return Ok(await base.Mediator.Send(query));
+        }
+
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] EntryCreateCommand command)
         {
