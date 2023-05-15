@@ -19,6 +19,7 @@ namespace Application.Mapping
             CreateMap<Entry, MainPageViewModel>();
             CreateMap<Entry, SidebarViewModel>()
             .ForMember(e => e.CommentCount, a => a.MapFrom(b => b.EntryComments.Count));
+            CreateMap<Entry, AllEntryViewModel>();
         }
     }
 }

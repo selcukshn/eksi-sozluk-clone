@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Persistence.Context;
 
@@ -11,9 +12,10 @@ using Persistence.Context;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(SozlukCloneContext))]
-    partial class SozlukCloneContextModelSnapshot : ModelSnapshot
+    [Migration("20230515120224_usernameLengthIncreased")]
+    partial class usernameLengthIncreased
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -35,7 +37,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 5, 15, 15, 14, 36, 863, DateTimeKind.Local).AddTicks(6886));
+                        .HasDefaultValue(new DateTime(2023, 5, 15, 15, 2, 24, 177, DateTimeKind.Local).AddTicks(424));
 
                     b.Property<string>("Subject")
                         .IsRequired()
@@ -44,8 +46,8 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Url")
                         .IsRequired()
-                        .HasMaxLength(400)
-                        .HasColumnType("nvarchar(400)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -70,7 +72,7 @@ namespace Persistence.Migrations
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2023, 5, 15, 15, 14, 36, 862, DateTimeKind.Local).AddTicks(9383));
+                        .HasDefaultValue(new DateTime(2023, 5, 15, 15, 2, 24, 176, DateTimeKind.Local).AddTicks(2932));
 
                     b.Property<Guid>("EntryId")
                         .HasColumnType("uniqueidentifier");

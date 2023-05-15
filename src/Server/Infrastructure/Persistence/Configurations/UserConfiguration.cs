@@ -9,7 +9,7 @@ namespace Persistence.Configurations
         public override void Configure(EntityTypeBuilder<User> builder)
         {
             base.Configure(builder);
-            builder.Property(e => e.Username).HasMaxLength(20).IsRequired();
+            builder.Property(e => e.Username).HasMaxLength(40).IsRequired();
             builder.Property(e => e.Email).HasMaxLength(100).IsRequired();
             builder.Property(e => e.EmailConfirmed).HasDefaultValue(false);
             builder.Property(e => e.Password).HasMaxLength(256).IsRequired();

@@ -1,3 +1,5 @@
+using Common.Enums;
+
 namespace Domain
 {
     public class EntryVote : BaseEntity

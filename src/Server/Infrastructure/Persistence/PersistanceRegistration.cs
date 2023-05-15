@@ -17,6 +17,9 @@ namespace Persistence
 
             service.AddScoped<IUserRepository, UserRepository>();
             service.AddScoped<IEntryRepository, EntryRepository>();
+            service.AddScoped<IEntryCommentRepository, EntryCommentRepository>();
+
+            new FakeData(new SozlukCloneContext()).GenerateAsync().GetAwaiter().GetResult();
 
             return service;
         }
