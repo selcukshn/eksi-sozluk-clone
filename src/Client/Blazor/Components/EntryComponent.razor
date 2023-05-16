@@ -1,7 +1,7 @@
 <div class="entry">
-    <div class="entry-header px-4 pt-4">
+    <div class="entry-header">
         <h1 class="entry-title h5 color-white900 fw-700">
-            <a href=" /entrypage">deneme entry title</a>
+            <a href="/@Url">@Subject</a>
         </h1>
         @if (IsPage)
         {
@@ -28,8 +28,14 @@
             </div>
         }
     </div>
-    <EntryComment />
+    <EntryComment Content="@Content" Username="@Username" CreatedDate="@CreatedDate" />
 </div>
+
 @code {
+    [Parameter] public string Subject { get; set; }
+    [Parameter] public string Url { get; set; }
+    [Parameter] public string Content { get; set; }
+    [Parameter] public string Username { get; set; }
+    [Parameter] public DateTime CreatedDate { get; set; }
     [Parameter] public bool IsPage { get; set; }
 }

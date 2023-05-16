@@ -1,13 +1,6 @@
-<div class="p-4">
+<div class="py-4">
     <p class="fs-09 lh-7 mb-2">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quibusdam illo provident fugit deserunt dolore
-        mollitia, consequuntur minima culpa non atque! Impedit, atque rerum doloremque neque fuga natus quaerat ad.
-        Libero numquam nihil voluptas excepturi voluptates rem distinctio voluptate corrupti reprehenderit, non soluta
-        culpa consequuntur? Molestias eveniet sint accusantium numquam doloremque possimus consequuntur, esse corrupti
-        reprehenderit ducimus quibusdam magnam sunt delectus ullam est praesentium ab quia soluta. Exercitationem vel
-        inventore quo illo corporis ratione laudantium hic recusandae dolor mollitia assumenda fuga sapiente ipsam sit
-        sint natus, eligendi dolorum. Inventore doloremque, eum praesentium aperiam ducimus porro cum minus non cumque
-        ipsa maiores?
+        @Content
     </p>
     <div class="entry-buttons d-flex justify-content-between mb-2">
         <div class="d-flex gap-4 color-white500 fs-08">
@@ -29,8 +22,8 @@
     </div>
     <div class="entry-user d-flex gap-3 justify-content-end">
         <div class="text-end">
-            <a href="#" class="d-block fs-08" style="color: var(--theme-300);">username</a>
-            <a href="#" class="d-block color-white600 fs-07">@(DateTime.Now)</a>
+            <a href="#" class="d-block fs-08" style="color: var(--theme-300);">@Username</a>
+            <a href="#" class="d-block color-white600 fs-07">@CreatedDate</a>
         </div>
         <div>
             <a href="#" class="d-inline-block">
@@ -40,3 +33,10 @@
         </div>
     </div>
 </div>
+
+@code {
+    [Parameter] public string Content { get; set; }
+    [Parameter] public string? Username { get; set; }
+    [Parameter] public string Image { get; set; }
+    [Parameter] public DateTime CreatedDate { get; set; }
+}

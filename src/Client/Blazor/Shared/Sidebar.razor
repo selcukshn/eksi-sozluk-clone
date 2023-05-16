@@ -1,3 +1,4 @@
+@inject HttpClient client;
 <aside>
     <div class="color-white500">
         <h1 class="fs-12 d-inline-block me-2">gündem</h1>
@@ -5,15 +6,32 @@
     </div>
 
     <ul class="sidebar-list fs-08">
-        @for (int i = 0; i < 50; i++)
+        @if (sidebarEntries.Count != 0)
         {
-            <li class="sidebar-list-item d-block">
-                <a href="#" class="d-flex align-items-center">
-                    <p class="w-90 m-0 color-white700 lh-10">Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    </p>
-                    <span class="d-inline-block w-10 color-white500">@(i * 10)</span>
-                </a>
-            </li>
+            foreach (var entry in sidebarEntries)
+            {
+                <li class="sidebar-list-item d-block">
+                    @* <NavLink href="@entry.Url" Match="NavLinkMatch.All" class="d-flex align-items-center">
+            <p class="w-90 m-0 color-white700 lh-10">@entry.Subject</p>
+            <span class="d-inline-block w-10 color-white500">@entry.CommentCount</span>
+            </NavLink> *@
+                    <a href="/@entry.Url" class="d-flex align-items-center">
+                        <p class="w-90 m-0 color-white700 lh-10">@entry.Subject</p>
+                        <span class="d-inline-block w-10 color-white500">@entry.CommentCount</span>
+                    </a>
+                </li>
+            }
         }
     </ul>
 </aside>
+
+@code {
+    List<SidebarViewModel> sidebarEntries;
+    protected override async Task OnInitializedAsync()
+    {
+        var response = await client.GetAsync("/api/entry/sidebar");
+        if (response.IsSuccessStatusCode)
+            sidebarEntries = await response.Content.ReadFromJsonAsync<List<SidebarViewModel>>();
+    }
+}
+

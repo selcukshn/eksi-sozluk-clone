@@ -17,7 +17,7 @@ namespace Application.Features.Queries.Entry.Entry
             .Include(e => e.EntryCommentVotes)
             .Where(e => e.EntryId == request.EntryId);
 
-            return entry.Select(e => new EntryCommentsViewModel()
+            return await entry.Select(e => new EntryCommentsViewModel()
             {
                 Id = e.Id,
                 Content = e.Content,
@@ -25,9 +25,9 @@ namespace Application.Features.Queries.Entry.Entry
                 UserImage = e.User.Image,
                 Username = e.User.Username,
                 VoteType = e.EntryCommentVotes.Any(e => e.UserId == request.UserId) && request.UserId != Guid.Empty ?
-                    e.EntryCommentVotes.FirstOrDefault(e => e.UserId == request.UserId).Type :
+                    e.EntryCommentVotes.First(e => e.UserId == request.UserId).Type :
                     Common.Enums.VoteType.None
-            }).ToList();
+            }).ToListAsync();
         }
     }
 }

@@ -24,22 +24,16 @@ namespace Api.Controllers
             return Ok(await base.Mediator.Send(new SingleEntryQuery() { Url = url, UserId = userId }));
         }
 
-        [HttpGet("comments")]
-        public async Task<IActionResult> GetEntryComments([FromBody] EntryCommentsQuery query)
-        {
-            return Ok(await base.Mediator.Send(query));
-        }
-
         [HttpGet]
         [Route("sidebar")]
-        public async Task<IActionResult> GetSidebarEntities([FromQuery] SidebarEntitiesQuery query)
+        public async Task<IActionResult> GetSidebarEntries([FromQuery] SidebarEntriesQuery query)
         {
             return Ok(await base.Mediator.Send(query));
         }
 
         [HttpGet]
         [Route("main")]
-        public async Task<IActionResult> GetMainPageEntities([FromQuery] MainPageEntitiesQuery query)
+        public async Task<IActionResult> GetMainPageEntries([FromQuery] MainPageEntriesQuery query)
         {
             return Ok(await base.Mediator.Send(query));
         }

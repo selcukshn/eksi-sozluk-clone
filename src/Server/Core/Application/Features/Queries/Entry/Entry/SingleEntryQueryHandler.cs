@@ -1,5 +1,6 @@
 using Application.Interfaces.Repository;
 using AutoMapper;
+using Common.Exceptions;
 using Common.Models.Queries;
 using Common.Models.View;
 using Microsoft.EntityFrameworkCore;
@@ -15,9 +16,13 @@ namespace Application.Features.Queries.Entry.Entry
             var entry = await base.Repository.AsQueryable()
             .Include(e => e.User)
             .Include(e => e.EntryVotes)
-            .FirstOrDefaultAsync(e => e.Url == Uri.EscapeDataString(request.Url));
-            var result = new EntryViewModel()
+            .FirstOrDefaultAsync(e => e.Url == request.Url);
+            if (entry == null)
+                throw new EntryNotFoundException("Bu url'e ait entry bulunamadı");
+
+            return new EntryViewModel()
             {
+                Id = entry.Id,
                 Content = entry.Content,
                 CreatedDate = entry.CreatedDate,
                 Subject = entry.Subject,
@@ -25,12 +30,10 @@ namespace Application.Features.Queries.Entry.Entry
                 UserImage = entry.User.Image,
                 Username = entry.User.Username,
                 UserId = entry.UserId,
-                VoteType = Common.Enums.VoteType.None
+                VoteType = entry.EntryVotes.Any(e => e.UserId == request.UserId) && request.UserId != Guid.Empty ?
+                    entry.EntryVotes.First(e => e.UserId == request.UserId).Type :
+                    Common.Enums.VoteType.None
             };
-            if (entry.EntryVotes.Any(e => e.UserId == request.UserId) && request.UserId != Guid.Empty)
-                result.VoteType = entry.EntryVotes.FirstOrDefault(e => e.UserId == request.UserId).Type;
-
-            return result;
         }
     }
 }

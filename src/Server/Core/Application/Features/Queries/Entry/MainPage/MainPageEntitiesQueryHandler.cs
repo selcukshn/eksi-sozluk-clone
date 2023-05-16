@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Queries.Entry.MainPage
 {
-    public class MainPageEntitiesQueryHandler : GenericHandler<IEntryRepository, MainPageEntitiesQuery, List<MainPageViewModel>>
+    public class MainPageEntitiesQueryHandler : GenericHandler<IEntryRepository, MainPageEntriesQuery, List<MainPageViewModel>>
     {
         public MainPageEntitiesQueryHandler(IEntryRepository repository, IMapper mapper) : base(repository, mapper) { }
 
-        public override async Task<List<MainPageViewModel>> Handle(MainPageEntitiesQuery request, CancellationToken cancellationToken)
+        public override async Task<List<MainPageViewModel>> Handle(MainPageEntriesQuery request, CancellationToken cancellationToken)
         {
             var entities = base.Repository.AsQueryable();
             if (request.Random)

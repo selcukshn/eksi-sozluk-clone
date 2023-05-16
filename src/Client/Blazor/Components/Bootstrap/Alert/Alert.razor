@@ -1,0 +1,8 @@
+@inherits BaseAlert
+<div class="alert @(AlertColors[Color]) @(Dismissible?"alert-dismissible fade show":"")" role="alert">
+    @Message
+    @if (Dismissible)
+    {
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    }
+</div>

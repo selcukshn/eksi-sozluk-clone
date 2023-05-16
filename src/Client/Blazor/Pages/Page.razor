@@ -1,0 +1,72 @@
+@page "/{url}"
+@inject HttpClient client;
+@if (Status == ApplicationStatus.NotFound)
+{
+    <Alert Message="404" Color="BootstrapColor.Danger" />
+}
+@if (Status == ApplicationStatus.Waiting)
+{
+    <Spinner Color="BootstrapColor.Dark" Type="SpinnerType.Border" />
+}
+@if (Status == ApplicationStatus.Error)
+{
+    <Alert Message="Sunucu tarafında bir hata meydana geldi. Lütfen daha sonra tekrar deneyin."
+        Color="BootstrapColor.Danger" />
+}
+@if (Status == ApplicationStatus.Stable)
+{
+    <EntryComponent Content="@entry.Content" CreatedDate="@entry.CreatedDate" Subject="@entry.Subject" Url="@entry.Url"
+        Username="@entry.Username" IsPage="@true" />
+    @if (entryComments.Count != 0)
+    {
+        foreach (var comment in entryComments)
+        {
+            <EntryComment Content="@comment.Content" CreatedDate="@comment.CreatedDate" Username="@comment.Username" />
+        }
+    }
+    <div class="d-flex justify-content-end">
+        <div class="d-flex align-items-center gap-1 color-white700">
+            <select class="form-select form-select-sm fs-08 focus-disable">
+                @for (int i = 0; i < 10; i++)
+                {
+                    <option>@i</option>
+                }
+            </select>
+            /
+            <button class="btn btn-sm border py-1 px-2 fs-08">1</button>
+            <button class="btn btn-sm border py-1 px-2 fs-08">
+                <i class="bi bi-chevron-double-right"></i>
+            </button>
+        </div>
+    </div>
+}
+@code {
+    [Parameter] public string? url { get; set; }
+    EntryViewModel entry;
+    List<EntryCommentsViewModel> entryComments;
+    ApplicationStatus Status = ApplicationStatus.Waiting;
+    int StatusCode;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var entryResponse = await client.GetAsync($"/api/entry/{url}");
+            if (entryResponse.IsSuccessStatusCode)
+            {
+                entry = await entryResponse.Content.ReadFromJsonAsync<EntryViewModel>();
+                var commentsResponse = await client.GetAsync($"/api/entrycomments/{entry.Id}");
+                if (commentsResponse.IsSuccessStatusCode)
+                    entryComments = await commentsResponse.Content.ReadFromJsonAsync<List<EntryCommentsViewModel>>();
+                Status = ApplicationStatus.Stable;
+
+            }
+            else if (entryResponse.StatusCode == System.Net.HttpStatusCode.NotFound)
+                Status = ApplicationStatus.NotFound;
+        }
+        catch (System.Exception)
+        {
+            Status = ApplicationStatus.Error;
+        }
+    }
+}

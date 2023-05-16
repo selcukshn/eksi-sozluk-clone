@@ -4,7 +4,7 @@ using MediatR;
 
 namespace Common.Models.Queries
 {
-    public class MainPageEntitiesQuery : MainSideEntitiesQuery, IRequest<List<MainPageViewModel>>
+    public class SidebarEntriesQuery : MainSideEntriesQuery, IRequest<List<SidebarViewModel>>
     {
     }
 }
