@@ -21,11 +21,18 @@ namespace Persistence
             Bogus = new Faker();
         }
 
-        public async Task GenerateAsync(int count = 250)
+        public async Task GenerateAsync(int userCount = 25, int entryCount = 25, int entryCommentCount = 500)
         {
-            await AddUsersAsync(count);
-            await AddEntriesAsync(count);
-            await AddEntryComments(count);
+            await AddUsersAsync(userCount);
+            await AddEntriesAsync(entryCount);
+            await AddEntryComments(entryCommentCount);
+        }
+        public async Task CleanAsync()
+        {
+            Context.Users.RemoveRange(await Context.Users.ToListAsync());
+            Context.Entries.RemoveRange(await Context.Entries.ToListAsync());
+            Context.EntryComments.RemoveRange(await Context.EntryComments.ToListAsync());
+            await Context.SaveChangesAsync();
         }
 
         private async Task AddUsersAsync(int count)
@@ -68,7 +75,8 @@ namespace Persistence
         }
         private async Task AddEntryComments(int count)
         {
-            if (!Context.EntryComments.Any())
+            int entityCount = Context.EntryComments.Count();
+            if (!Context.EntryComments.Any() || entityCount < count)
             {
                 var comments = new Faker<EntryComment>("tr")
                 .RuleFor(e => e.Id, e => Guid.NewGuid())
@@ -76,7 +84,7 @@ namespace Persistence
                 .RuleFor(e => e.CreatedDate, e => e.Date.Between(EntryDates[e.Random.Int(0, EntryDates.Count - 1)], EntryDates[e.Random.Int(0, EntryDates.Count - 1)].AddHours(e.Random.Double(1, 10000))))
                 .RuleFor(e => e.UserId, e => UserIds.OrderBy(e => Guid.NewGuid()).First())
                 .RuleFor(e => e.EntryId, e => EntriesIds.OrderBy(e => Guid.NewGuid()).First())
-                .Generate(count);
+                .Generate(entityCount < count ? count - entityCount : count);
                 await Context.EntryComments.AddRangeAsync(comments);
                 await Context.SaveChangesAsync();
             }

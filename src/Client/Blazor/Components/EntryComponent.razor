@@ -1,3 +1,4 @@
+@inject NavigationManager navManager;
 <div class="entry">
     <div class="entry-header">
         <h1 class="entry-title h5 color-white900 fw-700">
@@ -13,15 +14,15 @@
                     <a href="#">son 24 saat</a>
                 </div>
                 <div class="d-flex align-items-center gap-1 color-white700">
-                    <select class="form-select form-select-sm fs-08 focus-disable">
-                        @for (int i = 0; i < 10; i++)
+                    <select @onchange="ChangePage" class="form-select form-select-sm fs-08 focus-disable">
+                        @for (int i = 1; i <= Page.Max; i++)
                         {
-                            <option>@i</option>
+                            <option selected="@(Page.Current == i)" value="@i">@i</option>
                         }
                     </select>
                     /
-                    <button class="btn btn-sm border py-1 px-2 fs-08">1</button>
-                    <button class="btn btn-sm border py-1 px-2 fs-08">
+                    <button class="btn btn-sm border py-1 px-2 fs-08">@Page.Current</button>
+                    <button class="btn btn-sm border py-1 px-2 fs-08" @onclick="NextPage">
                         <i class="bi bi-chevron-double-right"></i>
                     </button>
                 </div>
@@ -38,4 +39,14 @@
     [Parameter] public string Username { get; set; }
     [Parameter] public DateTime CreatedDate { get; set; }
     [Parameter] public bool IsPage { get; set; }
+    [Parameter] public Page Page { get; set; }
+    private void ChangePage(ChangeEventArgs eventArgs)
+    {
+        if (eventArgs.Value != null)
+            navManager.NavigateTo($"/{Url}?page={Convert.ToInt32(eventArgs.Value)}");
+    }
+    private void NextPage()
+    {
+        navManager.NavigateTo($"/{Url}?page={Page.Current + 1}");
+    }
 }

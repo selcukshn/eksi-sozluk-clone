@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/entry")]
     public class EntryController : BaseApiController
     {
         public EntryController(IMediator mediator) : base(mediator) { }
@@ -19,9 +19,9 @@ namespace Api.Controllers
             return Ok(await base.Mediator.Send(new AllEntryQuery() { Count = count }));
         }
         [HttpGet("{url}")]
-        public async Task<IActionResult> GetEntry([FromQuery] Guid userId, string url)
+        public async Task<IActionResult> GetEntry([FromQuery] PagedQuery query, string url)
         {
-            return Ok(await base.Mediator.Send(new SingleEntryQuery() { Url = url, UserId = userId }));
+            return Ok(await base.Mediator.Send(new SingleEntryQuery() { Url = url, UserId = query.UserId, Current = query.Current, Take = query.Take }));
         }
 
         [HttpGet]
