@@ -31,7 +31,7 @@
     {
         var response = await client.GetAsync("/api/entry/sidebar");
         if (response.IsSuccessStatusCode)
-            sidebarEntries = await response.Content.ReadFromJsonAsync<List<SidebarViewModel>>();
+            sidebarEntries = await response.Content.ReadFromJsonAsync<List<SidebarViewModel>>() ?? new List<SidebarViewModel>();
     }
 }
 

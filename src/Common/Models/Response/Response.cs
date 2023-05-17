@@ -7,7 +7,7 @@ namespace Common.Models.Response
         public string? Message { get; set; }
         public ResponseStatus Status { get; set; }
         public bool IsSuccess => Status == ResponseStatus.Success ? true : false;
-        private HttpResponseMessage HttpResponse { get; set; }
+        private HttpResponseMessage? HttpResponse { get; set; }
         public Response(ResponseStatus status)
         {
             Status = status;
@@ -21,8 +21,10 @@ namespace Common.Models.Response
             Message = message;
         }
 
-        public async Task<TModel> ResultAsync<TModel>()
+        public async Task<TModel?> ResultAsync<TModel>()
         {
+            if (HttpResponse == null)
+                return default;
             return JsonConvert.DeserializeObject<TModel>(await HttpResponse.Content.ReadAsStringAsync());
         }
     }

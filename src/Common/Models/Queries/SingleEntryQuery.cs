@@ -7,6 +7,6 @@ namespace Common.Models.Queries
 {
     public class SingleEntryQuery : PagedQuery, IRequest<EntryViewModel>
     {
-        public string Url { get; set; }
+        public string? Url { get; set; }
     }
 }

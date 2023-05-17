@@ -4,7 +4,7 @@
         <h1 class="entry-title h5 color-white900 fw-700">
             <a href="/@Url">@Subject</a>
         </h1>
-        @if (IsPage)
+        @if (Page != null)
         {
             <div class="d-flex justify-content-between mb-4">
                 <div class="d-flex align-items-center gap-1 fs-08 color-white900">
@@ -33,13 +33,12 @@
 </div>
 
 @code {
-    [Parameter] public string Subject { get; set; }
-    [Parameter] public string Url { get; set; }
-    [Parameter] public string Content { get; set; }
-    [Parameter] public string Username { get; set; }
-    [Parameter] public DateTime CreatedDate { get; set; }
-    [Parameter] public bool IsPage { get; set; }
-    [Parameter] public Page Page { get; set; }
+    [Parameter] public string? Subject { get; set; }
+    [Parameter] public string? Url { get; set; }
+    [Parameter] public string? Content { get; set; }
+    [Parameter] public string? Username { get; set; }
+    [Parameter] public DateTime? CreatedDate { get; set; }
+    [Parameter] public Page? Page { get; set; }
     private void ChangePage(ChangeEventArgs eventArgs)
     {
         if (eventArgs.Value != null)
@@ -47,6 +46,6 @@
     }
     private void NextPage()
     {
-        navManager.NavigateTo($"/{Url}?page={Page.Current + 1}");
+        navManager.NavigateTo($"/{Url}?page={Page?.Current + 1}");
     }
 }
