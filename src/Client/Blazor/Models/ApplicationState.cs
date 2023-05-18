@@ -15,7 +15,7 @@ namespace Blazor.Models
             Message = message;
         }
 
-        public void SetResponse(Response response)
+        public void SetResponse(RequestResponse response)
         {
             Status = response.Status;
             Message = response.Message;

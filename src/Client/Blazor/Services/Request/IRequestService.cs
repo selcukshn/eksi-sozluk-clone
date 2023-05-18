@@ -4,6 +4,6 @@ namespace Blazor.Services.Request
 {
     public interface IRequestService
     {
-        Task<Response> GetAsync(string address);
+        Task<RequestResponse> GetAsync(string address);
     }
 }

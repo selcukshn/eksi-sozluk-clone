@@ -2,9 +2,10 @@ using Persistence;
 using Application;
 using FluentValidation.AspNetCore;
 using Common.Helpers;
-using System.Net;
 using Microsoft.AspNetCore.Server.Kestrel.Https;
 using System.Security.Cryptography.X509Certificates;
+using Api.Middlewares;
+using Api.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 // Port configuration
@@ -15,10 +16,10 @@ builder.WebHost.ConfigureKestrel(opt =>
     {
         listenOptions.UseHttps(httpsOptions =>
         {
-            var localhostCert = CertificateLoader.LoadFromStoreCert("localhost", "My", StoreLocation.CurrentUser, allowInvalid: true);
+            var certificate = CertificateLoader.LoadFromStoreCert("localhost", "My", StoreLocation.CurrentUser, allowInvalid: true);
             httpsOptions.ServerCertificateSelector = (context, name) =>
             {
-                return localhostCert;
+                return certificate;
             };
         });
     });
@@ -45,8 +46,11 @@ app.UseCors(opt =>
     opt.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
 });
 app.UseHttpsRedirection();
+app.UseMiddleware<ExceptionHandlerMiddleware>();
+// app.ExceptionHandling();
+
+// app.UseAuthentication();
 // app.UseAuthorization();
 
 app.MapControllers();
-
 app.Run();

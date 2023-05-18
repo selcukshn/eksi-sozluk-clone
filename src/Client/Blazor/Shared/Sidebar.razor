@@ -1,37 +1,39 @@
-@inject HttpClient client;
+@inject IRequestService requestService;
 <aside>
     <div class="color-white500">
         <h1 class="fs-12 d-inline-block me-2">gündem</h1>
         <a href="#"><i class="bi bi-gear-fill fs-07"></i></a>
     </div>
 
-    <ul class="sidebar-list fs-08">
-        @if (sidebarEntries.Count != 0)
-        {
-            foreach (var entry in sidebarEntries)
-            {
-                <li class="sidebar-list-item d-block">
-                    @* <NavLink href="@entry.Url" Match="NavLinkMatch.All" class="d-flex align-items-center">
-            <p class="w-90 m-0 color-white700 lh-10">@entry.Subject</p>
-            <span class="d-inline-block w-10 color-white500">@entry.CommentCount</span>
-            </NavLink> *@
-                    <a href="/@entry.Url" class="d-flex align-items-center">
-                        <p class="w-90 m-0 color-white700 lh-10">@entry.Subject</p>
-                        <span class="d-inline-block w-10 color-white500">@entry.CommentCount</span>
-                    </a>
-                </li>
-            }
-        }
-    </ul>
+    <ResponseView State="@State">
+        <ResponseSuccess>
+            <ul class="sidebar-list fs-08">
+                @if (sidebarEntries.Any())
+                {
+                    foreach (var entry in sidebarEntries)
+                    {
+                        <li class="sidebar-list-item d-block">
+                            <a href="/@entry.Url" class="d-flex align-items-center">
+                                <p class="w-90 m-0 color-white700 lh-10">@entry.Subject</p>
+                                <span class="d-inline-block w-10 color-white500">@entry.CommentCount</span>
+                            </a>
+                        </li>
+                    }
+                }
+            </ul>
+        </ResponseSuccess>
+    </ResponseView>
 </aside>
 
 @code {
     List<SidebarViewModel> sidebarEntries;
+    ApplicationState State = new ApplicationState(ResponseStatus.Waiting);
     protected override async Task OnInitializedAsync()
     {
-        var response = await client.GetAsync("/api/entry/sidebar");
-        if (response.IsSuccessStatusCode)
-            sidebarEntries = await response.Content.ReadFromJsonAsync<List<SidebarViewModel>>() ?? new List<SidebarViewModel>();
+        var response = await requestService.GetAsync("/api/entry/sidebar");
+        State.SetResponse(response);
+        if (response.IsSuccess)
+            sidebarEntries = await response.ResultAsync<List<SidebarViewModel>>();
     }
 }
 

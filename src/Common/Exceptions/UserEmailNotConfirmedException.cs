@@ -1,8 +1,9 @@
 using System.Runtime.Serialization;
+using Common.Exceptions.Base;
 
 namespace Common.Exceptions
 {
-    public class UserEmailNotConfirmedException : Exception
+    public class UserEmailNotConfirmedException : ConditionsNotProvidedException
     {
         public UserEmailNotConfirmedException()
         {

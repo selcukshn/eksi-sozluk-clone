@@ -1,37 +1,29 @@
 @page "/"
-@inject HttpClient client;
+@inject IRequestService requestService;
 
 <PageTitle>Index</PageTitle>
 
-@if (Entries.Count == 0)
-{
-    if (Message == string.Empty)
-    {
-        <Spinner Type="SpinnerType.Border" Color="BootstrapColor.Dark" />
-    }
-    else
-    {
-        <Alert Message="@Message" Color="BootstrapColor.Warning" />
-    }
-}
-else
-{
-    foreach (var entry in Entries)
-    {
-        <EntryComponent Content="@entry.Content" CreatedDate="@entry.CreatedDate" Subject="@entry.Subject" Url="@entry.Url"
-            Username="@entry.Username" IsPage="@false" />
-    }
-}
+<ResponseView State="@State">
+    <ResponseSuccess>
+        @if (Entries.Any())
+        {
+            foreach (var entry in Entries)
+            {
+                <EntryComponent Content="@entry.Content" CreatedDate="@entry.CreatedDate" Subject="@entry.Subject"
+                    Url="@entry.Url" Username="@entry.Username" IsPage="@false" />
+            }
+        }
+    </ResponseSuccess>
+</ResponseView>
 
 @code {
     List<AllEntryViewModel> Entries = new List<AllEntryViewModel>();
-    string Message = string.Empty;
+    ApplicationState State = new ApplicationState(ResponseStatus.Waiting);
     protected override async Task OnInitializedAsync()
     {
-        var response = await client.GetAsync("/api/entry/main?random=true");
-        if (response.IsSuccessStatusCode)
-            Entries = await response.Content.ReadFromJsonAsync<List<AllEntryViewModel>>();
-        else
-            Message = "İçerikleri yükleme sırasında bir hata oluştu.";
+        var response = await requestService.GetAsync("/api/entry/main?random=true");
+        State.SetResponse(response);
+        if (response.IsSuccess)
+            Entries = await response.ResultAsync<List<AllEntryViewModel>>();
     }
 }

@@ -1,5 +1,6 @@
 using System.Net;
 using Common.Models.Response;
+using Newtonsoft.Json;
 
 namespace Blazor.Services.Request
 {
@@ -12,25 +13,26 @@ namespace Blazor.Services.Request
             Client = client;
         }
 
-        public async Task<Response> GetAsync(string address)
+        public async Task<RequestResponse> GetAsync(string address)
         {
             try
             {
                 var response = await Client.GetAsync(address);
                 if (response.IsSuccessStatusCode)
-                    return new Response(ResponseStatus.Success, response);
+                    return new RequestResponse(ResponseStatus.Success, response);
                 else
                 {
-                    string message = await response.Content.ReadAsStringAsync();
-                    if (response.StatusCode == HttpStatusCode.NotFound)
-                        return new Response(ResponseStatus.NotFound, message);
-                    else
-                        return new Response(ResponseStatus.Error, message);
+                    var exception = JsonConvert.DeserializeObject<ExceptionResponse>(await response.Content.ReadAsStringAsync()) ?? new ExceptionResponse("Bilinmeyen hata");
+                    return new RequestResponse()
+                    {
+                        Message = exception.Message,
+                        Status = response.StatusCode == HttpStatusCode.NotFound ? ResponseStatus.NotFound : ResponseStatus.Error
+                    };
                 }
             }
             catch (Exception exception)
             {
-                return new Response(ResponseStatus.Error, exception.Message);
+                return new RequestResponse(ResponseStatus.Error, exception.Message);
             }
         }
     }

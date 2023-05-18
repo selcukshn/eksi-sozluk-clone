@@ -1,8 +1,9 @@
 using System.Runtime.Serialization;
+using Common.Exceptions.Base;
 
 namespace Common.Exceptions
 {
-    public class UserUsernameAlreadyExist : Exception
+    public class UserUsernameAlreadyExist : AlreadyExistException
     {
         public UserUsernameAlreadyExist()
         {

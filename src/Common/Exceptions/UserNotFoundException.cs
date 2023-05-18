@@ -1,8 +1,9 @@
 using System.Runtime.Serialization;
+using Common.Exceptions.Base;
 
 namespace Common.Exceptions
 {
-    public class UserNotFoundException : Exception
+    public class UserNotFoundException : NotFoundException
     {
         public UserNotFoundException()
         {

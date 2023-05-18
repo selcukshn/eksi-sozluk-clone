@@ -1,8 +1,9 @@
 using System.Runtime.Serialization;
+using Common.Exceptions.Base;
 
 namespace Common.Exceptions
 {
-    public class EntryNotFoundException : Exception
+    public class EntryNotFoundException : NotFoundException
     {
         public EntryNotFoundException()
         {

@@ -36,8 +36,6 @@
     EntryViewModel? entry;
     PagedViewModel<EntryCommentsViewModel>? entryComments;
     ApplicationState State = new ApplicationState(ResponseStatus.Waiting);
-    int StatusCode;
-    int p;
     protected override async Task OnParametersSetAsync()
     {
         State.Status = ResponseStatus.Waiting;
@@ -55,10 +53,7 @@
     private void ChangePage(ChangeEventArgs eventArgs)
     {
         if (eventArgs.Value != null)
-        {
-            p = Convert.ToInt32(eventArgs.Value);
             navManager.NavigateTo($"/{url}?page={Convert.ToInt32(eventArgs.Value)}");
-        }
     }
     private void NextPage()
     {
