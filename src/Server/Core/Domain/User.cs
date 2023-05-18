@@ -6,8 +6,8 @@ namespace Domain
         public string Email { get; set; }
         public bool EmailConfirmed { get; set; }
         public string Password { get; set; }
-        public string? PasswordResetToken { get; set; }
-        public string? Image { get; set; }
+        public string PasswordResetToken { get; set; }
+        public string Image { get; set; }
 
         public virtual ICollection<Entry> Entries { get; set; }
         public virtual ICollection<EntryComment> EntryComments { get; set; }

@@ -11,9 +11,9 @@ namespace Persistence
     {
         private readonly SozlukCloneContext Context;
         private readonly Faker Bogus;
-        private List<Guid>? UserIds;
-        private List<Guid>? EntriesIds;
-        private List<DateTime>? EntryDates;
+        private List<Guid> UserIds;
+        private List<Guid> EntriesIds;
+        private List<DateTime> EntryDates;
 
         public FakeData(SozlukCloneContext context)
         {

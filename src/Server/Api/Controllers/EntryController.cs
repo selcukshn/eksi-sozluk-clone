@@ -17,7 +17,6 @@ namespace Api.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllEntry([FromQuery] int count)
         {
-            throw new ConditionsNotProvidedException("hataaaaaaaa");
             return Ok(await base.Mediator.Send(new AllEntryQuery() { Count = count }));
         }
         [HttpGet("{url}")]

@@ -13,8 +13,8 @@ namespace Persistence.Configurations
             builder.Property(e => e.Email).HasMaxLength(100).IsRequired();
             builder.Property(e => e.EmailConfirmed).HasDefaultValue(false);
             builder.Property(e => e.Password).HasMaxLength(256).IsRequired();
-            builder.Property(e => e.PasswordResetToken).HasDefaultValue(null);
-            builder.Property(e => e.Image).HasDefaultValue(null);
+            builder.Property(e => e.PasswordResetToken).HasDefaultValue(null).IsRequired(false);
+            builder.Property(e => e.Image).HasDefaultValue(null).IsRequired(false);
 
             builder.HasMany(x => x.Entries).WithOne(x => x.User).HasForeignKey(x => x.UserId);
             builder.HasMany(x => x.EntryComments).WithOne(x => x.User).HasForeignKey(x => x.UserId).OnDelete(DeleteBehavior.Restrict);
