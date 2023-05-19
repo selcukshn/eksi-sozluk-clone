@@ -57,9 +57,9 @@ namespace Persistence
             {
                 var entries = new Faker<Entry>("tr")
                 .RuleFor(e => e.Id, e => Guid.NewGuid())
-                .RuleFor(e => e.UserId, UserIds.OrderBy(e => Guid.NewGuid()).First())
+                .RuleFor(e => e.UserId, e => UserIds[e.Random.Int(0, UserIds.Count - 1)])
                 .RuleFor(e => e.Content, e => e.Lorem.Sentences(e.Random.Int(5, 10)))
-                .RuleFor(e => e.Subject, e => e.Lorem.Sentences(Bogus.Random.Int(1, 2)))
+                .RuleFor(e => e.Subject, e => e.Lorem.Sentences(e.Random.Int(1, 2)))
                 .RuleFor(e => e.CreatedDate, e => e.Date.Between(DateTime.Now.AddDays(-(365 * 5)), DateTime.Now))
                 .Generate(count);
                 foreach (var entry in entries)
@@ -82,8 +82,8 @@ namespace Persistence
                 .RuleFor(e => e.Id, e => Guid.NewGuid())
                 .RuleFor(e => e.Content, e => e.Lorem.Sentences(e.Random.Int(3, 5)))
                 .RuleFor(e => e.CreatedDate, e => e.Date.Between(EntryDates[e.Random.Int(0, EntryDates.Count - 1)], EntryDates[e.Random.Int(0, EntryDates.Count - 1)].AddHours(e.Random.Double(1, 10000))))
-                .RuleFor(e => e.UserId, e => UserIds.OrderBy(e => Guid.NewGuid()).First())
-                .RuleFor(e => e.EntryId, e => EntriesIds.OrderBy(e => Guid.NewGuid()).First())
+                .RuleFor(e => e.UserId, e => UserIds[e.Random.Int(0, UserIds.Count - 1)])
+                .RuleFor(e => e.EntryId, e => EntriesIds[e.Random.Int(0, EntriesIds.Count - 1)])
                 .Generate(entityCount < count ? count - entityCount : count);
                 await Context.EntryComments.AddRangeAsync(comments);
                 await Context.SaveChangesAsync();
