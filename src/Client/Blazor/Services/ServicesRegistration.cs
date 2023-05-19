@@ -4,7 +4,7 @@ using Blazor.Services.Request.EntryComment;
 
 namespace Blazor.Services
 {
-    public static class RequestRegistration
+    public static class ServicesRegistration
     {
         public static IServiceCollection AddServicesDependencies(this IServiceCollection service)
         {
