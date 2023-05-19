@@ -1,5 +1,5 @@
 @page "/"
-@inject IRequestService requestService;
+@inject IEntryRequestService entryService;
 
 <PageTitle>Index</PageTitle>
 
@@ -10,20 +10,20 @@
             foreach (var entry in Entries)
             {
                 <EntryComponent Content="@entry.Content" CreatedDate="@entry.CreatedDate" Subject="@entry.Subject"
-                    Url="@entry.Url" Username="@entry.Username" IsPage="@false" />
+                    Url="@entry.Url" Username="@entry.Username" />
             }
         }
     </ResponseSuccess>
 </ResponseView>
 
 @code {
-    List<AllEntryViewModel> Entries = new List<AllEntryViewModel>();
+    List<MainPageViewModel> Entries = new List<MainPageViewModel>();
     ApplicationState State = new ApplicationState(ResponseStatus.Waiting);
     protected override async Task OnInitializedAsync()
     {
-        var response = await requestService.GetAsync("/api/entry/main?random=true");
+        var response = await entryService.GetMainPageEntriesAsync(new MainPageEntriesQuery() { Random = true });
         State.SetResponse(response);
         if (response.IsSuccess)
-            Entries = await response.ResultAsync<List<AllEntryViewModel>>();
+            Entries = await response.ResultAsync<List<MainPageViewModel>>();
     }
 }

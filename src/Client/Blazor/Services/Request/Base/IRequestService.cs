@@ -1,6 +1,6 @@
 using Common.Models.Response;
 
-namespace Blazor.Services.Request
+namespace Blazor.Services.Request.Base
 {
     public interface IRequestService
     {

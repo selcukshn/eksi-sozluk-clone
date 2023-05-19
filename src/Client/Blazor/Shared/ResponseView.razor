@@ -4,11 +4,14 @@
 {
     <Spinner Color="BootstrapColor.Dark" Type="SpinnerType.Grow" />
 }
-@if (State.Status == ResponseStatus.Success)
-{
-    @ResponseSuccess
-}
 else
 {
-    <Alert Message="@State.Message" Color="BootstrapColor.Danger" />
+    @if (State.Status == ResponseStatus.Success)
+    {
+        @ResponseSuccess
+    }
+    else
+    {
+        <Alert Message="@State.Message" Color="BootstrapColor.Danger" />
+    }
 }

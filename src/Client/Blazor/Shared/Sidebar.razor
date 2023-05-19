@@ -1,4 +1,4 @@
-@inject IRequestService requestService;
+@inject IEntryRequestService entryService;
 <aside>
     <div class="color-white500">
         <h1 class="fs-12 d-inline-block me-2">gündem</h1>
@@ -30,7 +30,7 @@
     ApplicationState State = new ApplicationState(ResponseStatus.Waiting);
     protected override async Task OnInitializedAsync()
     {
-        var response = await requestService.GetAsync("/api/entry/sidebar");
+        var response = await entryService.GetSidebarEntriesAsync(new SidebarEntriesQuery() { Random = true });
         State.SetResponse(response);
         if (response.IsSuccess)
             sidebarEntries = await response.ResultAsync<List<SidebarViewModel>>();

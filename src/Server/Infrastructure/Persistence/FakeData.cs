@@ -59,7 +59,7 @@ namespace Persistence
                 .RuleFor(e => e.Id, e => Guid.NewGuid())
                 .RuleFor(e => e.UserId, UserIds.OrderBy(e => Guid.NewGuid()).First())
                 .RuleFor(e => e.Content, e => e.Lorem.Sentences(e.Random.Int(5, 10)))
-                .RuleFor(e => e.Subject, Bogus.Lorem.Sentences(Bogus.Random.Int(1, 2)))
+                .RuleFor(e => e.Subject, e => e.Lorem.Sentences(Bogus.Random.Int(1, 2)))
                 .RuleFor(e => e.CreatedDate, e => e.Date.Between(DateTime.Now.AddDays(-(365 * 5)), DateTime.Now))
                 .Generate(count);
                 foreach (var entry in entries)

@@ -20,9 +20,9 @@ namespace Api.Controllers
             return Ok(await base.Mediator.Send(new AllEntryQuery() { Count = count }));
         }
         [HttpGet("{url}")]
-        public async Task<IActionResult> GetEntry([FromQuery] PagedQuery query, string url)
+        public async Task<IActionResult> GetEntry([FromQuery] Guid? userId, string url)
         {
-            return Ok(await base.Mediator.Send(new SingleEntryQuery() { Url = url, UserId = query.UserId, Current = query.Current, Take = query.Take }));
+            return Ok(await base.Mediator.Send(new SingleEntryQuery() { Url = url, UserId = userId }));
         }
 
         [HttpGet]

@@ -18,7 +18,7 @@ namespace Application.Features.Queries.Entry.MainPage
             else
                 entities = entities.OrderBy(e => e.CreatedDate);
 
-            return base.Mapper.Map<List<MainPageViewModel>>(await entities.Take(request.Count).ToListAsync());
+            return base.Mapper.Map<List<MainPageViewModel>>(await entities.Include(e => e.User).Take(request.Count).ToListAsync());
         }
     }
 }

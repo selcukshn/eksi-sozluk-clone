@@ -1,5 +1,6 @@
 @page "/{url}"
-@inject IRequestService requestService;
+@inject IEntryRequestService entryService;
+@inject IEntryCommentRequestService entryCommentsService;
 @inject NavigationManager navManager;
 
 <ResponseView State="@State">
@@ -31,7 +32,7 @@
     </ResponseSuccess>
 </ResponseView>
 @code {
-    [Parameter] public string? url { get; set; }
+    [Parameter] public string url { get; set; }
     [Parameter][SupplyParameterFromQuery] public int page { get; set; }
     EntryViewModel? entry;
     PagedViewModel<EntryCommentsViewModel>? entryComments;
@@ -39,12 +40,12 @@
     protected override async Task OnParametersSetAsync()
     {
         State.Status = ResponseStatus.Waiting;
-        var entryResponse = await requestService.GetAsync($"/api/entry/{url}");
+        var entryResponse = await entryService.GetAsync(url);
         State.SetResponse(entryResponse);
         if (entryResponse.IsSuccess)
         {
             entry = await entryResponse.ResultAsync<EntryViewModel>();
-            var commentsResponse = await requestService.GetAsync($"/api/entrycomments/{entry?.Id}?current={page}");
+            var commentsResponse = await entryCommentsService.GetAsync(entry.Id, new PagedQuery() { Current = page });
             State.SetResponse(commentsResponse);
             if (commentsResponse.IsSuccess)
                 entryComments = await commentsResponse.ResultAsync<PagedViewModel<EntryCommentsViewModel>>();
