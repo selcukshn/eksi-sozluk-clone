@@ -24,3 +24,50 @@ ul {
 li {
     list-style: none;
 }
+
+.btn-form {
+    background-color: var(--theme);
+    border-radius: 2px;
+    font-size: 0.8rem;
+    color: white !important;
+    padding: 0.7rem 0;
+    border-color: var(--theme-100);
+    transition: all 0s;
+}
+
+.btn-form:hover {
+    background-color: var(--theme-200);
+    border-color: var(--theme-300);
+}
+
+.btn-gender {
+    background-color: var(--white-100);
+    font-size: 0.8rem;
+}
+
+.btn-gender.active {
+    background-color: var(--theme);
+    border-color: var(--theme-100);
+    color: white;
+}
+
+.btn-gender:hover {
+    background-color: var(--theme);
+}
+
+.hover-text-underline:hover {
+    text-decoration: underline !important;
+}
+
+.title {
+    /* color-white900 fw-700 mb-5 */
+    color: var(--white-900);
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.password-requirement {
+    padding: 0.4rem;
+    font-size: 0.7rem;
+    color: var(--white-500);
+}

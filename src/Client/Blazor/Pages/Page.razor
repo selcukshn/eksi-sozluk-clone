@@ -3,6 +3,8 @@
 @inject IEntryCommentRequestService entryCommentsService;
 @inject NavigationManager navManager;
 
+<PageTitle>@url - ekşi sözlük</PageTitle>
+
 <ResponseView State="@State">
     <ResponseSuccess>
         <EntryComponent Page="@entryComments?.Page" Content="@entry?.Content" CreatedDate="@entry?.CreatedDate"

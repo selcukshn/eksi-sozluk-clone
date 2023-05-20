@@ -1,0 +1,89 @@
+@page "/kayit"
+
+<PageTitle>kayıt ol - ekşi sözlük</PageTitle>
+
+<h1 class="title mb-5">yeni kullanıcı kaydı</h1>
+
+<form class="d-flex flex-column w-50 gap-2">
+    <div>
+        <label class="form-label">nick</label>
+        <input type="text" class="form-control">
+    </div>
+    <div>
+        <label class="form-label">e-mail</label>
+        <input type="text" class="form-control">
+    </div>
+    <div>
+        <label class="form-label">doğum tarihi</label>
+        <div class="d-flex gap-1">
+            <select class="form-select">
+                @for (int i = 1; i <= 31; i++)
+                {
+                    <option value="@i">@i</option>
+                }
+            </select>
+            <select class="form-select">
+                @for (int i = 0; i < mounths.Length; i++)
+                {
+                    <option value="@mounths[i]">@mounths[i]</option>
+                }
+            </select>
+            <select class="form-select">
+                @for (int i = DateTime.Now.Year - 18; i >= 1900; i--)
+                {
+                    <option value="@i">@i</option>
+                }
+            </select>
+        </div>
+    </div>
+    <div>
+        <label class="form-label">cinsiyet</label>
+        <div class="input-group">
+            <button class="btn btn-gender" data-bs-toggle="button">kadın</button>
+            <button class="btn btn-gender" data-bs-toggle="button">erkek</button>
+            <button class="btn btn-gender" data-bs-toggle="button">başka</button>
+            <button class="btn btn-gender active" data-bs-toggle="button">boşver</button>
+        </div>
+    </div>
+    <div class="d-flex gap-3 py-3">
+        <i class="bi bi-info-square"></i>
+        <p class="m-0 fs-08">
+            hesap güvenliğiniz açısından şifrenizin <strong>diğer sitelerde kullandığınız şifrelerden farklı
+                olmasını</strong> tavsiye ederiz.
+        </p>
+    </div>
+    <div>
+        <label class="form-label">şifre</label>
+        <input type="password" class="form-control">
+        <ul class="password-requirement">
+            <li>şifre en az 8 karakter</li>
+            <li>en az bir büyük harf</li>
+            <li>bir küçük harf</li>
+            <li>rakam içermelidir.</li>
+        </ul>
+    </div>
+    <div>
+        <label class="form-label">şifre (tekrar)</label>
+        <input type="password" class="form-control">
+        <ul class="password-requirement">
+            <li>en az 1 küçük harf</li>
+            <li>en az 1 büyük harf</li>
+            <li>en az 1 rakam</li>
+            <li>en az 8 karakter</li>
+        </ul>
+    </div>
+    <div class="form-check">
+        <label class="form-check-label">
+            <input type="checkbox" class="form-check-input" />
+            <a class="hover-text-underline" href="/kayit-sozlesme">ekşi sözlük kullanıcı sözleşmesi</a>ni
+            okudum ve
+            kabul ediyorum
+        </label>
+    </div>
+    <button class="btn btn-form">kayıt ol işte böyle</button>
+</form>
+
+@code {
+    string[] mounths = new string[] { "ocak", "şubat", "mart", "nisan", "mayıs", "haziran", "temmuz", "ağustos", "eylül",
+"ekim", "kasım", "aralık" };
+}

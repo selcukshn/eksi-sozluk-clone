@@ -1,0 +1,40 @@
+.form-label {
+    font-size: 0.8rem;
+    color: var(--white-800);
+    margin-bottom: 0.1rem;
+}
+
+.form-control {
+    border-color: var(--white-400);
+    border-radius: 2px;
+    font-size: 0.8rem;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: var(--white-400);
+}
+
+.form-check-label {
+    font-size: 0.8rem !important;
+}
+
+.form-check-input {
+    border-color: var(--white-700) !important;
+    border-radius: 0 !important;
+}
+
+.form-check-input:focus {
+    box-shadow: none;
+}
+
+.form-select {
+    border-color: var(--white-400) !important;
+    border-radius: 2px;
+    font-size: 0.8rem;
+    width: auto;
+}
+
+.form-select:focus {
+    box-shadow: none;
+}
