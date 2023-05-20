@@ -19,6 +19,7 @@ namespace Api.Controllers
         {
             return Ok(await base.Mediator.Send(new AllEntryQuery() { Count = count }));
         }
+
         [HttpGet("{url}")]
         public async Task<IActionResult> GetEntry([FromQuery] Guid? userId, string url)
         {
@@ -39,6 +40,12 @@ namespace Api.Controllers
             return Ok(await base.Mediator.Send(query));
         }
 
+        [HttpGet]
+        [Route("search/{value}")]
+        public async Task<IActionResult> Search(string value, [FromQuery] int count)
+        {
+            return Ok(await base.Mediator.Send(new SearchQuery() { Value = value, Count = count }));
+        }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] EntryCreateCommand command)

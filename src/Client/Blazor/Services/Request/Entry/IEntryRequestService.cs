@@ -11,5 +11,6 @@ namespace Blazor.Services.Request.Entry
         Task<RequestResponse> GetAllAsync(int count);
         Task<RequestResponse> GetMainPageEntriesAsync(MainPageEntriesQuery query);
         Task<RequestResponse> GetSidebarEntriesAsync(SidebarEntriesQuery query);
+        Task<RequestResponse> SearchAsync(string value);
     }
 }

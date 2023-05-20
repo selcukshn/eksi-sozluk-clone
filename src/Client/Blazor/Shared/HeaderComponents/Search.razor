@@ -1,13 +1,94 @@
-<form>
+@inject IEntryRequestService entryService;
+@inject NavigationManager navManager;
+<div class="position-relative">
     <div class="input-group">
-        <input type="text"
+        <input @bind-value="searchValue" @bind-value:event="oninput" @onkeydown="searchKeyPress" @onfocus="searchFocus"
+        @onfocusout="searchFocusOut" type="text"
             class="form-control form-control-sm border-theme border-end-0 border-radius-5 fs-08 fw-500 focus-disable"
             placeholder="başlık,#entry,@@yazar">
         <a href="#" class="d-flex align-items-center justify-content-center px-3 border border-theme">
             <i class="bi bi-caret-down-fill fs-05 color-white600"></i>
         </a>
-        <button type="button" class="btn btn-theme btn-sm">
+        <button @onclick="redirectSearchResult" type="button" class="btn btn-theme btn-sm">
             <i class="bi bi-search"></i>
         </button>
     </div>
-</form>
+    @if (searchMode)
+    {
+        @(searchResult == null)
+        <div class="search-result">
+            <ul class="search-result-list">
+                @if (searchAvailable)
+                {
+                    if (searchResult != null)
+                    {
+                        foreach (var entry in searchResult.Entry)
+                        {
+                            <li class="search-result-list-item"><a href="/@entry.Url">@entry.Subject</a></li>
+                        }
+                        foreach (var user in searchResult.User)
+                        {
+                            <li class="search-result-list-item"><a href="/biri/@user.Username">@@@user.Username</a></li>
+                        }
+                    }
+                    else
+                    {
+                        <li class="search-result-list-item"><a>(buna yakın bir şey yok)</a></li>
+                    }
+                }
+                else
+                {
+                    <li class="search-result-list-item"><a>(arama yapmak için 3 karakter girin)</a></li>
+                }
+            </ul>
+        </div>
+    }
+</div>
+
+@code {
+    string searchValue = "";
+    bool searchAvailable => searchValue.Trim().Length > 2;
+    public bool searchMode;
+    public SearchViewModel? searchResult;
+
+    public async Task search()
+    {
+        var response = await entryService.SearchAsync(searchValue);
+        if (response.IsSuccess)
+            searchResult = await response.ResultAsync<SearchViewModel>();
+    }
+    public async void searchKeyPress(KeyboardEventArgs e)
+    {
+        if (searchAvailable && searchMode)
+            await search();
+        else
+            searchResult = null;
+    }
+
+    public void searchFocus()
+    {
+        searchMode = true;
+    }
+    public void searchFocusOut()
+    {
+        searchMode = false;
+        searchResult = null;
+    }
+
+    public async void redirectSearchResult()
+    {
+        if (searchAvailable)
+        {
+            await search();
+            var firstResult = searchResult.GetFirstResult();
+            if (firstResult != null)
+            {
+                if (firstResult.Entry != null)
+                    navManager.NavigateTo($"/{firstResult.Entry.Url}");
+                else if (firstResult.User != null)
+                    navManager.NavigateTo($"/biri/{firstResult.User.Username}");
+            }
+        }
+    }
+
+}

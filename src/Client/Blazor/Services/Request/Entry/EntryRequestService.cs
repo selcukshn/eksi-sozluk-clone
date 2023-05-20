@@ -35,5 +35,10 @@ namespace Blazor.Services.Request.Entry
         {
             return await base.PostAsync($"/api/entry", JsonContent.Create(command));
         }
+
+        public async Task<RequestResponse> SearchAsync(string value)
+        {
+            return await base.GetAsync($"/api/entry/search/{value}");
+        }
     }
 }
