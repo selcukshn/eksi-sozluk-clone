@@ -1,13 +1,13 @@
 .form-label {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     color: var(--white-800);
-    margin-bottom: 0.1rem;
+    margin-bottom: 0.4rem;
 }
 
 .form-control {
     border-color: var(--white-400);
     border-radius: 2px;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
 }
 
 .form-control:focus {
@@ -16,7 +16,7 @@
 }
 
 .form-check-label {
-    font-size: 0.8rem !important;
+    font-size: 0.9rem !important;
 }
 
 .form-check-input {
@@ -31,7 +31,7 @@
 .form-select {
     border-color: var(--white-400) !important;
     border-radius: 2px;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     width: auto;
 }
 

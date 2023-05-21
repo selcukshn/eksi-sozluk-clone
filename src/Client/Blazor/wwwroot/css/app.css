@@ -1,10 +1,8 @@
-﻿@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400;700;900&family=Open+Sans:wght@300;400;500;600;700;800&display=swap');
-/* font-family: 'Lato', sans-serif; */
-/* font-family: 'Open Sans', sans-serif; */
+﻿@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600;700;900&display=swap');
 @import "./custom.css";
 
 body {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'Source Sans Pro', sans-serif;
 }
 
 a {
@@ -28,9 +26,9 @@ li {
 .btn-form {
     background-color: var(--theme);
     border-radius: 2px;
-    font-size: 0.8rem;
+    font-size: 0.9rem;
     color: white !important;
-    padding: 0.7rem 0;
+    padding: 0.6rem 0;
     border-color: var(--theme-100);
     transition: all 0s;
 }
@@ -42,17 +40,19 @@ li {
 
 .btn-gender {
     background-color: var(--white-100);
-    font-size: 0.8rem;
+    font-size: 0.9rem;
+    transition: all 0s;
 }
 
-.btn-gender.active {
+.btn-gender:has(.btn-gender-option:checked) {
     background-color: var(--theme);
     border-color: var(--theme-100);
     color: white;
 }
 
+
 .btn-gender:hover {
-    background-color: var(--theme);
+    background-color: var(--theme) !important;
 }
 
 .hover-text-underline:hover {
@@ -68,6 +68,6 @@ li {
 
 .password-requirement {
     padding: 0.4rem;
-    font-size: 0.7rem;
+    font-size: 0.8rem;
     color: var(--white-500);
 }

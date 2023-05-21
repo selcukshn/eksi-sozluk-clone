@@ -40,7 +40,7 @@ namespace Api.Middlewares
             if (exceptionType == typeof(AlreadyExistException))
                 context.Response.StatusCode = (int)HttpStatusCode.Conflict;
 
-            await context.Response.Body.WriteAsync(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(new ExceptionResponse(exception.Message))));
+            await context.Response.Body.WriteAsync(Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(exception)));
         }
     }
 }

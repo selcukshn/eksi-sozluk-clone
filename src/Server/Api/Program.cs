@@ -33,18 +33,22 @@ builder.Services.AddControllers().AddJsonOptions(opt =>
 {
     opt.JsonSerializerOptions.PropertyNamingPolicy = null;
 });
-builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddPersistenceDependencies(builder.Configuration);
 builder.Services.AddApplicationDependencies();
-builder.Services.AddCors();
+builder.Services.AuthenticationConfiguration(builder.Configuration);
+builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+builder.Services.AddCors(opt =>
+{
+    opt.AddPolicy("DefaultPolicy", policy =>
+    {
+        policy.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
+    });
+});
 
 var app = builder.Build();
-app.UseCors(opt =>
-{
-    opt.AllowAnyHeader().AllowAnyMethod().AllowAnyOrigin();
-});
+app.UseCors("DefaultPolicy");
 app.UseHttpsRedirection();
 app.UseMiddleware<ExceptionHandlerMiddleware>();
 // app.ExceptionHandling();

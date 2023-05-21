@@ -36,18 +36,30 @@
             </select>
         </div>
     </div>
-    <div>
+    <section>
         <label class="form-label">cinsiyet</label>
         <div class="input-group">
-            <button class="btn btn-gender" data-bs-toggle="button">kadın</button>
-            <button class="btn btn-gender" data-bs-toggle="button">erkek</button>
-            <button class="btn btn-gender" data-bs-toggle="button">başka</button>
-            <button class="btn btn-gender active" data-bs-toggle="button">boşver</button>
+            <label class="btn btn-gender" for="option1">kadın
+                <input type="radio" class="btn-check btn-gender-option" name="options" id="option1" autocomplete="off">
+            </label>
+
+            <label class="btn btn-gender" for="option2">erkek
+                <input type="radio" class="btn-check btn-gender-option" name="options" id="option2" autocomplete="off">
+            </label>
+
+            <label class="btn btn-gender" for="option3">başka
+                <input type="radio" class="btn-check btn-gender-option" name="options" id="option3" autocomplete="off">
+            </label>
+
+            <label class="btn btn-gender" for="option4">boşver
+                <input type="radio" class="btn-check btn-gender-option" name="options" id="option4" autocomplete="off"
+                    checked>
+            </label>
         </div>
-    </div>
+    </section>
     <div class="d-flex gap-3 py-3">
-        <i class="bi bi-info-square"></i>
-        <p class="m-0 fs-08">
+        <i class="bi bi-info-square fs-12"></i>
+        <p class="m-0 fs-09">
             hesap güvenliğiniz açısından şifrenizin <strong>diğer sitelerde kullandığınız şifrelerden farklı
                 olmasını</strong> tavsiye ederiz.
         </p>

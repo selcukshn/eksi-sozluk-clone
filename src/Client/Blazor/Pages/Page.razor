@@ -3,34 +3,43 @@
 @inject IEntryCommentRequestService entryCommentsService;
 @inject NavigationManager navManager;
 
-<PageTitle>@url - ekşi sözlük</PageTitle>
+<PageTitle>@entry?.Subject - ekşi sözlük</PageTitle>
 
 <ResponseView State="@State">
     <ResponseSuccess>
         <EntryComponent Page="@entryComments?.Page" Content="@entry?.Content" CreatedDate="@entry?.CreatedDate"
             Subject="@entry?.Subject" Url="@entry?.Url" Username="@entry?.Username" />
-        @if (entryComments?.Data != null)
+        @if (entryComments?.Data != null && entryComments.Data.Any())
         {
             foreach (var comment in entryComments.Data)
             {
                 <EntryComment Content="@comment.Content" CreatedDate="@comment.CreatedDate" Username="@comment.Username" />
             }
-        }
-        <div class="d-flex justify-content-end">
-            <div class="d-flex align-items-center gap-1 color-white700">
-                <select @onchange="ChangePage" class="form-select form-select-sm fs-08 focus-disable">
-                    @for (int i = 1; i <= entryComments?.Page.Max; i++)
-                    {
-                        <option selected="@(i == entryComments.Page.Current)" value="@i">@i</option>
-                    }
-                </select>
-                /
-                <button class="btn btn-sm border py-1 px-2 fs-08">@entryComments?.Page.Current</button>
-                <button class="btn btn-sm border py-1 px-2 fs-08" @onclick="NextPage">
-                    <i class="bi bi-chevron-double-right"></i>
-                </button>
+            <div class="d-flex justify-content-end">
+                <div class="d-flex align-items-center gap-1 color-white700">
+                    <select @onchange="ChangePage" class="form-select form-select-sm fs-09 focus-disable">
+                        @for (int i = 1; i <= entryComments?.Page.Max; i++)
+                        {
+                            <option selected="@(i == entryComments.Page.Current)" value="@i">@i</option>
+                        }
+                    </select>
+                    /
+                    <button class="btn btn-sm border py-1 px-2 fs-09">@entryComments?.Page.Current</button>
+                    <button class="btn btn-sm border py-1 px-2 fs-09" @onclick="NextPage">
+                        <i class="bi bi-chevron-double-right"></i>
+                    </button>
+                </div>
             </div>
-        </div>
+        }
+        else
+        {
+            <Alert Color="BootstrapColor.Light" Class="rounded-0 fs-09">
+                <AlertBody>
+                    Böyle bir sayfa yok en yakın sayfaya <a class="color-white900 text-decoration-underline"
+                        href="/@(url)?page=@(entryComments?.Page.Max)">git</a>
+                </AlertBody>
+            </Alert>
+        }
     </ResponseSuccess>
 </ResponseView>
 @code {
@@ -61,5 +70,9 @@
     private void NextPage()
     {
         navManager.NavigateTo($"/{url}?page={entryComments?.Page.Current + 1}");
+    }
+    private void GoLastPage()
+    {
+        navManager.NavigateTo($"/{url}?page={entryComments?.Page.Max}");
     }
 }

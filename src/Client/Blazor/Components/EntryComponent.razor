@@ -13,19 +13,22 @@
                     <div class="svl-50 bg-white500"></div>
                     <a href="#">son 24 saat</a>
                 </div>
-                <div class="d-flex align-items-center gap-1 color-white700">
-                    <select @onchange="ChangePage" class="form-select form-select-sm fs-08 focus-disable">
-                        @for (int i = 1; i <= Page.Max; i++)
-                        {
-                            <option selected="@(Page.Current == i)" value="@i">@i</option>
-                        }
-                    </select>
-                    /
-                    <button class="btn btn-sm border py-1 px-2 fs-08">@Page.Current</button>
-                    <button class="btn btn-sm border py-1 px-2 fs-08" @onclick="NextPage">
-                        <i class="bi bi-chevron-double-right"></i>
-                    </button>
-                </div>
+                @if (Page.Current <= Page.Max)
+                {
+                    <div class="d-flex align-items-center gap-1 color-white700">
+                        <select @onchange="ChangePage" class="form-select form-select-sm fs-08 focus-disable">
+                            @for (int i = 1; i <= Page.Max; i++)
+                            {
+                                <option selected="@(Page.Current == i)" value="@i">@i</option>
+                            }
+                        </select>
+                        /
+                        <button class="btn btn-sm border py-1 px-2 fs-08">@Page.Current</button>
+                        <button class="btn btn-sm border py-1 px-2 fs-08" @onclick="NextPage">
+                            <i class="bi bi-chevron-double-right"></i>
+                        </button>
+                    </div>
+                }
             </div>
         }
     </div>

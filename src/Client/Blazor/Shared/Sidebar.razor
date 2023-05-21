@@ -1,13 +1,17 @@
 @inject IEntryRequestService entryService;
-<aside>
+<aside class="px-2">
     <div class="color-white500">
-        <h1 class="fs-12 d-inline-block me-2">gündem</h1>
-        <a href="#"><i class="bi bi-gear-fill fs-07"></i></a>
+        <h1 class="fs-12 d-inline-block me-2">bugün</h1>
+    </div>
+    <div class="">
+        <button @onclick="refreshSidebarEntries" class="btn btn-refresh">yenile
+            <i class="bi bi-arrow-clockwise"></i>
+        </button>
     </div>
 
     <ResponseView State="@State">
         <ResponseSuccess>
-            <ul class="sidebar-list fs-08">
+            <ul class="sidebar-list fs-09">
                 @if (sidebarEntries.Any())
                 {
                     foreach (var entry in sidebarEntries)
@@ -29,6 +33,15 @@
     List<SidebarViewModel> sidebarEntries;
     ApplicationState State = new ApplicationState(ResponseStatus.Waiting);
     protected override async Task OnInitializedAsync()
+    {
+        await getSidebarEntries();
+    }
+    public async void refreshSidebarEntries()
+    {
+        await getSidebarEntries();
+    }
+
+    public async Task getSidebarEntries()
     {
         var response = await entryService.GetSidebarEntriesAsync(new SidebarEntriesQuery() { Random = true });
         State.SetResponse(response);

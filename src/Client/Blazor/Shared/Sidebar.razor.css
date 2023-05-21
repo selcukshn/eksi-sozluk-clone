@@ -34,3 +34,21 @@ aside::-webkit-scrollbar-thumb {
 .sidebar-list-item a:hover {
     background-color: var(--white-50);
 }
+
+.btn-refresh {
+    border-radius: 0;
+    font-size: 0.8rem;
+    width: 100%;
+    border: 1px solid var(--white-400);
+    margin-bottom: 0.5rem;
+    transition: all 0s;
+}
+
+.btn-refresh i {
+    color: var(--white-900) !important;
+}
+
+.btn-refresh:hover {
+    background-color: var(--white-100);
+    color: var(--theme);
+}

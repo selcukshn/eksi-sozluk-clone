@@ -8,6 +8,8 @@ namespace Blazor.Components.Bootstrap.Alert
         [Parameter] public string? Message { get; set; }
         [Parameter] public BootstrapColor Color { get; set; }
         [Parameter] public bool Dismissible { get; set; }
+        [Parameter] public RenderFragment? AlertBody { get; set; }
+        [Parameter] public string? Class { get; set; }
         public Dictionary<BootstrapColor, string> AlertColors = new Dictionary<BootstrapColor, string>{
             {BootstrapColor.Danger,"alert-danger"},
             {BootstrapColor.Info,"alert-info"},

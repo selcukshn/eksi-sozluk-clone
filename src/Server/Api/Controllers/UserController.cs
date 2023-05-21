@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/user")]
     public class UserController : BaseApiController
     {
         public UserController(IMediator mediator) : base(mediator) { }
@@ -17,9 +17,16 @@ namespace Api.Controllers
         {
             return Ok(await base.Mediator.Send(query));
         }
+        [HttpPost]
+        [Route("login")]
+        public async Task<IActionResult> LoginAsync([FromBody] UserLoginCommand command)
+        {
+            return Ok(await base.Mediator.Send(command));
+        }
 
-        [HttpPost("Create")]
-        public async Task<IActionResult> CreateAsync([FromBody] UserCreateCommand command)
+        [HttpPost]
+        [Route("register")]
+        public async Task<IActionResult> RegisterAsync([FromBody] UserCreateCommand command)
         {
             return Ok(await base.Mediator.Send(command));
         }

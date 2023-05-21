@@ -1,5 +1,6 @@
 @inherits BaseAlert
-<div class="alert @(AlertColors[Color]) @(Dismissible?"alert-dismissible fade show":"")" role="alert">
+<div class="alert @(AlertColors[Color]) @(Dismissible?"alert-dismissible fade show":"") @Class" role="alert">
+    @AlertBody
     @Message
     @if (Dismissible)
     {
