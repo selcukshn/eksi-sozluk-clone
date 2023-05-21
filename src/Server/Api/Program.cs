@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Server.Kestrel.Https;
 using System.Security.Cryptography.X509Certificates;
 using Api.Middlewares;
 using Api.Extensions;
+using Microsoft.AspNetCore.Mvc;
+using Common.Models.Response;
 
 var builder = WebApplication.CreateBuilder(args);
 // Port configuration
@@ -29,16 +31,19 @@ builder.WebHost.ConfigureKestrel(opt =>
 //     opt.HttpsPort = WebConstants.HttpsPort;
 // });
 // Add services to the container.
-builder.Services.AddControllers().AddJsonOptions(opt =>
-{
-    opt.JsonSerializerOptions.PropertyNamingPolicy = null;
-});
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddPersistenceDependencies(builder.Configuration);
-builder.Services.AddApplicationDependencies();
-builder.Services.AuthenticationConfiguration(builder.Configuration);
-builder.Services.AddFluentValidationAutoValidation().AddFluentValidationClientsideAdapters();
+builder.Services
+    .AddControllers()
+    .DisableJsonResultParametersNamingPolicy()
+    .SuppressFluentValidationExceptionModel<ExceptionResponse>();
+
+builder.Services
+    .AddEndpointsApiExplorer()
+    .AddPersistenceDependencies(builder.Configuration)
+    .AddApplicationDependencies()
+    .AuthenticationConfiguration(builder.Configuration)
+    .AddFluentValidationAutoValidation()
+    .AddFluentValidationClientsideAdapters();
+
 builder.Services.AddCors(opt =>
 {
     opt.AddPolicy("DefaultPolicy", policy =>
