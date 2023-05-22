@@ -19,7 +19,7 @@ Ekşi sözlük clone, Blazor ve REST API bilgilerinin pekiştirtirilmesi, Onion 
 - [SQL Server](https://www.microsoft.com/tr-tr/sql-server/sql-server-downloads)
 - ~~[RabbitMQ](https://www.rabbitmq.com)~~
 - [Node.js](https://nodejs.org/en) npm kaynağından javascript ve css paketlerini yüklemek için
-##### Bağımlı paketlerin yüklenilmesi
+##### Bağımlı paketlerin yüklenmesi
 - Blazor `.../src/Client/Blazor/wwwroot> npm i`
 - API `.../src/Server/Api> dotnet restore`
 - Common `.../src/Common> dotnet restore`
