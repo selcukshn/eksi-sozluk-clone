@@ -1,6 +1,6 @@
 @inherits BaseSpinner
-<div class="text-center">
-    <div class="@SpinnerTypes[Type] @SpinnerColors[Color]" role="status">
+<div class="text-@(Alignment ?? "center")">
+    <div class="@SpinnerTypes[Type] @SpinnerColors[Color]" style="@Style" role="status">
         <span class="visually-hidden">Loading...</span>
     </div>
 </div>

@@ -1,3 +1,4 @@
+@using System.Timers;
 @inject IEntryRequestService entryService;
 @inject NavigationManager navManager;
 <div class="position-relative">
@@ -15,26 +16,35 @@
     </div>
     @if (searchMode)
     {
-        @(searchResult == null)
         <div class="search-result">
             <ul class="search-result-list">
                 @if (searchAvailable)
                 {
-                    if (searchResult != null)
+                    if (writing)
                     {
-                        foreach (var entry in searchResult.Entry)
-                        {
-                            <li class="search-result-list-item"><a href="/@entry.Url">@entry.Subject</a></li>
-                        }
-                        foreach (var user in searchResult.User)
-                        {
-                            <li class="search-result-list-item"><a href="/biri/@user.Username">@@@user.Username</a></li>
-                        }
+                        <li class="search-result-list-item">
+                            <Spinner Color="BootstrapColor.Dark" Type="SpinnerType.Grow" Style="width:1rem;height:1rem" />
+                        </li>
                     }
                     else
                     {
-                        <li class="search-result-list-item"><a>(buna yakın bir şey yok)</a></li>
+                        if (searchResult != null && searchResult.HaveItem())
+                        {
+                            foreach (var entry in searchResult.Entry)
+                            {
+                                <li class="search-result-list-item"><a href="/@entry.Url">@entry.Subject</a></li>
+                            }
+                            foreach (var user in searchResult.User)
+                            {
+                                <li class="search-result-list-item"><a href="/biri/@user.Username">@@@user.Username</a></li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="search-result-list-item"><a>(buna yakın bir şey yok)</a></li>
+                        }
                     }
+
                 }
                 else
                 {
@@ -47,22 +57,45 @@
 
 @code {
     string searchValue = "";
+    bool writing = false;
     bool searchAvailable => searchValue.Trim().Length > 2;
     public bool searchMode;
     public SearchViewModel? searchResult;
+    int count = 0;
+    Timer timer;
+    protected override void OnInitialized()
+    {
+        timer = new Timer(100);
+        timer.Elapsed += onTimerEvent;
+        timer.AutoReset = true;
+    }
+    private async void onTimerEvent(Object? source, ElapsedEventArgs e)
+    {
+        count++;
+        if (count % 5 == 0)
+        {
+            timer.Stop();
+            writing = false;
+            if (searchAvailable && searchMode && !writing)
+                await search();
+            else
+                searchResult = null;
+        }
+        StateHasChanged();
+    }
 
     public async Task search()
     {
         var response = await entryService.SearchAsync(searchValue);
         if (response.IsSuccess)
             searchResult = await response.ResultAsync<SearchViewModel>();
+        StateHasChanged();
     }
-    public async void searchKeyPress(KeyboardEventArgs e)
+    public async Task searchKeyPress(KeyboardEventArgs e)
     {
-        if (searchAvailable && searchMode)
-            await search();
-        else
-            searchResult = null;
+        count = 0;
+        writing = true;
+        timer.Start();
     }
 
     public void searchFocus()
@@ -75,7 +108,7 @@
         searchResult = null;
     }
 
-    public async void redirectSearchResult()
+    public async Task redirectSearchResult()
     {
         if (searchAvailable)
         {

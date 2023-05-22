@@ -7,6 +7,8 @@ namespace Blazor.Components.Bootstrap.Spinner
     {
         [Parameter] public SpinnerType Type { get; set; }
         [Parameter] public BootstrapColor Color { get; set; }
+        [Parameter] public string? Style { get; set; }
+        [Parameter] public string? Alignment { get; set; }
         public Dictionary<BootstrapColor, string> SpinnerColors = new Dictionary<BootstrapColor, string>{
             {BootstrapColor.Danger,"text-danger"},
             {BootstrapColor.Info,"text-info"},

@@ -12,6 +12,10 @@ namespace Common.Models.View
                 return new SearchFirstResult(User[0]);
             return null;
         }
+        public bool HaveItem()
+        {
+            return User.Any() || Entry.Any();
+        }
     }
     public class SearchResultUserModel
     {
