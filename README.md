@@ -9,13 +9,13 @@ Ekşi sözlük clone, Blazor ve REST API bilgilerinin pekiştirtirilmesi, Onion 
     - Blazor
     - Bootstrap 5
 - Backend
-    - REST Api
+    - REST API
     - **CQRS Pattern** dahil edilerek **Onion Architecture** dizayn kalıbı uygulandı
     - **Code First** yaklaşımı ve **SQL Server** veritabanı kullanıldı.
 
 ## Yapılandırma
 ### 1.Dependencies
-- [.NET6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0)
+- [.NET6](https://dotnet.microsoft.com/en-us/download/dotnet/6.0) 6.0.16+
 - [SQL Server](https://www.microsoft.com/tr-tr/sql-server/sql-server-downloads)
 - ~~[RabbitMQ](https://www.rabbitmq.com)~~
 - [Node.js](https://nodejs.org/en) npm kaynağından javascript ve css paketlerini yüklemek için
