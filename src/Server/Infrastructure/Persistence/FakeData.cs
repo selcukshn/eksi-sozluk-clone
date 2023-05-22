@@ -15,9 +15,9 @@ namespace Persistence
         private List<Guid> EntriesIds;
         private List<DateTime> EntryDates;
 
-        public FakeData(SozlukCloneContext context)
+        public FakeData()
         {
-            Context = context;
+            Context = new SozlukCloneContext();
             Bogus = new Faker();
         }
 

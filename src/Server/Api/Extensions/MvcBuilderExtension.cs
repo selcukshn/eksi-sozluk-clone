@@ -12,13 +12,7 @@ namespace Api.Extensions
             {
                 opt.InvalidModelStateResponseFactory = context =>
                 {
-                    string error = string.Empty;
-                    foreach (var modelState in context.ModelState.Values)
-                    {
-                        error = modelState.Errors.FirstOrDefault().ErrorMessage;
-                    }
-
-                    return new BadRequestObjectResult(new T() { Message = error });
+                    return new BadRequestObjectResult(new T() { Message = context.ModelState.Values.FirstOrDefault()?.Errors.FirstOrDefault()?.ErrorMessage });
                 };
             });
             return builder;

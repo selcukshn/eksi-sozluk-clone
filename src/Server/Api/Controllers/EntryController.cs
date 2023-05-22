@@ -1,8 +1,6 @@
 using Api.Controllers.Base;
-using Common.Exceptions.Base;
 using Common.Models.Command;
 using Common.Models.Queries;
-using Common.Models.Queries.Base;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 

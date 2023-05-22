@@ -2,16 +2,24 @@
 
 <PageTitle>kayıt ol - ekşi sözlük</PageTitle>
 
-<h1 class="title mb-5">yeni kullanıcı kaydı</h1>
-
-<form class="d-flex flex-column w-50 gap-2">
+<h1 class="title mb-4">yeni kullanıcı kaydı</h1>
+@if (State.Status == ResponseStatus.Error)
+{
+    <p class="text-danger fs-09 m-0">@State.Message</p>
+}
+@if (State.Status == ResponseStatus.Success)
+{
+    <p class="text-success fs-09 m-0">kaydınız oluşturuldu, e-posta adresinize gelen bağlantıdan kaydınızı tamamladıktan
+        sonra giriş yapabilirsiniz</p>
+}
+<EditForm Model="@RegisterCommand" OnValidSubmit="TryRegister" class="d-flex flex-column gap-2 w-50 pt-4 pb-5">
     <div>
         <label class="form-label">nick</label>
-        <input type="text" class="form-control">
+        <input @bind-value="RegisterCommand.Username" type="text" class="form-control">
     </div>
     <div>
         <label class="form-label">e-mail</label>
-        <input type="text" class="form-control">
+        <input @bind-value="RegisterCommand.Email" type="text" class="form-control">
     </div>
     <div>
         <label class="form-label">doğum tarihi</label>
@@ -66,7 +74,7 @@
     </div>
     <div>
         <label class="form-label">şifre</label>
-        <input type="password" class="form-control">
+        <input @bind-value="RegisterCommand.Password" type="password" class="form-control">
         <ul class="password-requirement">
             <li>şifre en az 8 karakter</li>
             <li>en az bir büyük harf</li>
@@ -76,7 +84,7 @@
     </div>
     <div>
         <label class="form-label">şifre (tekrar)</label>
-        <input type="password" class="form-control">
+        <input @bind-value="RegisterCommand.RePassword" type="password" class="form-control">
         <ul class="password-requirement">
             <li>en az 1 küçük harf</li>
             <li>en az 1 büyük harf</li>
@@ -93,9 +101,20 @@
         </label>
     </div>
     <button class="btn btn-form">kayıt ol işte böyle</button>
-</form>
+</EditForm>
 
 @code {
     string[] mounths = new string[] { "ocak", "şubat", "mart", "nisan", "mayıs", "haziran", "temmuz", "ağustos", "eylül",
 "ekim", "kasım", "aralık" };
+
+    [Inject] IAuthenticationRequestService authService { get; set; }
+    [Inject] NavigationManager navManager { get; set; }
+    UserCreateCommand RegisterCommand = new UserCreateCommand();
+    ApplicationState State = new ApplicationState(ResponseStatus.Waiting);
+    public async Task TryRegister()
+    {
+        var response = await authService.RegisterAsync(RegisterCommand);
+        State.SetResponse(response);
+    }
+
 }

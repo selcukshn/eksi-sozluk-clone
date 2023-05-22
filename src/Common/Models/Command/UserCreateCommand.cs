@@ -8,6 +8,7 @@ namespace Common.Models.Command
         public string Email { get; set; }
         public string Password { get; set; }
         public string RePassword { get; set; }
+        public UserCreateCommand() { }
         public UserCreateCommand(string username, string email, string password, string rePassword)
         {
             Username = username;

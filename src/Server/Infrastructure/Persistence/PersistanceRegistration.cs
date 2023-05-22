@@ -12,7 +12,7 @@ namespace Persistence
         {
             service.AddDbContext<SozlukCloneContext>(opt =>
             {
-                opt.UseSqlServer(configuration.GetConnectionString("MSSQL"));
+                opt.UseSqlServer(configuration.GetConnectionString("SQLServer"));
             });
 
             service.AddScoped<IUserRepository, UserRepository>();
@@ -20,7 +20,7 @@ namespace Persistence
             service.AddScoped<IEntryCommentRepository, EntryCommentRepository>();
 
             // new FakeData(new SozlukCloneContext()).CleanAsync().GetAwaiter().GetResult();
-            new FakeData(new SozlukCloneContext()).GenerateAsync().GetAwaiter().GetResult();
+            new FakeData().GenerateAsync().GetAwaiter().GetResult();
 
             return service;
         }
