@@ -19,7 +19,7 @@ namespace Persistence
             service.AddScoped<IEntryRepository, EntryRepository>();
             service.AddScoped<IEntryCommentRepository, EntryCommentRepository>();
 
-            // new FakeData(new SozlukCloneContext()).CleanAsync().GetAwaiter().GetResult();
+            // new FakeData().CleanAsync().GetAwaiter().GetResult();
             new FakeData().GenerateAsync().GetAwaiter().GetResult();
 
             return service;

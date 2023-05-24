@@ -12,14 +12,40 @@
                     </div>
                 </div>
             </div>
-            <div class="header-account-link col-6 d-flex justify-content-end color-white800 fs-09 gap-4">
+            <div class="header-account-link col-6 d-flex justify-content-end align-items-center fs-09 gap-3">
                 <AuthorizeView>
                     <Authorized>
+                        <a href="/biri" class="color-white800 d-flex align-items-center gap-2">
+                            <i class="bi bi-person fs-12"></i>
+                            ben
+                        </a>
+                        <a href="/mesaj" class="color-white800 d-flex align-items-center gap-2">
+                            <i class="bi bi-chat-right fs-10"></i>
+                            mesaj
+                        </a>
+                        <a href="/mesaj" class="btn btn-theme btn-sm">
+                            <i class="bi bi-activity me-1"></i>
+                            <b>olay</b>
+                        </a>
+                        <div class="dropdown">
+                            <a href="#" class="color-white800" role="button" data-bs-toggle="dropdown"
+                                aria-expanded="false">
+                                <i class="bi bi-three-dots"></i>
+                            </a>
 
+                            <ul class="dropdown-menu p-0 fs-09 border-radius-3">
+                                <li><a class="dropdown-item py-2" href="#">kanallar</a></li>
+                                <li><a class="dropdown-item py-2" href="#">ayarlar</a></li>
+                                <li><a class="dropdown-item py-2" href="#">gece modu</a></li>
+                                <li><a class="dropdown-item py-2" href="#">takip/engellenmiş</a></li>
+                                <hr class="m-0">
+                                <li><a class="dropdown-item py-2" href="/terk">terket</a></li>
+                            </ul>
+                        </div>
                     </Authorized>
                     <NotAuthorized>
-                        <a href="/giris">giriş</a>
-                        <a href="/kayit">kayıt ol</a>
+                        <a href="/giris" class="color-white800">giriş</a>
+                        <a href="/kayit" class="color-white800">kayıt ol</a>
                     </NotAuthorized>
                 </AuthorizeView>
             </div>

@@ -1,6 +1,6 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using Blazor.Extensions.LocalStorage;
+using Blazor.Extensions.Blazored.LocalStorage;
 using Blazored.LocalStorage;
 using Microsoft.AspNetCore.Components.Authorization;
 
@@ -19,7 +19,7 @@ namespace Blazor.Services.Authentication
         public override async Task<AuthenticationState> GetAuthenticationStateAsync()
         {
             var token = await LocalStorage.GetJWTAsync();
-            if (String.IsNullOrEmpty(token))
+            if (string.IsNullOrEmpty(token))
                 return AnonymousUser;
             return CreateAuthUser(token);
         }

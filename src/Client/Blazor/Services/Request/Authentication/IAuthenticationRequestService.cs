@@ -7,5 +7,6 @@ namespace Blazor.Services.Request.Authentication
     {
         Task<RequestResponse> LoginAsync(UserLoginCommand command);
         Task<RequestResponse> RegisterAsync(UserCreateCommand command);
+        Task LogoutAsync();
     }
 }

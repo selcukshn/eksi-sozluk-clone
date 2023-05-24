@@ -51,9 +51,9 @@ namespace Application.Features.Commands.User.Login
                 var token = new JwtSecurityToken(Configuration["JWT:Issuer"], Configuration["JWT:Audience"], claims, null, expiry, credentials);
                 return new JwtSecurityTokenHandler().WriteToken(token);
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                return string.Empty;
+                return exception.Message;
             }
         }
     }

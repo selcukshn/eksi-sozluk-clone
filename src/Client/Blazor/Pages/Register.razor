@@ -109,8 +109,14 @@
 
     [Inject] IAuthenticationRequestService authService { get; set; }
     [Inject] NavigationManager navManager { get; set; }
+    [Inject] ILocalStorageService storage { get; set; }
     UserCreateCommand RegisterCommand = new UserCreateCommand();
     ApplicationState State = new ApplicationState(ResponseStatus.Waiting);
+    protected override async Task OnInitializedAsync()
+    {
+        if (await storage.HaveUserAsync())
+            navManager.NavigateTo("/");
+    }
     public async Task TryRegister()
     {
         var response = await authService.RegisterAsync(RegisterCommand);

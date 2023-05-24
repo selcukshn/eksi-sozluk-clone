@@ -35,17 +35,20 @@
 @code {
     [Inject] IAuthenticationRequestService authService { get; set; }
     [Inject] NavigationManager navManager { get; set; }
+    [Inject] ILocalStorageService storage { get; set; }
     UserLoginCommand LoginCommand = new UserLoginCommand("test@gmail.com", "asdasd");
-
     string Error = string.Empty;
-
+    protected override async Task OnInitializedAsync()
+    {
+        if (await storage.HaveUserAsync())
+            navManager.NavigateTo("/");
+    }
     public async Task TryLogin()
     {
         var response = await authService.LoginAsync(LoginCommand);
-        @* if (response.IsSuccess)
-navManager.NavigateTo("/");
-else
-Error = response.Message; *@
-        Error = response.Message;
+        if (response.IsSuccess)
+            navManager.NavigateTo("/");
+        else
+            Error = response.Message;
     }
 }

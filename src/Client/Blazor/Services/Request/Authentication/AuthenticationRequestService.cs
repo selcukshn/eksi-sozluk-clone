@@ -1,5 +1,6 @@
 using System.Net.Http.Headers;
-using Blazor.Extensions.LocalStorage;
+using Blazor.Extensions.Blazored.LocalStorage;
+using Blazor.Models;
 using Blazor.Services.Authentication;
 using Blazor.Services.Request.Base;
 using Blazored.LocalStorage;
@@ -32,6 +33,7 @@ namespace Blazor.Services.Request.Authentication
                 if (!string.IsNullOrEmpty(result?.Token))
                 {
                     await LocalStorage.SetJWTAsync(result.Token);
+                    await LocalStorage.SetUserInformationAsync(new LoggedUserInformation(result));
                     AuthenticationState.NotifyLogin(result.Token);
                     base.Client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", result.Token);
                 }
@@ -42,6 +44,7 @@ namespace Blazor.Services.Request.Authentication
         public async Task LogoutAsync()
         {
             await LocalStorage.RemoveJWTAsync();
+            await LocalStorage.RemoveUserInformationAsync();
             AuthenticationState.NotifyLogout();
             base.Client.DefaultRequestHeaders.Authorization = null;
         }

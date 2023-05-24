@@ -46,6 +46,14 @@ namespace Persistence
                 .RuleFor(e => e.Password, e => HashHelper.GeneratePassword(e.Internet.Password()))
                 .RuleFor(e => e.Username, e => e.Internet.UserName())
                 .Generate(count);
+                users.Add(new User
+                {
+                    Id = Guid.NewGuid(),
+                    Email = "admin@gmail.com",
+                    EmailConfirmed = true,
+                    Password = HashHelper.GeneratePassword("admin123"),
+                    Username = "test admin"
+                });
                 await Context.Users.AddRangeAsync(users);
                 await Context.SaveChangesAsync();
             }
