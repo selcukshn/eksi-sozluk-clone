@@ -1,0 +1,11 @@
+.sidebar-list {
+    max-height: 100%;
+}
+
+.sidebar-list a {
+    padding: 0.6rem 0;
+}
+
+.sidebar-list-item a:hover {
+    background-color: var(--white-50);
+}

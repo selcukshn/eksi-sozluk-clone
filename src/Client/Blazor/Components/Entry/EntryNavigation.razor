@@ -1,0 +1,62 @@
+<div class="d-flex justify-content-between mb-4">
+    @if (ShowLeftSide)
+    {
+        <div class="d-flex align-items-center gap-1 fs-09 color-white900">
+            <span class="me-1">şükela:</span>
+            <a href="#" class="hover-text-underline">tümü</a>
+            <div class="svl-50 bg-white500"></div>
+            <a href="#" class="hover-text-underline">son 24 saat</a>
+        </div>
+    }
+    @if (Page.Current <= Page.Max)
+    {
+        <div class="d-flex align-items-center gap-1 color-white700 ms-auto">
+            @if (Page.Current > 1)
+            {
+                <button class="btn btn-sm border py-1 px-2 fs-08" @onclick="PreviousPageButtonOnClick">
+                    <i class="bi bi-chevron-double-left"></i>
+                </button>
+            }
+            <select @onchange="PageSelectOnChange" class="form-select form-select-sm fs-08 focus-disable">
+                @for (int i = 1; i <= Page.Max; i++)
+                {
+                    <option selected="@(Page.Current == i)" value="@i">@i</option>
+                }
+            </select>
+            /
+            <button class="btn btn-sm border py-1 px-2 fs-08">@Page.Current</button>
+            @if (Page.Current < Page.Max)
+            {
+                <button class="btn btn-sm border py-1 px-2 fs-08" @onclick="NextPageButtonOnClick">
+                    <i class="bi bi-chevron-double-right"></i>
+                </button>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    [Parameter] public Page? Page { get; set; }
+    [Parameter] public EventCallback<ChangeEventArgs> PageChangedEvent { get; set; }
+    [Parameter] public EventCallback NextPageEvent { get; set; }
+    [Parameter] public EventCallback PreviousPageEvent { get; set; }
+    [Parameter] public bool ShowLeftSide { get; set; }
+    private async void PageSelectOnChange(ChangeEventArgs eventArgs)
+    {
+        await PageChangedEvent.InvokeAsync(eventArgs);
+    }
+    private async void NextPageButtonOnClick()
+    {
+        await NextPageEvent.InvokeAsync();
+    }
+    private async void PreviousPageButtonOnClick()
+    {
+        await PreviousPageEvent.InvokeAsync();
+    }
+    protected override void OnParametersSet()
+    {
+        if (Page != null)
+            StateHasChanged();
+
+    }
+}

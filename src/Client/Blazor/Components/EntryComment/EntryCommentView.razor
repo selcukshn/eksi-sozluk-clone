@@ -1,0 +1,17 @@
+<div class="entry-comment py-3">
+    <div class="entry-comment-body pb-2">
+        <p class="fs-10 lh-5 mb-2">
+            @Content
+        </p>
+    </div>
+    <div class="entry-comment-footer pt-2">
+        <EntryFooter CreatedDate="@CreatedDate" Username="@Username" />
+    </div>
+</div>
+
+@code {
+    [Parameter] public string? Content { get; set; }
+    [Parameter] public string? Username { get; set; }
+    [Parameter] public string? Image { get; set; }
+    [Parameter] public DateTime? CreatedDate { get; set; }
+}

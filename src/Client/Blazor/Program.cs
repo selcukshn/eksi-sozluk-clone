@@ -5,10 +5,16 @@ using Common.Helpers;
 using Blazor.Services;
 using Blazored.LocalStorage;
 using Blazor.Configurations.Http;
+using Blazor.Configurations;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
 builder.RootComponents.Add<HeadOutlet>("head::after");
+
+builder.Services.AddBlazoredLocalStorage();
+builder.Services.AddAuthorizationCore();
+builder.Services.AddServicesDependencies();
+builder.Services.AddConfigurationsDependencies();
 
 builder.Services.AddHttpClient("LocalApi", client =>
 {
@@ -20,9 +26,5 @@ builder.Services.AddScoped(factory =>
     var clientFactory = factory.GetRequiredService<IHttpClientFactory>();
     return clientFactory.CreateClient("LocalApi");
 });
-
-builder.Services.AddBlazoredLocalStorage();
-builder.Services.AddAuthorizationCore();
-builder.Services.AddServicesDependencies();
 
 await builder.Build().RunAsync();

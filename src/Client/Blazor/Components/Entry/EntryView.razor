@@ -1,0 +1,44 @@
+@inject NavigationManager navManager;
+<div class="entry mb-5">
+    <div class="entry-header">
+        <h1 class="entry-title h5 color-white900 fw-700">
+            <a href="/@Url">@Subject</a>
+        </h1>
+        @if (Page != null)
+        {
+            <EntryNavigation ShowLeftSide="true" Page="@Page" NextPageEvent="NextPage" PageChangedEvent="ChangePage"
+                PreviousPageEvent="PreviousPage" />
+        }
+    </div>
+    <div class="entry-body py-4">
+        <p class="fs-10 lh-5 mb-2">
+            @Content
+        </p>
+    </div>
+    <div class="entry-footer">
+        <EntryFooter CreatedDate="@CreatedDate" Username="@Username" />
+    </div>
+</div>
+
+@code {
+    [Parameter] public string? Subject { get; set; }
+    [Parameter] public string? Url { get; set; }
+    [Parameter] public string? Content { get; set; }
+    [Parameter] public Page? Page { get; set; }
+    [Parameter] public string? Username { get; set; }
+    [Parameter] public DateTime? CreatedDate { get; set; }
+    private void ChangePage(ChangeEventArgs eventArgs)
+    {
+        if (eventArgs.Value != null)
+            navManager.NavigateTo($"/{Url}?page={Convert.ToInt32(eventArgs.Value)}");
+    }
+    private void NextPage()
+    {
+        navManager.NavigateTo($"/{Url}?page={Page?.Current + 1}");
+    }
+    private void PreviousPage()
+    {
+        navManager.NavigateTo($"/{Url}?page={Page?.Current - 1}");
+    }
+
+}

@@ -1,0 +1,45 @@
+<AuthorizeView>
+    <Authorized>
+        <section class="px-3 py-4 entry-create">
+            <div class="d-flex gap-1 mb-2">
+                <button class="btn btn-sm btn-entry-create">(bkz:)</button>
+                <button class="btn btn-sm btn-entry-create">hede</button>
+                <button class="btn btn-sm btn-entry-create">*</button>
+                <button class="btn btn-sm btn-entry-create">-spoiler-</button>
+                <button class="btn btn-sm btn-entry-create">http://</button>
+                <button class="btn btn-sm btn-entry-create">görsel</button>
+            </div>
+            <form>
+                <textarea placeholder="@subject hakkında bilgi verin" class="form-control fs-10 mb-2"
+                    rows="10"></textarea>
+                <div class="d-flex gap-2 align-items-center">
+                    <div class="dropdown">
+                        <a href="#" class=" fs-09 color-white900 p-2">kenarda dursun</a>
+                        <a href="#" class="fs-06 color-white500 py-2" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-caret-down-fill"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Action</a></li>
+                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        </ul>
+                    </div>
+                    <button class="btn btn-form-sm">yolla</button>
+                </div>
+            </form>
+        </section>
+    </Authorized>
+</AuthorizeView>
+
+@code {
+    private string subject;
+    [Parameter]
+    public string Subject
+    {
+        get => subject;
+        set
+        {
+            subject = $"\"{value}\"";
+        }
+    }
+}

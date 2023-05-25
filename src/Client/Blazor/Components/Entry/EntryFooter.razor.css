@@ -1,0 +1,39 @@
+.entry-buttons .entry-buttons-up:hover i,
+.entry-buttons .entry-share:hover i,
+.entry-buttons .entry-other:hover i {
+    color: var(--theme);
+}
+
+.entry-buttons .entry-buttons-down:hover i {
+    color: var(--red-500);
+}
+
+.entry-buttons .entry-buttons-favorite::before {
+    display: inline-block;
+    content: "\F30D";
+    font-family: "bootstrap-icons" !important;
+    font-style: normal;
+    font-weight: normal !important;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+    vertical-align: -0.125em;
+    -webkit-font-smoothing: antialiased;
+}
+
+.entry-buttons .entry-buttons-favorite:hover::before {
+    content: "\F30B" !important;
+    color: var(--theme);
+}
+
+.entry-buttons .entry-buttons-favorite:hover i {
+    background-color: var(--theme);
+}
+
+.entry-user a:hover {
+    text-decoration: underline !important;
+}
+
+.entry-user a:hover i {
+    color: var(--theme);
+}

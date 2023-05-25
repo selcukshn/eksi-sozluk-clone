@@ -9,11 +9,17 @@
         {
             foreach (var entry in Entries)
             {
-                <EntryComponent Content="@entry.Content" CreatedDate="@entry.CreatedDate" Subject="@entry.Subject"
-                    Url="@entry.Url" Username="@entry.Username" />
+                <EntryView Content="@entry.Content" CreatedDate="@entry.CreatedDate" Subject="@entry.Subject" Url="@entry.Url"
+                    Username="@entry.Username" />
             }
         }
     </ResponseSuccess>
+    <ResponseNotFound>
+
+    </ResponseNotFound>
+    <ResponseError>
+
+    </ResponseError>
 </ResponseView>
 
 @code {

@@ -1,0 +1,14 @@
+section.entry-create {
+    background-color: var(--white-100);
+}
+
+.btn-entry-create {
+    border: 1px solid var(--white-400);
+    font-size: 0.75rem;
+    transition: none;
+}
+
+.btn-entry-create:hover {
+    border-color: var(--white-400);
+    background-color: var(--white);
+}

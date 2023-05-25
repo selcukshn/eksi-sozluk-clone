@@ -23,17 +23,26 @@ li {
     list-style: none;
 }
 
-.btn-form {
+.btn-form,
+.btn-form-sm {
     background-color: var(--theme);
     border-radius: 2px;
     font-size: 0.9rem;
     color: white !important;
-    padding: 0.6rem 0;
-    border-color: var(--theme-100);
+    border-color: var(--theme-200);
     transition: all 0s;
 }
 
-.btn-form:hover {
+.btn-form {
+    padding: 0.6rem;
+}
+
+.btn-form-sm {
+    padding: 0.4rem 0.5rem;
+}
+
+.btn-form:hover,
+.btn-form-sm:hover {
     background-color: var(--theme-200);
     border-color: var(--theme-300);
 }

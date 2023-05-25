@@ -7,29 +7,18 @@
 
 <ResponseView State="@State">
     <ResponseSuccess>
-        <EntryComponent Page="@entryComments?.Page" Content="@entry?.Content" CreatedDate="@entry?.CreatedDate"
+
+        <EntryView Page="@entryComments?.Page" Content="@entry?.Content" CreatedDate="@entry?.CreatedDate"
             Subject="@entry?.Subject" Url="@entry?.Url" Username="@entry?.Username" />
         @if (entryComments?.Data != null && entryComments.Data.Any())
         {
             foreach (var comment in entryComments.Data)
             {
-                <EntryComment Content="@comment.Content" CreatedDate="@comment.CreatedDate" Username="@comment.Username" />
+                <EntryCommentView Content="@comment.Content" CreatedDate="@comment.CreatedDate" Username="@comment.Username" />
             }
-            <div class="d-flex justify-content-end">
-                <div class="d-flex align-items-center gap-1 color-white700">
-                    <select @onchange="ChangePage" class="form-select form-select-sm fs-09 focus-disable">
-                        @for (int i = 1; i <= entryComments?.Page.Max; i++)
-                        {
-                            <option selected="@(i == entryComments.Page.Current)" value="@i">@i</option>
-                        }
-                    </select>
-                    /
-                    <button class="btn btn-sm border py-1 px-2 fs-09">@entryComments?.Page.Current</button>
-                    <button class="btn btn-sm border py-1 px-2 fs-09" @onclick="NextPage">
-                        <i class="bi bi-chevron-double-right"></i>
-                    </button>
-                </div>
-            </div>
+            <EntryNavigation Page="@entryComments.Page" NextPageEvent="NextPage" PageChangedEvent="ChangePage"
+                PreviousPageEvent="PreviousPage" />
+            <EntryCreate Subject="@entry?.Subject" />
         }
         else
         {
@@ -70,6 +59,10 @@
     private void NextPage()
     {
         navManager.NavigateTo($"/{url}?page={entryComments?.Page.Current + 1}");
+    }
+    private void PreviousPage()
+    {
+        navManager.NavigateTo($"/{url}?page={entryComments?.Page.Current - 1}");
     }
     private void GoLastPage()
     {

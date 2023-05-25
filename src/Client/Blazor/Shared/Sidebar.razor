@@ -11,21 +11,19 @@
 
     <ResponseView State="@State">
         <ResponseSuccess>
-            <ul class="sidebar-list fs-09">
-                @if (sidebarEntries.Any())
-                {
-                    foreach (var entry in sidebarEntries)
-                    {
-                        <li class="sidebar-list-item d-block">
-                            <a href="/@entry.Url" class="d-flex align-items-center">
-                                <p class="w-90 m-0 color-white700 lh-10">@entry.Subject</p>
-                                <span class="d-inline-block w-10 color-white500">@entry.CommentCount</span>
-                            </a>
-                        </li>
-                    }
-                }
-            </ul>
+            @if (sidebarEntries.Any())
+            {
+                <SidebarEntryList EntryList="@sidebarEntries" />
+            }
         </ResponseSuccess>
+        <ResponseNotFound>
+            <Alert Color="BootstrapColor.Secondary">
+                <AlertBody>@State.Message</AlertBody>
+            </Alert>
+        </ResponseNotFound>
+        <ResponseError>
+            <p class="text-danger"> @State.Message</p>
+        </ResponseError>
     </ResponseView>
 </aside>
 
