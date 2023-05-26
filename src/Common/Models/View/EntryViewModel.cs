@@ -11,6 +11,7 @@ namespace Common.Models.View
         public DateTime CreatedDate { get; set; }
         public VoteType VoteType { get; set; }
         public Guid UserId { get; set; }
+        public bool IsFavorite { get; set; }
         public string? Username { get; set; }
         public string? UserImage { get; set; }
     }

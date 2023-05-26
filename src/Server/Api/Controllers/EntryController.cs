@@ -50,5 +50,19 @@ namespace Api.Controllers
         {
             return Ok(await base.Mediator.Send(command));
         }
+
+        [HttpPost]
+        [Route("vote")]
+        public async Task<IActionResult> VoteAsync(EntryVoteCommand command)
+        {
+            return Ok(await base.Mediator.Send(command));
+        }
+
+        [HttpPost]
+        [Route("favorite")]
+        public async Task<IActionResult> FavoriteAsync(EntryFavoriteCommand command)
+        {
+            return Ok(await base.Mediator.Send(command));
+        }
     }
 }

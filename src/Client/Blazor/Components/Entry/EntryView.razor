@@ -1,4 +1,7 @@
 @inject NavigationManager navManager;
+@inject IEntryRequestService entryService;
+@inject ILocalStorageService storage;
+
 <div class="entry mb-5">
     <div class="entry-header">
         <h1 class="entry-title h5 color-white900 fw-700">
@@ -16,7 +19,15 @@
         </p>
     </div>
     <div class="entry-footer">
-        <EntryFooter CreatedDate="@CreatedDate" Username="@Username" />
+        <EntryFooter IsFavorite="@IsFavorite" Vote="@Vote" CreatedDate="@CreatedDate" Username="@Username"
+            AddFavoriteOnClickedEvent="AddFavorite" UpVoteOnClickedEvent="VoteProcess"
+            DownVoteOnClickedEvent="VoteProcess" />
+        <ResponseView State="@State">
+            <ResponseWaiting></ResponseWaiting>
+            <ResponseError>
+                <p class="text-danger">@State.Message</p>
+            </ResponseError>
+        </ResponseView>
     </div>
 </div>
 
@@ -27,6 +38,11 @@
     [Parameter] public Page? Page { get; set; }
     [Parameter] public string? Username { get; set; }
     [Parameter] public DateTime? CreatedDate { get; set; }
+    [Parameter] public Guid EntryId { get; set; }
+    [Parameter] public VoteType? Vote { get; set; }
+    [Parameter] public bool IsFavorite { get; set; }
+    [Parameter] public EventCallback AddFavoriteOnClickedEvent { get; set; }
+    private ApplicationState State = new ApplicationState(ResponseStatus.Waiting);
     private void ChangePage(ChangeEventArgs eventArgs)
     {
         if (eventArgs.Value != null)
@@ -40,5 +56,28 @@
     {
         navManager.NavigateTo($"/{Url}?page={Page?.Current - 1}");
     }
-
+    private async void AddFavorite()
+    {
+        await entryService.FavoriteAsync(new EntryFavoriteCommand((await storage.GetUserInformationAsync()).UserId, EntryId));
+        IsFavorite = !IsFavorite;
+        StateHasChanged();
+    }
+    private async Task VoteProcess(VoteType type)
+    {
+        if (await storage.HaveUserAsync())
+        {
+            var user = await storage.GetUserInformationAsync();
+            var response = await entryService.VoteAsync(new EntryVoteCommand(type, user.UserId, EntryId));
+            State.SetResponse(response);
+        }
+        VoteChange(type);
+    }
+    private void VoteChange(VoteType vote)
+    {
+        if ((Vote == VoteType.Up && vote == VoteType.Up) || (Vote == VoteType.Down && vote == VoteType.Down))
+            Vote = VoteType.None;
+        else
+            Vote = vote;
+        StateHasChanged();
+    }
 }

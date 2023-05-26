@@ -16,6 +16,7 @@ namespace Application.Features.Queries.Entry.Entry
             var entry = await base.Repository.AsQueryable()
             .Include(e => e.User)
             .Include(e => e.EntryVotes)
+            .Include(e => e.EntryFavorites)
             .FirstOrDefaultAsync(e => e.Url == request.Url);
             if (entry == null)
                 throw new EntryNotFoundException("Bu url'e ait entry bulunamadı");
@@ -30,8 +31,9 @@ namespace Application.Features.Queries.Entry.Entry
                 UserImage = entry.User.Image,
                 Username = entry.User.Username,
                 UserId = entry.UserId,
-                VoteType = entry.EntryVotes.Any(e => e.UserId == request.UserId) && request.UserId != Guid.Empty ?
-                    entry.EntryVotes.First(e => e.UserId == request.UserId).Type :
+                IsFavorite = entry.EntryFavorites.Any(b => b.UserId == request.UserId && b.EntryId == entry.Id) && request.UserId != Guid.Empty,
+                VoteType = entry.EntryVotes.Any(b => b.UserId == request.UserId) && request.UserId != Guid.Empty ?
+                    entry.EntryVotes.First(b => b.UserId == request.UserId).Type :
                     Common.Enums.VoteType.None
             };
         }

@@ -2,7 +2,14 @@
 
 @if (State.Status == ResponseStatus.Waiting)
 {
-    <Spinner Color="BootstrapColor.Dark" Type="SpinnerType.Grow" />
+    if (ResponseWaiting == null)
+    {
+        <Spinner Color="BootstrapColor.Dark" Type="SpinnerType.Grow" />
+    }
+    else
+    {
+        @ResponseWaiting
+    }
 }
 else if (State.Status == ResponseStatus.Success)
 {

@@ -1,15 +1,22 @@
+@inject ILocalStorageService storage;
+
 <div class="entry-buttons d-flex justify-content-between mb-2">
     <div class="d-flex gap-4 color-white600 fs-09">
-        <a href="#" class="entry-buttons-up" title="şükela!">
+        <span class="entry-buttons-up cursor-pointer @(Vote == VoteType.Up ? "selected":"")" title="şükela!"
+        @onclick="UpVote">
             <i class="bi bi-arrow-up-square"></i>
-        </a>
-        <a href="#" class="entry-buttons-down" title="çok kötü">
+        </span>
+        <span class="entry-buttons-down cursor-pointer @(Vote == VoteType.Down ? "selected":"")" title="çok kötü"
+        @onclick="DownVote">
             <i class="bi bi-arrow-down-square"></i>
-        </a>
+        </span>
         <AuthorizeView>
             <Authorized>
-                <a href="#" class="entry-buttons-favorite" title="favorilere ekle">
-                </a>
+                @if (user?.Username != Username)
+                {
+                    <span class="entry-buttons-favorite cursor-pointer @(IsFavorite ? "selected":"")" title="favorilere ekle"
+                    @onclick="AddFavorite"></span>
+                }
             </Authorized>
         </AuthorizeView>
     </div>
@@ -25,7 +32,7 @@
 <div class="entry-user d-flex gap-3 justify-content-end">
     <div class="text-end">
         <a href="#" class="d-block fs-09" style="color: var(--theme-300);">@Username</a>
-        <a href="#" class="d-block color-white600 fs-07">@CreatedDate</a>
+        <span class="d-block color-white600 fs-07 cursor-pointer">@CreatedDate</span>
     </div>
     <div>
         <a href="#" class="d-inline-block">
@@ -36,6 +43,36 @@
 </div>
 
 @code {
-    [Parameter] public string? Username { get; set; }
+    [Parameter] public string Username { get; set; }
     [Parameter] public DateTime? CreatedDate { get; set; }
+    [Parameter] public VoteType? Vote { get; set; }
+    [Parameter] public bool IsFavorite { get; set; }
+    [Parameter] public EventCallback AddFavoriteOnClickedEvent { get; set; }
+    [Parameter] public EventCallback<VoteType> UpVoteOnClickedEvent { get; set; }
+    [Parameter] public EventCallback<VoteType> DownVoteOnClickedEvent { get; set; }
+    private LoggedUserInformation? user { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        if (await storage.HaveUserAsync())
+            user = await storage.GetUserInformationAsync();
+    }
+    private async void AddFavorite()
+    {
+        await AddFavoriteOnClickedEvent.InvokeAsync();
+    }
+    private async void UpVote()
+    {
+        if (Vote == VoteType.Up)
+            await UpVoteOnClickedEvent.InvokeAsync(VoteType.None);
+        else
+            await UpVoteOnClickedEvent.InvokeAsync(VoteType.Up);
+    }
+    private async void DownVote()
+    {
+        if (Vote == VoteType.Down)
+            await DownVoteOnClickedEvent.InvokeAsync(VoteType.None);
+        else
+            await DownVoteOnClickedEvent.InvokeAsync(VoteType.Down);
+    }
+
 }

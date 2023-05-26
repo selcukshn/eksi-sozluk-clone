@@ -2,13 +2,15 @@
 @inject IEntryRequestService entryService;
 @inject IEntryCommentRequestService entryCommentsService;
 @inject NavigationManager navManager;
+@inject ILocalStorageService storage;
 
 <PageTitle>@entry?.Subject - ekşi sözlük</PageTitle>
 
 <ResponseView State="@State">
     <ResponseSuccess>
 
-        <EntryView Page="@entryComments?.Page" Content="@entry?.Content" CreatedDate="@entry?.CreatedDate"
+        <EntryView IsFavorite="@entry.IsFavorite" EntryId="@entry.Id" Vote="@entry?.VoteType"
+            Page="@entryComments?.Page" Content="@entry?.Content" CreatedDate="@entry?.CreatedDate"
             Subject="@entry?.Subject" Url="@entry?.Url" Username="@entry?.Username" />
         @if (entryComments?.Data != null && entryComments.Data.Any())
         {
@@ -40,7 +42,11 @@
     protected override async Task OnParametersSetAsync()
     {
         State.Status = ResponseStatus.Waiting;
-        var entryResponse = await entryService.GetAsync(url);
+
+        var entryResponse = await storage.HaveUserAsync() ?
+        await entryService.GetAsync(url, (await storage.GetUserInformationAsync())?.UserId) :
+        await entryService.GetAsync(url);
+
         State.SetResponse(entryResponse);
         if (entryResponse.IsSuccess)
         {

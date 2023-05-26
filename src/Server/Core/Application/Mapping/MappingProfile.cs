@@ -16,12 +16,15 @@ namespace Application.Mapping
 
 
             CreateMap<Entry, EntryCreateCommand>();
-            CreateMap<Entry, MainPageViewModel>()
-            .ForMember(e => e.Username, e => e.MapFrom(b => b.User.Username));
+            CreateMap<Entry, MainPageViewModel>();
+
             CreateMap<Entry, SidebarViewModel>()
             .ForMember(e => e.CommentCount, a => a.MapFrom(b => b.EntryComments.Count));
             CreateMap<Entry, AllEntryViewModel>()
             .ForMember(e => e.Username, e => e.MapFrom(b => b.User.Username));
+
+            CreateMap<EntryVoteCommand, EntryVote>();
+            CreateMap<EntryFavoriteCommand, EntryFavorite>();
         }
     }
 }

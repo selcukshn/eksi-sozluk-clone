@@ -3,6 +3,10 @@
     box-shadow: none;
 }
 
+.cursor-pointer:hover {
+    cursor: pointer !important;
+}
+
 /** width */
 .w-10 {
     width: 10%;

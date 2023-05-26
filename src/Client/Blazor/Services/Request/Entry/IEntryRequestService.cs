@@ -12,5 +12,7 @@ namespace Blazor.Services.Request.Entry
         Task<RequestResponse> GetMainPageEntriesAsync(MainPageEntriesQuery query);
         Task<RequestResponse> GetSidebarEntriesAsync(SidebarEntriesQuery query);
         Task<RequestResponse> SearchAsync(string value);
+        Task<RequestResponse> VoteAsync(EntryVoteCommand command);
+        Task<RequestResponse> FavoriteAsync(EntryFavoriteCommand command);
     }
 }

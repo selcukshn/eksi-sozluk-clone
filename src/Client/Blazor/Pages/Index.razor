@@ -1,5 +1,6 @@
 @page "/"
 @inject IEntryRequestService entryService;
+@inject ILocalStorageService storage;
 
 <PageTitle>ekşi sözlük - kutsal bilgi kaynağı</PageTitle>
 
@@ -9,8 +10,8 @@
         {
             foreach (var entry in Entries)
             {
-                <EntryView Content="@entry.Content" CreatedDate="@entry.CreatedDate" Subject="@entry.Subject" Url="@entry.Url"
-                    Username="@entry.Username" />
+                <EntryView IsFavorite="@entry.IsFavorite" EntryId="@entry.Id" Vote="@entry?.VoteType" Content="@entry.Content"
+                    CreatedDate="@entry.CreatedDate" Subject="@entry.Subject" Url="@entry.Url" Username="@entry.Username" />
             }
         }
     </ResponseSuccess>
@@ -27,7 +28,10 @@
     ApplicationState State = new ApplicationState(ResponseStatus.Waiting);
     protected override async Task OnInitializedAsync()
     {
-        var response = await entryService.GetMainPageEntriesAsync(new MainPageEntriesQuery() { Random = true });
+        var query = new MainPageEntriesQuery() { Random = true };
+        if (await storage.HaveUserAsync())
+            query.UserId = (await storage.GetUserInformationAsync())?.UserId;
+        var response = await entryService.GetMainPageEntriesAsync(query);
         State.SetResponse(response);
         if (response.IsSuccess)
             Entries = await response.ResultAsync<List<MainPageViewModel>>();

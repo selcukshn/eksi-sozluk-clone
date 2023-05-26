@@ -18,6 +18,8 @@ namespace Persistence
             service.AddScoped<IUserRepository, UserRepository>();
             service.AddScoped<IEntryRepository, EntryRepository>();
             service.AddScoped<IEntryCommentRepository, EntryCommentRepository>();
+            service.AddScoped<IEntryVoteRepository, EntryVoteRepository>();
+            service.AddScoped<IEntryFavoriteRepository, EntryFavoriteRepository>();
 
             // new FakeData().CleanAsync().GetAwaiter().GetResult();
             new FakeData().GenerateAsync().GetAwaiter().GetResult();

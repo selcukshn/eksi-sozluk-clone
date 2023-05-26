@@ -8,6 +8,14 @@
     color: var(--red-500);
 }
 
+.entry-buttons .entry-buttons-down.selected i {
+    color: var(--red-500);
+}
+
+.entry-buttons .entry-buttons-up.selected i {
+    color: var(--theme);
+}
+
 .entry-buttons .entry-buttons-favorite::before {
     display: inline-block;
     content: "\F30D";
@@ -26,8 +34,9 @@
     color: var(--theme);
 }
 
-.entry-buttons .entry-buttons-favorite:hover i {
-    background-color: var(--theme);
+.entry-buttons .entry-buttons-favorite.selected::before {
+    content: "\F30B" !important;
+    color: var(--theme);
 }
 
 .entry-user a:hover {

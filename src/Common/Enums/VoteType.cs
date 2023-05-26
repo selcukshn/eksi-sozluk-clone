@@ -2,8 +2,8 @@ namespace Common.Enums
 {
     public enum VoteType
     {
-        Down = -1,
         None = 0,
+        Down = 1,
         Up = 2
     }
 }
