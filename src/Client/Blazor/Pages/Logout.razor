@@ -1,13 +1,13 @@
 @page "/terk"
 
-@code{
-   [Inject] IAuthenticationRequestService authService { get; set; }
+@code {
+    [Inject] IAuthenticationRequestService authService { get; set; }
     [Inject] NavigationManager navManager { get; set; }
-        protected override async Task OnInitializedAsync()
-        {
-            await authService.LogoutAsync();
-            navManager.NavigateTo("/");
-        }
+    protected override async Task OnInitializedAsync()
+    {
+        await authService.LogoutAsync();
+        navManager.NavigateToHomePage();
+    }
 }
 
 

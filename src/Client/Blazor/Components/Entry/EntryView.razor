@@ -41,20 +41,20 @@
     [Parameter] public Guid EntryId { get; set; }
     [Parameter] public VoteType? Vote { get; set; }
     [Parameter] public bool IsFavorite { get; set; }
-    [Parameter] public EventCallback AddFavoriteOnClickedEvent { get; set; }
     private ApplicationState State = new ApplicationState(ResponseStatus.Waiting);
+
     private void ChangePage(ChangeEventArgs eventArgs)
     {
-        if (eventArgs.Value != null)
-            navManager.NavigateTo($"/{Url}?page={Convert.ToInt32(eventArgs.Value)}");
+        if (int.TryParse(eventArgs.Value?.ToString(), out int page))
+            navManager.NavigateToPage(Url, page);
     }
     private void NextPage()
     {
-        navManager.NavigateTo($"/{Url}?page={Page?.Current + 1}");
+        navManager.NavigateToPage(Url, Page?.Current + 1);
     }
     private void PreviousPage()
     {
-        navManager.NavigateTo($"/{Url}?page={Page?.Current - 1}");
+        navManager.NavigateToPage(Url, Page?.Current - 1);
     }
     private async void AddFavorite()
     {

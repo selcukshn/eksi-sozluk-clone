@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 
 namespace Blazor.Services.Request.Base
 {
-    public class RequestService : IRequestService
+    public class RequestService
     {
         protected readonly HttpClient Client;
         public RequestService(HttpClient client)

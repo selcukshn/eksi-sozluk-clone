@@ -115,7 +115,7 @@
     protected override async Task OnInitializedAsync()
     {
         if (await storage.HaveUserAsync())
-            navManager.NavigateTo("/");
+            navManager.NavigateToHomePage();
     }
     public async Task TryRegister()
     {

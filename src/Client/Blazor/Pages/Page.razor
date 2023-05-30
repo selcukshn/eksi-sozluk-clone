@@ -59,19 +59,19 @@
     }
     private void ChangePage(ChangeEventArgs eventArgs)
     {
-        if (eventArgs.Value != null)
-            navManager.NavigateTo($"/{url}?page={Convert.ToInt32(eventArgs.Value)}");
+        if (int.TryParse(eventArgs.Value?.ToString(), out int page))
+            navManager.NavigateToPage(url, page);
     }
     private void NextPage()
     {
-        navManager.NavigateTo($"/{url}?page={entryComments?.Page.Current + 1}");
+        navManager.NavigateToPage(url, entryComments?.Page.Current + 1);
     }
     private void PreviousPage()
     {
-        navManager.NavigateTo($"/{url}?page={entryComments?.Page.Current - 1}");
+        navManager.NavigateToPage(url, entryComments?.Page.Current - 1);
     }
     private void GoLastPage()
     {
-        navManager.NavigateTo($"/{url}?page={entryComments?.Page.Max}");
+        navManager.NavigateToPage(url, entryComments?.Page.Max);
     }
 }

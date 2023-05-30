@@ -41,13 +41,13 @@
     protected override async Task OnInitializedAsync()
     {
         if (await storage.HaveUserAsync())
-            navManager.NavigateTo("/");
+            navManager.NavigateToHomePage();
     }
     public async Task TryLogin()
     {
         var response = await authService.LoginAsync(LoginCommand);
         if (response.IsSuccess)
-            navManager.NavigateTo("/");
+            navManager.NavigateToHomePage();
         else
             Error = response.Message;
     }

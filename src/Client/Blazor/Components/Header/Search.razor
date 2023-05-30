@@ -117,9 +117,9 @@
             if (firstResult != null)
             {
                 if (firstResult.Entry != null)
-                    navManager.NavigateTo($"/{firstResult.Entry.Url}");
+                    navManager.NavigateToPage(firstResult.Entry.Url);
                 else if (firstResult.User != null)
-                    navManager.NavigateTo($"/biri/{firstResult.User.Username}");
+                    navManager.NavigateToProfilePage(firstResult.User.Username);
             }
         }
     }
