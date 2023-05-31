@@ -1,0 +1,21 @@
+<div class="d-flex gap-3 profile-button">
+    @if (UserId != null && LoggedUserId != null & UserId != LoggedUserId)
+    {
+        <button class="btn profile-button-follow px-5 py-1 color-white bg-theme fs-09 fw-600 rounded-pill">takip
+            et</button>
+        <button class="btn profile-button-message">
+            <i class="bi bi-chat-right fs-08"></i>
+        </button>
+    }
+    <button class="btn profile-button-share">
+        <i class="bi bi-box-arrow-up fs-08"></i>
+    </button>
+    <button class="btn profile-button-other">
+        <i class="bi bi-three-dots fs-08"></i>
+    </button>
+</div>
+
+@code {
+    [Parameter] public Guid? UserId { get; set; }
+    [Parameter] public Guid? LoggedUserId { get; set; }
+}

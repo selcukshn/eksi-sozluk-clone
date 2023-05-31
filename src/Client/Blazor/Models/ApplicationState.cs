@@ -6,6 +6,7 @@ namespace Blazor.Models
     {
         public ResponseStatus Status { get; set; }
         public string? Message { get; set; }
+        public string? Detail { get; set; }
         public ApplicationState(ResponseStatus status)
         {
             Status = status;
@@ -19,6 +20,7 @@ namespace Blazor.Models
         {
             Status = response.Status;
             Message = response.Message;
+            Detail = response.Detail;
         }
     }
 }

@@ -5,8 +5,9 @@ namespace Common.Models.Response;
 public class RequestResponse : Response
 {
     public ResponseStatus Status { get; set; }
-    public bool IsSuccess => Status == ResponseStatus.Success ? true : false;
+    public string? Detail { get; set; }
     private HttpResponseMessage? HttpResponse { get; set; }
+    public bool IsSuccess => Status == ResponseStatus.Success ? true : false;
     public RequestResponse() { }
     public RequestResponse(string message) : base(message) { }
     public RequestResponse(ResponseStatus status)

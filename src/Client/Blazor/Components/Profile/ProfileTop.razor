@@ -1,0 +1,16 @@
+<div class="d-flex justify-content-between">
+    <div>
+        <h1 class="profile-title">
+            <a href="/biri/@Username" class="fs-14 color-white900 fw-700">@Username</a>
+        </h1>
+        <a href="/?q=çaylak" class="profile-badge d-inline-block fs-09 color-white800 border-radius-3">çaylak</a>
+    </div>
+    <div class="position-relative profile-image cursor-pointer" style="width: 110px;">
+        <img src="https://icones.pro/wp-content/uploads/2021/02/icone-utilisateur-gris.png" class="img-fluid">
+        <div class="profile-image-vignette"></div>
+    </div>
+</div>
+
+@code {
+    [Parameter] public string Username { get; set; }
+}

@@ -1,6 +1,7 @@
 using Api.Controllers.Base;
 using Common.Models.Command;
 using Common.Models.Queries;
+using Common.Models.Queries.Base;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
@@ -22,6 +23,20 @@ namespace Api.Controllers
         public async Task<IActionResult> GetEntry([FromQuery] Guid? userId, string url)
         {
             return Ok(await base.Mediator.Send(new SingleEntryQuery() { Url = url, UserId = userId }));
+        }
+
+        [HttpGet]
+        [Route("user/{userId}")]
+        public async Task<IActionResult> GetUserEntries(Guid userId)
+        {
+            return Ok(await base.Mediator.Send(new UserEntriesQuery() { UserId = userId }));
+        }
+
+        [HttpGet]
+        [Route("user/favorite/{userId}")]
+        public async Task<IActionResult> GetUserFavorites(Guid userId)
+        {
+            return Ok(await base.Mediator.Send(new UserFavoritesQuery() { UserId = userId }));
         }
 
         [HttpGet]

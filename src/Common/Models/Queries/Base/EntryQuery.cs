@@ -3,7 +3,7 @@ namespace Common.Models.Queries.Base
     public class EntryQuery
     {
         public string? Url { get; set; }
-        private int _count;
+        private int _count = 25;
         public int Count
         {
             get => _count;
@@ -11,10 +11,8 @@ namespace Common.Models.Queries.Base
             {
                 if (int.TryParse(value.ToString(), out int count))
                 {
-                    if (count == default) _count = 25;
-                    else _count = value;
+                    if (count != default) _count = value;
                 }
-                else _count = 25;
             }
         }
     }

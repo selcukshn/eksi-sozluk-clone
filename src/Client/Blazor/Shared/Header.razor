@@ -14,7 +14,7 @@
             <div class="header-account-link col-6 d-flex justify-content-end align-items-center fs-09 gap-3">
                 <AuthorizeView>
                     <Authorized>
-                        <a href="/biri" class="color-white800 d-flex align-items-center gap-2">
+                        <a href="/biri/@LoggedUser?.Username" class="color-white800 d-flex align-items-center gap-2">
                             <i class="bi bi-person fs-12"></i>
                             ben
                         </a>
@@ -52,3 +52,13 @@
         <Navigation />
     </div>
 </header>
+
+@code {
+    [Inject] public ILocalStorageService storage { get; set; }
+    LoggedUserInformation? LoggedUser;
+    protected override async Task OnInitializedAsync()
+    {
+        LoggedUser = await storage.GetUserInformationAsync();
+    }
+
+}

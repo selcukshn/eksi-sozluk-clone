@@ -1,0 +1,30 @@
+#profile .tab-content .tab-pane {
+    padding: 1rem 0;
+}
+
+.profile-selection {
+    display: flex;
+    gap: 1rem;
+    border-top: 1px solid;
+    border-bottom: 1px solid;
+    border-color: var(--white-500);
+}
+
+.profile-selection button {
+    color: var(--white-900);
+    font-size: 0.9rem;
+    border: none;
+    padding: 0.5rem 0 0.3rem 0;
+    margin-bottom: 0.2rem;
+}
+
+.profile-selection button:hover {
+    text-decoration: underline !important;
+    font-weight: 700;
+}
+
+.profile-selection button.active {
+    font-weight: 700;
+    margin-bottom: 0;
+    border-bottom: 0.2rem solid var(--theme);
+}

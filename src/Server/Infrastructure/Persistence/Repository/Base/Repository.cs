@@ -224,6 +224,10 @@ namespace Persistence.Repository
         {
             return Entity.Find(id);
         }
+        public T GetOne(Guid? id)
+        {
+            return Entity.Find(id);
+        }
 
         public T GetOne(Guid id, params Expression<Func<T, object>>[] includes)
         {
@@ -243,6 +247,10 @@ namespace Persistence.Repository
             return entity.FirstOrDefault(filter);
         }
         public async Task<T> GetOneAsync(Guid id)
+        {
+            return await Entity.FindAsync(id);
+        }
+        public async Task<T> GetOneAsync(Guid? id)
         {
             return await Entity.FindAsync(id);
         }

@@ -13,10 +13,17 @@ namespace Api.Controllers
         public UserController(IMediator mediator) : base(mediator) { }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll([FromQuery] UserQuery query)
+        public async Task<IActionResult> GetAll([FromQuery] AllUserQuery query)
         {
             return Ok(await base.Mediator.Send(query));
         }
+
+        [HttpPost]
+        public async Task<IActionResult> Get([FromBody] UserQuery query)
+        {
+            return Ok(await base.Mediator.Send(query));
+        }
+
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> LoginAsync([FromBody] UserLoginCommand command)

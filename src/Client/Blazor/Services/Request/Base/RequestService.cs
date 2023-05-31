@@ -34,7 +34,8 @@ namespace Blazor.Services.Request.Base
                     return new RequestResponse()
                     {
                         Message = exception.Message,
-                        Status = response.StatusCode == HttpStatusCode.NotFound ? ResponseStatus.NotFound : ResponseStatus.Error
+                        Status = response.StatusCode == HttpStatusCode.NotFound ? ResponseStatus.NotFound : ResponseStatus.Error,
+                        Detail = exception.Detail
                     };
                 }
             }

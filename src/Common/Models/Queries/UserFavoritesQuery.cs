@@ -1,11 +1,12 @@
+using Common.Models.Queries.Base;
 using Common.Models.View;
 using MediatR;
 
 namespace Common.Models.Queries
 {
-    public class UserQuery : IRequest<UserViewModel>
+    public class UserFavoritesQuery : EntryQuery, IRequest<IEnumerable<EntryViewModel>>
     {
-        private Guid _userId;
+        private Guid? _userId;
         public Guid? UserId
         {
             get => _userId;
@@ -17,6 +18,5 @@ namespace Common.Models.Queries
                     _userId = Guid.Empty;
             }
         }
-        public string? Username { get; set; }
     }
 }

@@ -14,8 +14,8 @@
             <Authorized>
                 @if (user?.Username != Username)
                 {
-                    <span class="entry-buttons-favorite cursor-pointer @(IsFavorite ? "selected":"")" title="favorilere ekle"
-                    @onclick="AddFavorite"></span>
+                    <span class="entry-buttons-favorite cursor-pointer @(IsFavorite ? "selected":"")"
+                        title="favorilere ekle" @onclick="AddFavorite"></span>
                 }
             </Authorized>
         </AuthorizeView>
@@ -31,7 +31,7 @@
 </div>
 <div class="entry-user d-flex gap-3 justify-content-end">
     <div class="text-end">
-        <a href="#" class="d-block fs-09" style="color: var(--theme-300);">@Username</a>
+        <a href="/biri/@Username" class="d-block fs-09" style="color: var(--theme-300);">@Username</a>
         <span class="d-block color-white600 fs-07 cursor-pointer">@CreatedDate</span>
     </div>
     <div>

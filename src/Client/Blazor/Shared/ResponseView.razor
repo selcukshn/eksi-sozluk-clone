@@ -17,9 +17,24 @@ else if (State.Status == ResponseStatus.Success)
 }
 else if (State.Status == ResponseStatus.NotFound)
 {
-    @ResponseNotFound
+    if (ResponseNotFound == null)
+    {
+        <p class="text-danger">@State.Message</p>
+    }
+    else
+    {
+        @ResponseNotFound
+    }
 }
 else
 {
-    @ResponseError
+    if (ResponseError == null)
+    {
+        <p class="text-danger">@State.Message</p>
+        <p class="text-danger">@State.Detail</p>
+    }
+    else
+    {
+        @ResponseError
+    }
 }

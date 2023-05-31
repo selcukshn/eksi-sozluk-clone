@@ -1,0 +1,23 @@
+.profile-button button {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    transition: none;
+    border: 1px solid var(--white-600);
+}
+
+.profile-button button:hover {
+    border-color: var(--white-600);
+}
+
+.profile-button button:not(.profile-button-follow) {
+    border-radius: 100%;
+    width: 32px;
+    height: 32px;
+    color: var(--white-600);
+}
+
+.profile-button button:hover {
+    background-color: var(--theme);
+    color: var(--white);
+}
