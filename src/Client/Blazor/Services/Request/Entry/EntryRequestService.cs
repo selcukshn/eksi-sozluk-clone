@@ -54,13 +54,13 @@ namespace Blazor.Services.Request.Entry
             return await base.PostAsync($"/api/entry/favorite", command);
         }
 
-        public async Task<RequestResponse> GetUserEntriesAsync(Guid userId)
+        public async Task<RequestResponse> GetUserEntriesAsync(Guid userId, int skip)
         {
-            return await base.GetAsync($"/api/entry/user/{userId}");
+            return await base.GetAsync($"/api/entry/user/{userId}?skip={skip}");
         }
-        public async Task<RequestResponse> GetUserFavoritesAsync(Guid userId)
+        public async Task<RequestResponse> GetUserFavoritesAsync(Guid userId, int skip)
         {
-            return await base.GetAsync($"/api/entry/user/favorite/{userId}");
+            return await base.GetAsync($"/api/entry/user/favorite/{userId}?skip={skip}");
         }
     }
 }

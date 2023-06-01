@@ -27,16 +27,16 @@ namespace Api.Controllers
 
         [HttpGet]
         [Route("user/{userId}")]
-        public async Task<IActionResult> GetUserEntries(Guid userId)
+        public async Task<IActionResult> GetUserEntries(Guid userId, [FromQuery] int skip)
         {
-            return Ok(await base.Mediator.Send(new UserEntriesQuery() { UserId = userId }));
+            return Ok(await base.Mediator.Send(new UserEntriesQuery() { UserId = userId, Skip = skip, Count = 5 }));
         }
 
         [HttpGet]
         [Route("user/favorite/{userId}")]
-        public async Task<IActionResult> GetUserFavorites(Guid userId)
+        public async Task<IActionResult> GetUserFavorites(Guid userId, [FromQuery] int skip)
         {
-            return Ok(await base.Mediator.Send(new UserFavoritesQuery() { UserId = userId }));
+            return Ok(await base.Mediator.Send(new UserFavoritesQuery() { UserId = userId, Skip = skip, Count = 5 }));
         }
 
         [HttpGet]

@@ -20,6 +20,7 @@ namespace Application.Features.Queries.Entry.Entry
             var entries = await base.Repository.AsQueryable()
             .Include(e => e.User)
             .Where(e => e.UserId == request.UserId)
+            .Skip(request.Skip)
             .Take(request.Count)
             .ToListAsync();
 
@@ -27,11 +28,12 @@ namespace Application.Features.Queries.Entry.Entry
             .Include(e => e.Entry)
             .Include(e => e.User)
             .Where(e => e.UserId == request.UserId)
+            .Skip(request.Skip)
             .Take(request.Count)
             .ToListAsync();
 
             if (!entries.Any() && !entryComments.Any())
-                throw new NotFoundException("kullanıcıya ait entry yok");
+                throw new NotFoundException("entry bulunamadı");
 
             var entriesMap = entries.Select(e => new EntryViewModel()
             {

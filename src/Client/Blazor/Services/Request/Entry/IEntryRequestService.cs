@@ -14,7 +14,7 @@ namespace Blazor.Services.Request.Entry
         Task<RequestResponse> SearchAsync(string value);
         Task<RequestResponse> VoteAsync(EntryVoteCommand command);
         Task<RequestResponse> FavoriteAsync(EntryFavoriteCommand command);
-        Task<RequestResponse> GetUserEntriesAsync(Guid userId);
-        Task<RequestResponse> GetUserFavoritesAsync(Guid userId);
+        Task<RequestResponse> GetUserEntriesAsync(Guid userId, int skip);
+        Task<RequestResponse> GetUserFavoritesAsync(Guid userId, int skip);
     }
 }

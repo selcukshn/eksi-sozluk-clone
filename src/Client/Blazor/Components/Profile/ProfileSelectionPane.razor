@@ -1,0 +1,55 @@
+<ResponseView State="@PaneState">
+    <ResponseSuccess>
+        @if (ViewModel != null)
+        {
+            foreach (var item in ViewModel)
+            {
+                <EntryView Content="@item?.Content" CreatedDate="@item?.CreatedDate" Subject="@item?.Subject" Url="@item?.Url"
+                    Username="@item?.Username" />
+            }
+        }
+        @if (ShowLoadMoreButton)
+        {
+            <button class="btn btn-outline-secondary w-100" @onclick="LoadMore">daha fazla göster</button>
+        }
+        else
+        {
+            @NotFound
+        }
+    </ResponseSuccess>
+</ResponseView>
+
+@code {
+    [Inject] public IEntryRequestService entryRequestService { get; set; }
+    [Parameter] public UserViewModel? User { get; set; }
+    [Parameter] public Func<Guid, int, Task<RequestResponse>> LoadDataRequest { get; set; }
+    [Parameter] public RenderFragment NotFound { get; set; }
+    List<EntryViewModel>? ViewModel;
+    ApplicationState PaneState = new ApplicationState(ResponseStatus.Waiting);
+    int Skip = 0;
+    bool ShowLoadMoreButton = true;
+
+    protected override async Task OnInitializedAsync()
+    {
+        PaneState.Status = ResponseStatus.Waiting;
+        var response = await LoadDataRequest.Invoke(User.Id, Skip);
+        if (response.IsSuccess)
+            ViewModel = await response.ResultAsync<List<EntryViewModel>>();
+        PaneState.SetResponse(response);
+    }
+
+    public async Task LoadMore()
+    {
+        Skip += 5;
+        var response = await entryRequestService.GetUserEntriesAsync(User.Id, Skip);
+        if (response.IsSuccess)
+        {
+            var result = await response.ResultAsync<List<EntryViewModel>>();
+            if (result.Any())
+                ViewModel.AddRange(result);
+        }
+        else
+            ShowLoadMoreButton = false;
+    }
+}
+

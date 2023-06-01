@@ -18,22 +18,24 @@ namespace Application.Features.Queries.Entry.Entry
         public override async Task<IEnumerable<EntryViewModel>> Handle(UserFavoritesQuery request, CancellationToken cancellationToken)
         {
             var entries = await base.Repository.AsQueryable()
-              .Include(e => e.User)
-              .Include(e => e.Entry)
-              .Where(e => e.UserId == request.UserId)
-              .Take(request.Count)
-              .ToListAsync();
+            .Include(e => e.User)
+            .Include(e => e.Entry)
+            .Where(e => e.UserId == request.UserId)
+            .Skip(request.Skip)
+            .Take(request.Count)
+            .ToListAsync();
 
             var entryComments = await entryCommentFavoriteRepository.AsQueryable()
             .Include(e => e.EntryComment)
             .ThenInclude(e => e.Entry)
             .Include(e => e.User)
             .Where(e => e.UserId == request.UserId)
+            .Skip(request.Skip)
             .Take(request.Count)
             .ToListAsync();
 
             if (!entries.Any() && !entryComments.Any())
-                throw new NotFoundException("favorilere henüz bir şey eklememişsiniz");
+                throw new NotFoundException("favorilere eklenmiş entry bulunamadı");
 
             var entriesMap = entries.Select(e => new EntryViewModel()
             {

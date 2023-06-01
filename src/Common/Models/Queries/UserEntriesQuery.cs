@@ -18,5 +18,18 @@ namespace Common.Models.Queries
                     _userId = Guid.Empty;
             }
         }
+        private int _skip = 0;
+        public int Skip
+        {
+            get => _skip;
+            set
+            {
+                if (int.TryParse(value.ToString(), out int skip))
+                {
+                    if (skip > 0)
+                        _skip = skip;
+                }
+            }
+        }
     }
 }

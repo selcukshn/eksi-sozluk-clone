@@ -3,11 +3,11 @@
 <section id="profile">
     <ResponseView State="@UserState">
         <ResponseSuccess>
-            <ProfileTop Username="@username"/>
+            <ProfileTop Username="@username" />
 
-            <ProfileCounter/>
+            <ProfileCounter />
 
-            <ProfileButtons LoggedUserId="@LoggedUserId" UserId="@User?.Id"/>
+            <ProfileButtons LoggedUserId="@LoggedUserId" UserId="@User?.Id" />
 
             <ul class="nav nav-tabs profile-selection" role="tablist">
                 <li class="nav-item" role="presentation">
@@ -35,48 +35,27 @@
             <div class="tab-content">
                 <div class="tab-pane fade show active" id="entry-tab-pane" role="tabpanel" aria-labelledby="entry-tab"
                     tabindex="0">
-                    <ResponseView State="@UserEntriesState">
-                        <ResponseSuccess>
-                            @if (UserEntries != null)
-                            {
-                                foreach (var item in UserEntries)
-                                {
-                                    <EntryView Content="@item?.Content" CreatedDate="@item?.CreatedDate" Subject="@item?.Subject"
-                                        Url="@item?.Url" Username="@item?.Username" />
-                                }
-                            }
-                        </ResponseSuccess>
-                    </ResponseView>
+                    <ProfileSelectionPane User="@User" LoadDataRequest="GetUserEntries">
+                        <NotFound>
+                            <div>daha fazla yüklenecek entry yok</div>
+                        </NotFound>
+                    </ProfileSelectionPane>
                 </div>
                 <div class="tab-pane fade" id="favorite-tab-pane" role="tabpanel" aria-labelledby="favorite-tab"
                     tabindex="0">
-                    <ResponseView State="@UserFavoritesState">
-                        <ResponseSuccess>
-                            @if (UserFavorites != null)
-                            {
-                                foreach (var item in UserFavorites)
-                                {
-                                    <EntryView Content="@item?.Content" CreatedDate="@item?.CreatedDate" Subject="@item?.Subject"
-                                        Url="@item?.Url" Username="@item?.Username" />
-                                }
-                            }
-                        </ResponseSuccess>
-                    </ResponseView>
+                    <ProfileSelectionPane User="@User" LoadDataRequest="GetUserFavorites">
+                        <NotFound>
+                            <div>daha fazla favorilere eklenmiş entry yok</div>
+                        </NotFound>
+                    </ProfileSelectionPane>
                 </div>
                 <div class="tab-pane fade" id="images-tab-pane" role="tabpanel" aria-labelledby="images-tab"
                     tabindex="0">
-                    <ResponseView State="@UserImagesState">
-                        <ResponseSuccess>
-                            @if (UserImages != null)
-                            {
-                                foreach (var item in UserImages)
-                                {
-                                    <EntryView Content="@item?.Content" CreatedDate="@item?.CreatedDate" Subject="@item?.Subject"
-                                        Url="@item?.Url" Username="@item?.Username" />
-                                }
-                            }
-                        </ResponseSuccess>
-                    </ResponseView>
+                    <ProfileSelectionPane User="@User" LoadDataRequest="GetUserImages">
+                        <NotFound>
+                            <div>daha fazla yüklenecek entry yok</div>
+                        </NotFound>
+                    </ProfileSelectionPane>
                 </div>
             </div>
         </ResponseSuccess>
@@ -92,50 +71,28 @@
     Guid? LoggedUserId;
 
     ApplicationState UserState = new ApplicationState(ResponseStatus.Waiting);
-    ApplicationState UserEntriesState = new ApplicationState(ResponseStatus.Waiting);
-    ApplicationState UserFavoritesState = new ApplicationState(ResponseStatus.Waiting);
-    ApplicationState UserImagesState = new ApplicationState(ResponseStatus.Waiting);
-
-    List<EntryViewModel>? UserEntries;
-    List<EntryViewModel>? UserFavorites;
-    List<EntryViewModel>? UserImages;
 
     Selection SelectedSelection = Selection.Entries;
 
+    public async Task<RequestResponse> GetUserEntries(Guid userId, int skip)
+    {
+        return await entryRequestService.GetUserEntriesAsync(userId, skip);
+    }
+    public async Task<RequestResponse> GetUserFavorites(Guid userId, int skip)
+    {
+        return await entryRequestService.GetUserFavoritesAsync(userId, skip);
+    }
+    public async Task<RequestResponse> GetUserImages(Guid userId, int skip)
+    {
+        return await entryRequestService.GetUserEntriesAsync(userId, skip);
+    }
     protected override async Task OnInitializedAsync()
     {
         LoggedUserId = await authenticationStateProvider.GetUserIdAsync();
         var response = await userRequestService.GetUserAsync(username);
         if (response.IsSuccess)
-        {
             User = await response.ResultAsync<UserViewModel>();
-            await GetUserEntriesAsync();
-            await GetUserFavoritesAsync();
-        }
         UserState.SetResponse(response);
-    }
-
-    public async Task GetUserEntriesAsync()
-    {
-        UserEntriesState.Status = ResponseStatus.Waiting;
-        var response = await entryRequestService.GetUserEntriesAsync(User.Id);
-        if (response.IsSuccess)
-            UserEntries = await response.ResultAsync<List<EntryViewModel>>();
-        UserEntriesState.SetResponse(response);
-    }
-
-    public async Task GetUserFavoritesAsync()
-    {
-            UserFavoritesState.Status = ResponseStatus.Waiting;
-            var response = await entryRequestService.GetUserFavoritesAsync(User.Id);
-            if (response.IsSuccess)
-                UserFavorites = await response.ResultAsync<List<EntryViewModel>>();
-            UserFavoritesState.SetResponse(response);
-    }
-
-    public void GetUserImages()
-    {
-        SelectedSelection = Selection.Images;
     }
 
     public enum Selection
