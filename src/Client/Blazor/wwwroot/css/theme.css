@@ -15,6 +15,22 @@
     border-color: var(--theme) !important;
 }
 
+.border-theme100 {
+    border-color: var(--theme-100) !important;
+}
+
+.border-theme200 {
+    border-color: var(--theme-200) !important;
+}
+
+.border-theme300 {
+    border-color: var(--theme-300) !important;
+}
+
+.border-them4100 {
+    border-color: var(--theme-400) !important;
+}
+
 .btn-theme {
     background-color: var(--theme);
     color: white;

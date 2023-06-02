@@ -18,8 +18,8 @@ namespace Application.Features.Queries.Entry.Entry
         public override async Task<IEnumerable<EntryViewModel>> Handle(UserFavoritesQuery request, CancellationToken cancellationToken)
         {
             var entries = await base.Repository.AsQueryable()
-            .Include(e => e.User)
             .Include(e => e.Entry)
+            .ThenInclude(e => e.User)
             .Where(e => e.UserId == request.UserId)
             .Skip(request.Skip)
             .Take(request.Count)
@@ -28,7 +28,8 @@ namespace Application.Features.Queries.Entry.Entry
             var entryComments = await entryCommentFavoriteRepository.AsQueryable()
             .Include(e => e.EntryComment)
             .ThenInclude(e => e.Entry)
-            .Include(e => e.User)
+            .Include(e => e.EntryComment)
+            .ThenInclude(e => e.User)
             .Where(e => e.UserId == request.UserId)
             .Skip(request.Skip)
             .Take(request.Count)
@@ -43,8 +44,8 @@ namespace Application.Features.Queries.Entry.Entry
                 Subject = e.Entry.Subject,
                 CreatedDate = e.Entry.CreatedDate,
                 Url = e.Entry.Url,
-                Username = e.User.Username,
-                UserImage = e.User.Image
+                Username = e.Entry.User.Username,
+                UserImage = e.Entry.User.Image
             });
             var entryCommentsMap = entryComments.Select(e => new EntryViewModel()
             {
@@ -52,8 +53,8 @@ namespace Application.Features.Queries.Entry.Entry
                 Subject = e.EntryComment.Entry.Subject,
                 CreatedDate = e.EntryComment.CreatedDate,
                 Url = e.EntryComment.Entry.Url,
-                Username = e.User.Username,
-                UserImage = e.User.Image
+                Username = e.EntryComment.User.Username,
+                UserImage = e.EntryComment.User.Image
             });
             return entriesMap.Concat(entryCommentsMap);
         }

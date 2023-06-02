@@ -1,32 +1,26 @@
-@page "/biri/{username}"
-
+@page "/biri/{username?}"
 <section id="profile">
     <ResponseView State="@UserState">
         <ResponseSuccess>
-            <ProfileTop Username="@username" />
-
+            <ProfileTop Username="@username" IsLoggedUser="IsLoggedUser" />
             <ProfileCounter />
 
-            <ProfileButtons LoggedUserId="@LoggedUserId" UserId="@User?.Id" />
+            <ProfileButtons IsLoggedUser="IsLoggedUser" />
 
             <ul class="nav nav-tabs profile-selection" role="tablist">
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link  @(SelectedSelection == Selection.Entries ?"active":"")" id="entry-tab"
-                        data-bs-toggle="tab" data-bs-target="#entry-tab-pane" type="button" role="tab"
-                        aria-controls="entry-tab-pane" aria-selected="true"
-                    @onclick="()=>SelectedSelection = Selection.Entries">entry'ler</button>
+                    <button class="nav-link active" id="entry-tab" data-bs-toggle="tab" data-bs-target="#entry-tab-pane"
+                        type="button" role="tab" aria-controls="entry-tab-pane" aria-selected="true">entry'ler</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link  @(SelectedSelection == Selection.Favorites ?"active":"")" id="favorite-tab"
-                        data-bs-toggle="tab" data-bs-target="#favorite-tab-pane" type="button" role="tab"
-                        aria-controls="favorite-tab-pane" aria-selected="false"
-                    @onclick="()=>SelectedSelection = Selection.Favorites">favoriler</button>
+                    <button class="nav-link" id="favorite-tab" data-bs-toggle="tab" data-bs-target="#favorite-tab-pane"
+                        type="button" role="tab" aria-controls="favorite-tab-pane"
+                        aria-selected="false">favoriler</button>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <button class="nav-link  @(SelectedSelection == Selection.Images ?"active":"")" id="images-tab"
-                        data-bs-toggle="tab" data-bs-target="#images-tab-pane" type="button" role="tab"
-                        aria-controls="images-tab-pane" aria-selected="false"
-                    @onclick="()=>SelectedSelection = Selection.Images">görseller</button>
+                    <button class="nav-link" id="images-tab" data-bs-toggle="tab" data-bs-target="#images-tab-pane"
+                        type="button" role="tab" aria-controls="images-tab-pane"
+                        aria-selected="false">görseller</button>
                 </li>
                 <li class="nav-item" role="presentation">
                     <button class="nav-link" type="button">istatistikler</button>
@@ -59,41 +53,45 @@
                 </div>
             </div>
         </ResponseSuccess>
+        <ResponseNotFound>
+            <p>geçerli bir kullanıcı adı girdiğinizden emin olun</p>
+        </ResponseNotFound>
     </ResponseView>
 </section>
 
 @code {
-    [Parameter] public string username { get; set; }
+    [Parameter] public string? username { get; set; }
     [Inject] public IEntryRequestService entryRequestService { get; set; }
     [Inject] public IUserRequestService userRequestService { get; set; }
     [Inject] public AuthenticationStateProvider authenticationStateProvider { get; set; }
     UserViewModel? User;
     Guid? LoggedUserId;
-
+    bool IsLoggedUser;
     ApplicationState UserState = new ApplicationState(ResponseStatus.Waiting);
 
-    Selection SelectedSelection = Selection.Entries;
-
-    public async Task<RequestResponse> GetUserEntries(Guid userId, int skip)
+    protected override async Task OnParametersSetAsync()
     {
-        return await entryRequestService.GetUserEntriesAsync(userId, skip);
+        if (!string.IsNullOrEmpty(username))
+            await InitAsync();
+        else
+            UserState.Status = ResponseStatus.NotFound;
     }
-    public async Task<RequestResponse> GetUserFavorites(Guid userId, int skip)
-    {
-        return await entryRequestService.GetUserFavoritesAsync(userId, skip);
-    }
-    public async Task<RequestResponse> GetUserImages(Guid userId, int skip)
-    {
-        return await entryRequestService.GetUserEntriesAsync(userId, skip);
-    }
-    protected override async Task OnInitializedAsync()
+    private async Task InitAsync()
     {
         LoggedUserId = await authenticationStateProvider.GetUserIdAsync();
         var response = await userRequestService.GetUserAsync(username);
         if (response.IsSuccess)
             User = await response.ResultAsync<UserViewModel>();
         UserState.SetResponse(response);
+        IsLoggedUser = User?.Id == LoggedUserId;
     }
+
+    public async Task<RequestResponse> GetUserEntries(Guid userId, int skip) =>
+    await entryRequestService.GetUserEntriesAsync(userId, skip);
+    public async Task<RequestResponse> GetUserFavorites(Guid userId, int skip) =>
+    await entryRequestService.GetUserFavoritesAsync(userId, skip);
+    public async Task<RequestResponse> GetUserImages(Guid userId, int skip) =>
+    await entryRequestService.GetUserEntriesAsync(userId, skip);
 
     public enum Selection
     {

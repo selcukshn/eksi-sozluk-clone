@@ -1,5 +1,5 @@
-<div class="d-flex gap-3 profile-button">
-    @if (UserId != null && LoggedUserId != null & UserId != LoggedUserId)
+<div class="d-flex gap-3 profile-button mb-3">
+    @if (!IsLoggedUser)
     {
         <button class="btn profile-button-follow px-5 py-1 color-white bg-theme fs-09 fw-600 rounded-pill">takip
             et</button>
@@ -16,6 +16,5 @@
 </div>
 
 @code {
-    [Parameter] public Guid? UserId { get; set; }
-    [Parameter] public Guid? LoggedUserId { get; set; }
+    [Parameter] public bool IsLoggedUser{ get; set; }
 }

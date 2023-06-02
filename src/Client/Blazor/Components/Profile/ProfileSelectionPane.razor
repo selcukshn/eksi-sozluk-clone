@@ -20,16 +20,32 @@
 </ResponseView>
 
 @code {
-    [Inject] public IEntryRequestService entryRequestService { get; set; }
     [Parameter] public UserViewModel? User { get; set; }
     [Parameter] public Func<Guid, int, Task<RequestResponse>> LoadDataRequest { get; set; }
     [Parameter] public RenderFragment NotFound { get; set; }
+    Guid? OldUserId;
     List<EntryViewModel>? ViewModel;
     ApplicationState PaneState = new ApplicationState(ResponseStatus.Waiting);
     int Skip = 0;
     bool ShowLoadMoreButton = true;
 
     protected override async Task OnInitializedAsync()
+    {
+        if (User != null)
+        {
+            OldUserId = User.Id;
+            await InitAsync();
+        }
+    }
+    protected override async Task OnParametersSetAsync()
+    {
+        if (OldUserId != User?.Id && User != null)
+        {
+            OldUserId = User.Id;
+            await InitAsync();
+        }
+    }
+    private async Task InitAsync()
     {
         PaneState.Status = ResponseStatus.Waiting;
         var response = await LoadDataRequest.Invoke(User.Id, Skip);
@@ -41,7 +57,7 @@
     public async Task LoadMore()
     {
         Skip += 5;
-        var response = await entryRequestService.GetUserEntriesAsync(User.Id, Skip);
+        var response = await LoadDataRequest.Invoke(User.Id, Skip);
         if (response.IsSuccess)
         {
             var result = await response.ResultAsync<List<EntryViewModel>>();
@@ -52,4 +68,3 @@
             ShowLoadMoreButton = false;
     }
 }
-

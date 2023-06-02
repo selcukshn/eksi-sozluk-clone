@@ -1,0 +1,34 @@
+<style>
+    .sozluk-modal-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        background-color: rgba(0, 0, 0, 0.5);
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+    }
+</style>
+<div class="sozluk-modal-container align-items-center justify-content-center @(ModalToggle?"d-flex":"d-none")">
+    <div class="sozluk-modal d-flex flex-column bg-white100 border-radius-3">
+        <div class="sozluk-modal-close align-self-end " @onclick="CloseModal">
+            <span class="d-flex align-items-center justify-content-center cursor-pointer hover-text-underline p-2 fs-13 fw-700"
+                style="width: 40px; height: 40px;">×</span>
+        </div>
+        @ModalBody
+    </div>
+</div>
+
+@code {
+    [Parameter] public RenderFragment ModalBody { get; set; }
+    [Parameter] public bool ModalToggle { get; set; }
+
+    private async void CloseModal()
+    {
+        ModalToggle = false;
+    }
+}
+
+
+
+

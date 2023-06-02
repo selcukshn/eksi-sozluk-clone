@@ -1,4 +1,8 @@
 <div>
+    @if (!string.IsNullOrEmpty(Biography))
+    {
+        <p>@Biography</p>
+    }
     <div class="d-flex align-items-center gap-2 profile-count fs-09 fw-600 color-white600">
         <span>0 entry</span>
         <span class="sd-1 bg-white900"></span>
@@ -8,3 +12,7 @@
     </div>
     <p class="fs-09">henüz 10 entry'yi tamamlamadığınızdan onay sırasında değilsiniz.</p>
 </div>
+
+@code {
+    [Parameter] public string? Biography { get; set; }
+}

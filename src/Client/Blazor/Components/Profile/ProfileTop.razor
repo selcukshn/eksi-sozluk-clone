@@ -1,16 +1,67 @@
+@if (IsLoggedUser)
+{
+    <SozlukModal ModalToggle="ModalToggle">
+        <ModalBody>
+            <div class="p-2 text-center" style="width: 420px;">
+                <img src="/user_default.png" class="img-fluid mb-5" width="200px">
+                <div class="d-flex justify-content-between">
+                    <label for="profile-upload-image"
+                        class="btn bg-theme border-theme300 btn-sm border-radius-3 color-white">
+                        yeni fotoğraf yükle
+                        <input id="profile-upload-image" name="profile-upload-image" type="file" class="d-none">
+                    </label>
+                    <div>
+                        <button type="button" class="btn bg-white200 border-radius-3 border-white400 btn-sm py-2">fotoğrafı
+                            sil</button>
+                        <button type="button" class="btn bg-white200 border-radius-3 border-white400 btn-sm py-2"
+                        @onclick="()=>ModalToggle = false">iptal</button>
+                    </div>
+                </div>
+            </div>
+        </ModalBody>
+    </SozlukModal>
+}
+
 <div class="d-flex justify-content-between">
     <div>
         <h1 class="profile-title">
             <a href="/biri/@Username" class="fs-14 color-white900 fw-700">@Username</a>
         </h1>
-        <a href="/?q=çaylak" class="profile-badge d-inline-block fs-09 color-white800 border-radius-3">çaylak</a>
+        @if (IsLoggedUser)
+        {
+            <a href="/?q=çaylak" class="profile-badge d-inline-block fs-09 color-white800 border-radius-3">çaylak</a>
+        }
     </div>
-    <div class="position-relative profile-image cursor-pointer" style="width: 110px;">
-        <img src="https://icones.pro/wp-content/uploads/2021/02/icone-utilisateur-gris.png" class="img-fluid">
-        <div class="profile-image-vignette"></div>
-    </div>
+    @if (IsLoggedUser)
+    {
+        <div class="position-relative profile-image cursor-pointer" style="width: 110px;" @onclick="ShowModal">
+            <img src="/user_default.png" class="img-fluid">
+            <div class="profile-image-vignette"></div>
+        </div>
+    }
+    else
+    {
+        <div class="position-relative profile-image" style="width: 110px;">
+            <img src="/user_default.png" class="img-fluid">
+        </div>
+    }
 </div>
 
 @code {
     [Parameter] public string Username { get; set; }
+    [Parameter] public bool IsLoggedUser { get; set; }
+    public bool ModalToggle { get; set; }
+
+    protected override void OnAfterRender(bool firstRender)
+    {
+        ModalToggle = false;
+    }
+
+    public void ShowModal()
+    {
+        ModalToggle = true;
+    }
+
 }
+
+
