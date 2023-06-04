@@ -1,15 +1,16 @@
 @using System.Timers;
 @inject IEntryRequestService entryService;
 @inject NavigationManager navManager;
+<div class="search-overlay @(searchMode?"":"d-none")" @onclick="searchFocusOut"></div>
 <div class="position-relative">
     <div class="input-group">
         <input @bind-value="searchValue" @bind-value:event="oninput" @onkeydown="searchKeyPress" @onfocus="searchFocus"
-        @onfocusout="searchFocusOut" type="text"
+            type="text"
             class="form-control form-control-sm border-theme border-end-0 border-radius-5 fs-08 fw-500 focus-disable"
             placeholder="başlık,#entry,@@yazar">
-        <a href="#" class="d-flex align-items-center justify-content-center px-3 border border-theme">
+        <span class="cursor-pointer d-flex align-items-center justify-content-center px-3 border border-theme">
             <i class="bi bi-caret-down-fill fs-05 color-white600"></i>
-        </a>
+        </span>
         <button @onclick="redirectSearchResult" type="button" class="btn btn-theme btn-sm">
             <i class="bi bi-search"></i>
         </button>
@@ -22,8 +23,8 @@
                 {
                     if (writing)
                     {
-                        <li class="search-result-list-item">
-                            <Spinner Color="BootstrapColor.Dark" Type="SpinnerType.Grow" Style="width:1rem;height:1rem" />
+                        <li class="search-result-list-item px-2 py-1 text-center">
+                            <Spinner Color="BootstrapColor.Dark" Type="SpinnerType.Grow" Style="width:1rem;height:1rem;" />
                         </li>
                     }
                     else
@@ -32,11 +33,12 @@
                         {
                             foreach (var entry in searchResult.Entry)
                             {
-                                <li class="search-result-list-item"><a href="/@entry.Url">@entry.Subject</a></li>
+                                <li class="search-result-list-item"><a href="/@entry.Url" @onclick="CleanSearch">@entry.Subject</a></li>
                             }
                             foreach (var user in searchResult.User)
                             {
-                                <li class="search-result-list-item"><a href="/biri/@user.Username">@@@user.Username</a></li>
+                                <li class="search-result-list-item"><a href="/biri/@user.Username"
+                                    @onclick="CleanSearch">@@@user.Username</a></li>
                             }
                         }
                         else
@@ -97,30 +99,31 @@
         writing = true;
         timer.Start();
     }
-
-    public void searchFocus()
+    public void CleanSearch()
+    {
+        searchMode = false;
+        searchResult = null;
+        searchValue = "";
+    }
+    public async Task searchFocus()
     {
         searchMode = true;
     }
     public void searchFocusOut()
     {
         searchMode = false;
-        searchResult = null;
     }
 
     public async Task redirectSearchResult()
     {
-        if (searchAvailable)
+        if (searchResult != null && searchResult.GetFirstResult() != null)
         {
-            await search();
             var firstResult = searchResult.GetFirstResult();
-            if (firstResult != null)
-            {
-                if (firstResult.Entry != null)
-                    navManager.NavigateToPage(firstResult.Entry.Url);
-                else if (firstResult.User != null)
-                    navManager.NavigateToProfilePage(firstResult.User.Username);
-            }
+            if (firstResult.Entry != null)
+                navManager.NavigateToPage(firstResult.Entry.Url);
+            else if (firstResult.User != null)
+                navManager.NavigateToProfilePage(firstResult.User.Username);
+            CleanSearch();
         }
     }
 

@@ -10,7 +10,7 @@ namespace Blazor.Extensions
         }
         public static void NavigateToPage(this NavigationManager manager, string url, int? page = null)
         {
-            string query = page != null ? $"/{url}" : $"/{url}?page={page}";
+            string query = page == null ? $"/{url}" : $"/{url}?page={page}";
             manager.NavigateTo(query);
         }
         public static void NavigateToProfilePage(this NavigationManager manager, string username)

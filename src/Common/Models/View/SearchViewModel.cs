@@ -2,14 +2,14 @@ namespace Common.Models.View
 {
     public class SearchViewModel
     {
-        public List<SearchResultUserModel> User { get; set; }
-        public List<SearchResultEntryModel> Entry { get; set; }
+        public List<SearchResultUserModel>? User { get; set; }
+        public List<SearchResultEntryModel>? Entry { get; set; }
         public SearchFirstResult? GetFirstResult()
         {
-            if (Entry[0] != null)
-                return new SearchFirstResult(Entry[0]);
-            else if (User[0] != null)
-                return new SearchFirstResult(User[0]);
+            if (Entry != null && Entry.Any())
+                return new SearchFirstResult(Entry.First());
+            else if (User != null && User.Any())
+                return new SearchFirstResult(User.First());
             return null;
         }
         public bool HaveItem()
