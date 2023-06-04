@@ -10,5 +10,6 @@ namespace Blazor.Shared
         [Parameter] public RenderFragment? ResponseSuccess { get; set; }
         [Parameter] public RenderFragment? ResponseNotFound { get; set; }
         [Parameter] public RenderFragment? ResponseError { get; set; }
+        [Parameter] public RenderFragment? ResponseNone { get; set; }
     }
 }

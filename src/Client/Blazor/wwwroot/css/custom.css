@@ -324,6 +324,62 @@
     padding: 0 6rem;
 }
 
+.p-9 {
+    padding: 7rem;
+}
+
+.pt-9 {
+    padding-top: 7rem;
+}
+
+.pe-9 {
+    padding-right: 7rem;
+}
+
+.pb-9 {
+    padding-bottom: 7rem;
+}
+
+.ps-9 {
+    padding-left: 7rem;
+}
+
+.py-9 {
+    padding: 7rem 0;
+}
+
+.px-9 {
+    padding: 0 7rem;
+}
+
+.p-10 {
+    padding: 8rem;
+}
+
+.pt-10 {
+    padding-top: 8rem;
+}
+
+.pe-10 {
+    padding-right: 8rem;
+}
+
+.pb-10 {
+    padding-bottom: 8rem;
+}
+
+.ps-10 {
+    padding-left: 8rem;
+}
+
+.py-10 {
+    padding: 8rem 0;
+}
+
+.px-10 {
+    padding: 0 8rem;
+}
+
 /** seperators */
 /* seperator line */
 .sl-1 {

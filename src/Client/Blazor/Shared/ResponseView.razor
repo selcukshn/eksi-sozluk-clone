@@ -1,6 +1,12 @@
 @inherits ResponseViewRazor
 
-@if (State.Status == ResponseStatus.Waiting)
+@if(State.Status == ResponseStatus.None){
+    if(ResponseNone != null)
+    {
+@ResponseNone
+    }
+}
+else if (State.Status == ResponseStatus.Waiting)
 {
     if (ResponseWaiting == null)
     {

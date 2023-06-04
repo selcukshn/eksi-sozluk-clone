@@ -6,6 +6,7 @@ namespace Common.Models.Response
         NullOrEmpty,
         Error,
         Success,
-        Waiting
+        Waiting,
+        None
     }
 }

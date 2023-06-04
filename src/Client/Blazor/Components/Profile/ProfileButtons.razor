@@ -1,3 +1,36 @@
+@inject IToastService toastService
+
+<SozlukModal ModalToggle="ModalToggle">
+    <ModalBody>
+        <div class="d-flex flex-column gap-2 px-4 pb-4" style="width: 700px;">
+            <div class="d-flex gap-1">
+                <button class="btn btn-sm bg-white100 border-white400 fs-08">(bkz.)</button>
+                <button class="btn btn-sm bg-white100 border-white400 fs-08 color-theme">hede</button>
+                <button class="btn btn-sm bg-white100 border-white400 fs-08">*</button>
+                <button class="btn btn-sm bg-white100 border-white400 fs-08">-spoiler-</button>
+                <button class="btn btn-sm bg-white100 border-white400 fs-08">http://</button>
+            </div>
+            <textarea class="form-control" rows="12" @bind="Biography"></textarea>
+            <div class="d-flex gap-1 align-items-center">
+                <button type="button" class="btn btn-sm bg-theme border-theme300 color-white py-2"
+                @onclick="SaveBiography" disabled="@(State.Status == ResponseStatus.Waiting)">
+                    kaydet
+                </button>
+                <button class="btn btn-sm bg-white100 border-white400 py-2" @onclick="DeleteBiography"
+                    disabled="@(State.Status == ResponseStatus.Waiting)">
+                    biyografiyi sil
+                </button>
+                <ResponseView State="@State">
+                    <ResponseWaiting>
+                        <Spinner Style="width:1rem;height:1rem;" Color="BootstrapColor.Secondary"
+                            Type="SpinnerType.Border"></Spinner>
+                    </ResponseWaiting>
+                </ResponseView>
+            </div>
+        </div>
+    </ModalBody>
+</SozlukModal>
+
 <div class="d-flex gap-3 profile-button mb-3">
     @if (!IsLoggedUser)
     {
@@ -10,11 +43,57 @@
     <button class="btn profile-button-share">
         <i class="bi bi-box-arrow-up fs-08"></i>
     </button>
-    <button class="btn profile-button-other">
-        <i class="bi bi-three-dots fs-08"></i>
-    </button>
+    <div class="dropdown">
+        <button type="button" class="btn profile-button-other" data-bs-toggle="dropdown">
+            <i class="bi bi-three-dots fs-08"></i>
+        </button>
+
+        <ul class="dropdown-menu p-0 fs-09 border-radius-3">
+            <li><span class="dropdown-item py-2 cursor-pointer" @onclick="ShowModal">biyografiyi düzenle</span></li>
+            <li><span class="dropdown-item py-2 cursor-pointer">rozetleri görüntüle</span></li>
+        </ul>
+    </div>
 </div>
 
 @code {
-    [Parameter] public bool IsLoggedUser{ get; set; }
+    [Inject] public IUserRequestService userRequestService { get; set; }
+    [Parameter] public bool IsLoggedUser { get; set; }
+    [Parameter] public string? Biography { get; set; }
+    private bool ModalToggle = false;
+    private string Image = string.Empty;
+    private ApplicationState State = new ApplicationState(ResponseStatus.None);
+    RequestResponse rr = new RequestResponse();
+    private void ShowModal()
+    {
+        ModalToggle = true;
+    }
+
+    private async Task SaveBiography()
+    {
+        if (Biography?.Length > 0)
+        {
+            State.Status = ResponseStatus.Waiting;
+            await Task.Delay(3000);
+            var response = await userRequestService.UpdateUserBiographyAsync(Biography);
+            if (response.IsSuccess)
+            {
+                StateHasChanged();
+                toastService.ShowSuccess("Biyografi güncellendi");
+            }
+            State.SetResponse(response);
+        }
+
+    }
+    private async Task DeleteBiography()
+    {
+        State.Status = ResponseStatus.Waiting;
+        Biography = string.Empty;
+        var response = await userRequestService.UpdateUserBiographyAsync(Biography);
+        if (response.IsSuccess)
+        {
+            StateHasChanged();
+            toastService.ShowSuccess("Biyografi silindi");
+        }
+        State.SetResponse(response);
+    }
 }

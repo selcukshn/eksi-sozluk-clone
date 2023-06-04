@@ -6,6 +6,7 @@ using Blazor.Services;
 using Blazored.LocalStorage;
 using Blazor.Configurations.Http;
 using Blazor.Configurations;
+using Blazored.Toast;
 
 var builder = WebAssemblyHostBuilder.CreateDefault(args);
 builder.RootComponents.Add<App>("#app");
@@ -15,6 +16,7 @@ builder.Services.AddBlazoredLocalStorage();
 builder.Services.AddAuthorizationCore();
 builder.Services.AddServicesDependencies();
 builder.Services.AddConfigurationsDependencies();
+builder.Services.AddBlazoredToast();
 
 builder.Services.AddHttpClient("LocalApi", client =>
 {

@@ -1,11 +1,15 @@
 @page "/biri/{username?}"
+@using Blazored.Toast.Configuration
+
+<BlazoredToasts Timeout="5" ShowProgressBar="true" Position="ToastPosition.BottomRight" SuccessIcon="fa fa-thumbs-up" />
+<BlazoredToasts Timeout="5" ShowProgressBar="true" Position="ToastPosition.TopRight" SuccessIcon="fa fa-thumbs-up" />
 <section id="profile">
     <ResponseView State="@UserState">
         <ResponseSuccess>
             <ProfileTop Username="@username" IsLoggedUser="IsLoggedUser" />
-            <ProfileCounter />
+            <ProfileCounter EntryCount="@User?.EntryCount" Biography="@User?.Biography" />
 
-            <ProfileButtons IsLoggedUser="IsLoggedUser" />
+            <ProfileButtons IsLoggedUser="IsLoggedUser" Biography="@User?.Biography" />
 
             <ul class="nav nav-tabs profile-selection" role="tablist">
                 <li class="nav-item" role="presentation">

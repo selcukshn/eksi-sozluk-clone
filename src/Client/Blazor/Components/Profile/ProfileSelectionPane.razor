@@ -32,21 +32,17 @@
     protected override async Task OnInitializedAsync()
     {
         if (User != null)
-        {
-            OldUserId = User.Id;
             await InitAsync();
-        }
     }
     protected override async Task OnParametersSetAsync()
     {
         if (OldUserId != User?.Id && User != null)
-        {
-            OldUserId = User.Id;
             await InitAsync();
-        }
     }
     private async Task InitAsync()
     {
+        Skip = 0;
+        OldUserId = User.Id;
         PaneState.Status = ResponseStatus.Waiting;
         var response = await LoadDataRequest.Invoke(User.Id, Skip);
         if (response.IsSuccess)

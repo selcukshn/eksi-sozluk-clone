@@ -37,5 +37,19 @@ namespace Api.Controllers
         {
             return Ok(await base.Mediator.Send(command));
         }
+
+        [HttpPost]
+        [Route("update/biography")]
+        public async Task<IActionResult> UpdateBiographyAsync([FromBody] UserUpdateBiographyCommand command)
+        {
+            return Ok(await base.Mediator.Send(command));
+        }
+
+        [HttpPost]
+        [Route("update/image")]
+        public async Task<IActionResult> UpdateImageAsync([FromBody] UserUpdateImageCommand command)
+        {
+            return Ok(await base.Mediator.Send(command));
+        }
     }
 }

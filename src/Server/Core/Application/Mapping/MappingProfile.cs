@@ -10,10 +10,13 @@ namespace Application.Mapping
         public MappingProfile()
         {
             CreateMap<User, UserLoginViewModel>().ReverseMap();
-            CreateMap<User, UserCreateCommand>().ReverseMap();
-            CreateMap<User, UserUpdateCommand>().ReverseMap();
-            CreateMap<User, UserViewModel>().ReverseMap();
 
+            CreateMap<User, UserCreateCommand>().ReverseMap();
+
+            CreateMap<User, UserUpdateCommand>().ReverseMap();
+
+            CreateMap<User, UserViewModel>()
+            .ForMember(e => e.EntryCount, e => e.MapFrom(m => m.Entries.Count));
 
             CreateMap<Entry, EntryCreateCommand>();
             CreateMap<Entry, MainPageViewModel>();

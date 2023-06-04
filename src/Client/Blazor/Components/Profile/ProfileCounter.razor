@@ -1,10 +1,10 @@
 <div>
     @if (!string.IsNullOrEmpty(Biography))
     {
-        <p>@Biography</p>
+        <h6 class="my-2">@Biography</h6>
     }
     <div class="d-flex align-items-center gap-2 profile-count fs-09 fw-600 color-white600">
-        <span>0 entry</span>
+        <span>@EntryCount entry</span>
         <span class="sd-1 bg-white900"></span>
         <span><b>0</b> takipçi</span>
         <span class="sd-1 bg-white900"></span>
@@ -15,4 +15,5 @@
 
 @code {
     [Parameter] public string? Biography { get; set; }
+    [Parameter] public int? EntryCount { get; set; }
 }
