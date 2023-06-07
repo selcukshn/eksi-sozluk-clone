@@ -14,5 +14,7 @@ namespace Common.Models.View
         public bool IsFavorite { get; set; }
         public string? Username { get; set; }
         public string? UserImage { get; set; }
+        public bool IsEntry { get; set; }
+        public bool IsEntryComment { get; set; }
     }
 }

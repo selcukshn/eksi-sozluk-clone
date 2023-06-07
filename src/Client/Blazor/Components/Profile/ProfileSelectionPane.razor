@@ -2,10 +2,18 @@
     <ResponseSuccess>
         @if (ViewModel != null)
         {
-            foreach (var item in ViewModel)
+            foreach (EntryViewModel item in ViewModel)
             {
-                <EntryView Content="@item?.Content" CreatedDate="@item?.CreatedDate" Subject="@item?.Subject" Url="@item?.Url"
-                    Username="@item?.Username" />
+                if (item.IsEntry)
+                {
+                    <EntryView EntryId="@item.Id" IsFavorite="@item.IsFavorite" Vote="@item.VoteType" Content="@item?.Content"
+                        CreatedDate="@item?.CreatedDate" Subject="@item?.Subject" Url="@item?.Url" Username="@item?.Username" />
+                }
+                else
+                {
+                    <EntryCommentView EntryCommentId="@item.Id" Content="@item?.Content" CreatedDate="@item?.CreatedDate"
+                        IsFavorite="@item.IsFavorite" Username="@item?.Username" Vote="@item?.VoteType"></EntryCommentView>
+                }
             }
         }
         @if (ShowLoadMoreButton)

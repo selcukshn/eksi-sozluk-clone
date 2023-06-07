@@ -17,6 +17,7 @@ namespace Application.Features.Queries.Entry.Entry
             var entry = base.Repository.AsQueryable()
             .Include(e => e.User)
             .Include(e => e.EntryCommentVotes)
+            .Include(e => e.EntryCommentFavorites)
             .Where(e => e.EntryId == request.EntryId);
 
             var mapEntry = entry.Select(e => new EntryCommentsViewModel()
@@ -26,6 +27,7 @@ namespace Application.Features.Queries.Entry.Entry
                 CreatedDate = e.CreatedDate,
                 UserImage = e.User.Image,
                 Username = e.User.Username,
+                IsFavorite = e.EntryCommentFavorites.Any(b => b.UserId == request.UserId && b.EntryCommentId == e.Id) && request.UserId != Guid.Empty,
                 VoteType = e.EntryCommentVotes.Any(e => e.UserId == request.UserId) && request.UserId != Guid.Empty ?
                     e.EntryCommentVotes.First(e => e.UserId == request.UserId).Type :
                     Common.Enums.VoteType.None

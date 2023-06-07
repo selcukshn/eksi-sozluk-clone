@@ -16,7 +16,8 @@
         {
             foreach (var comment in entryComments.Data)
             {
-                <EntryCommentView Content="@comment.Content" CreatedDate="@comment.CreatedDate" Username="@comment.Username" />
+                <EntryCommentView EntryCommentId="@comment.Id" IsFavorite="@comment.IsFavorite" Vote="@comment?.VoteType"
+                    Content="@comment.Content" CreatedDate="@comment.CreatedDate" Username="@comment.Username" />
             }
             <EntryNavigation Page="@entryComments.Page" NextPageEvent="NextPage" PageChangedEvent="ChangePage"
                 PreviousPageEvent="PreviousPage" />
@@ -51,7 +52,11 @@
         if (entryResponse.IsSuccess)
         {
             entry = await entryResponse.ResultAsync<EntryViewModel>();
-            var commentsResponse = await entryCommentsService.GetAsync(entry.Id, new PagedQuery() { Current = page });
+            var commentsResponse = await entryCommentsService.GetAsync(entry.Id, new PagedQuery()
+                {
+                    Current = page,
+                    UserId = (await storage.GetUserInformationAsync())?.UserId
+                });
             State.SetResponse(commentsResponse);
             if (commentsResponse.IsSuccess)
                 entryComments = await commentsResponse.ResultAsync<PagedViewModel<EntryCommentsViewModel>>();

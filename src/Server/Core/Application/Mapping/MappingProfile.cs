@@ -28,6 +28,9 @@ namespace Application.Mapping
 
             CreateMap<EntryVoteCommand, EntryVote>();
             CreateMap<EntryFavoriteCommand, EntryFavorite>();
+
+            CreateMap<EntryCommentVoteCommand, EntryCommentVote>();
+            CreateMap<EntryCommentFavoriteCommand, EntryCommentFavorite>();
         }
     }
 }

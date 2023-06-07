@@ -80,3 +80,9 @@ li {
     font-size: 0.8rem;
     color: var(--white-500);
 }
+
+#profile .entry-comment {
+    font-style: italic;
+    font-size: 0.8rem;
+    color: var(--white-700);
+}

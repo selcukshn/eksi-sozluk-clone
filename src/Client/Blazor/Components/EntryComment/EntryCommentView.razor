@@ -5,14 +5,52 @@
         </p>
     </div>
     <div class="entry-comment-footer pt-2">
-        <EntryFooter Vote="@Vote" CreatedDate="@CreatedDate" Username="@Username" />
+        <EntryFooter IsFavorite="@IsFavorite" Vote="@Vote" CreatedDate="@CreatedDate" Username="@Username"
+            AddFavoriteOnClickedEvent="AddFavorite" UpVoteOnClickedEvent="VoteProcess"
+            DownVoteOnClickedEvent="VoteProcess" />
+        <ResponseView State="@State">
+            <ResponseError>
+                <p class="text-danger">@State.Message</p>
+            </ResponseError>
+        </ResponseView>
     </div>
 </div>
 
 @code {
+    [Parameter] public Guid EntryCommentId { get; set; }
     [Parameter] public string? Content { get; set; }
     [Parameter] public string? Username { get; set; }
     [Parameter] public string? Image { get; set; }
     [Parameter] public DateTime? CreatedDate { get; set; }
     [Parameter] public VoteType? Vote { get; set; }
+    [Parameter] public bool IsFavorite { get; set; }
+    [Inject] public ILocalStorageService storage { get; set; }
+    [Inject] public IEntryCommentRequestService entryCommentRequestService { get; set; }
+    ApplicationState State = new ApplicationState(ResponseStatus.None);
+    private async void AddFavorite()
+    {
+        await entryCommentRequestService
+        .FavoriteAsync(new EntryCommentFavoriteCommand((await storage.GetUserInformationAsync()).UserId, EntryCommentId));
+        IsFavorite = !IsFavorite;
+        StateHasChanged();
+    }
+    private async Task VoteProcess(VoteType type)
+    {
+        if (await storage.HaveUserAsync())
+        {
+            var user = await storage.GetUserInformationAsync();
+            var response = await entryCommentRequestService
+            .VoteAsync(new EntryCommentVoteCommand(type, user.UserId, EntryCommentId));
+            State.SetResponse(response);
+        }
+        VoteChange(type);
+    }
+    private void VoteChange(VoteType vote)
+    {
+        if ((Vote == VoteType.Up && vote == VoteType.Up) || (Vote == VoteType.Down && vote == VoteType.Down))
+            Vote = VoteType.None;
+        else
+            Vote = vote;
+        StateHasChanged();
+    }
 }
