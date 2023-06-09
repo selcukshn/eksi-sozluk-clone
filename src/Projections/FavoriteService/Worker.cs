@@ -1,20 +1,26 @@
+using Common.Infrastructure.RabbitMQ;
+using Common.Models.Command;
+using FavoriteService.Service;
+
 namespace FavoriteService;
 
 public class Worker : BackgroundService
 {
     private readonly ILogger<Worker> _logger;
+    private readonly IFavoriteDbService FavoriteDbService;
 
-    public Worker(ILogger<Worker> logger)
+    public Worker(ILogger<Worker> logger, IFavoriteDbService favoriteDbService)
     {
         _logger = logger;
+        FavoriteDbService = favoriteDbService;
     }
-
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        while (!stoppingToken.IsCancellationRequested)
+        var queueConsumer = new QueueConsumer(QueueConstants.CreateEntryFavoriteQueue);
+        queueConsumer.QueueDeclare().Received<EntryFavoriteCommand>(async received =>
         {
-            _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-            await Task.Delay(1000, stoppingToken);
-        }
+            await FavoriteDbService.EntryFavoriteProcessAsync(received);
+            System.Console.WriteLine($"Data received EntryId: {received.EntryId} , UserId: {received.UserId}");
+        }).Consume();
     }
 }

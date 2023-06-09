@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <UserSecretsId>dotnet-FavoriteService-91493a2a-70b5-4452-85c2-47d216852830</UserSecretsId>
+    <UserSecretsId>dotnet-VoteService-ea258dbd-6ffd-4b2e-a6e9-ac8cb0a1d986</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
