@@ -17,33 +17,30 @@ namespace Common.Infrastructure.RabbitMQ
             Channel = Connection.CreateModel();
             Queue = queue;
         }
-        public BaseQueue(string exchange, string queue, string routingKey, string exchangeType = "direct")
+        public BaseQueue(string exchange, string queue, string routingKey, string exchangeType = "direct") : this(queue)
         {
-            Connection = new ConnectionFactory() { HostName = QueueConstants.Host }.CreateConnection();
-            Channel = Connection.CreateModel();
-            Queue = queue;
             Exchange = exchange;
             RoutingKey = routingKey;
             ExchangeType = exchangeType;
         }
-        protected BaseQueue QueueDeclare(bool durable = false, bool exclusive = false, bool autoDelete = false)
+        public BaseQueue QueueDeclare(bool durable = false, bool exclusive = false, bool autoDelete = false)
         {
             Channel.QueueDeclare(this.Queue, durable, exclusive, autoDelete);
             return this;
         }
-        protected BaseQueue ExchangeDeclare()
+        public BaseQueue ExchangeDeclare()
         {
             Channel.ExchangeDeclare(this.Exchange, this.ExchangeType);
             return this;
         }
-        protected BaseQueue BindQueue()
+        public BaseQueue BindQueue()
         {
             Channel.QueueBind(this.Queue, this.Exchange, this.RoutingKey);
             return this;
         }
-        protected void AutoDeclare()
+        protected void AutoDeclare(Action<BaseQueue> declare)
         {
-            this.ExchangeDeclare().QueueDeclare().BindQueue();
+            declare(this);
         }
     }
 }

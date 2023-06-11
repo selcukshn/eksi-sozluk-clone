@@ -11,7 +11,7 @@ namespace Common.Infrastructure.RabbitMQ
         public QueueConsumer(string queue) : base(queue)
         {
             Consuming = new EventingBasicConsumer(base.Channel);
-            base.AutoDeclare();
+            base.AutoDeclare(e => e.QueueDeclare());
         }
 
         public QueueConsumer Received<TModel>(Action<TModel> @event)

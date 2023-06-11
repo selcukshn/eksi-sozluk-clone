@@ -9,7 +9,7 @@ namespace Common.Infrastructure.RabbitMQ
         public QueuePublisher(string exchange, string queue, string routingKey, string exchangeType = "direct") :
         base(exchange, queue, routingKey, exchangeType)
         {
-            base.AutoDeclare();
+            base.AutoDeclare(e => e.QueueDeclare().ExchangeDeclare().BindQueue());
         }
         public void Publish(object body)
         {
