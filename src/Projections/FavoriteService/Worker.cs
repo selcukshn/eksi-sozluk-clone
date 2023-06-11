@@ -17,7 +17,7 @@ public class Worker : BackgroundService
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         var queueConsumer = new QueueConsumer(QueueConstants.CreateEntryFavoriteQueue);
-        queueConsumer.QueueDeclare().Received<EntryFavoriteCommand>(async received =>
+        queueConsumer.Received<EntryFavoriteCommand>(async received =>
         {
             await FavoriteDbService.EntryFavoriteProcessAsync(received);
             System.Console.WriteLine($"Data received EntryId: {received.EntryId} , UserId: {received.UserId}");

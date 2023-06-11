@@ -11,6 +11,7 @@ namespace Common.Infrastructure.RabbitMQ
         public QueueConsumer(string queue) : base(queue)
         {
             Consuming = new EventingBasicConsumer(base.Channel);
+            base.AutoDeclare();
         }
 
         public QueueConsumer Received<TModel>(Action<TModel> @event)
@@ -22,11 +23,6 @@ namespace Common.Infrastructure.RabbitMQ
                 @event(model);
                 Consuming.Model.BasicAck(ea.DeliveryTag, true);
             };
-            return this;
-        }
-        public QueueConsumer QueueDeclare(bool durable = false, bool exclusive = false, bool autoDelete = false)
-        {
-            Channel.QueueDeclare(base.Queue, durable, exclusive, autoDelete);
             return this;
         }
         public void Consume()

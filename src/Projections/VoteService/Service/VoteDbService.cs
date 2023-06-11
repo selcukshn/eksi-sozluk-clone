@@ -15,15 +15,17 @@ namespace VoteService.Service
 
         public async Task EntryVoteProcessAsync(EntryVoteCommand command)
         {
-            using var sql = new SqlConnection(Configuration.GetConnectionString("SQLServer"));
-            var entity = await sql.ExecuteAsync("SELECT * FROM EntryVote WHERE EntryId = @EntryId and UserId = @UserId",
-                        new { EntryId = command.EntryId, UserId = command.UserId });
-            if (entity == 0)
-                await sql.ExecuteAsync("INSERT INTO EntryVote (EntryId,UserId,Type) VALUES (@EntryId,@UserId,@Type)",
-                new { EntryId = command.EntryId, UserId = command.UserId, Type = command.Type });
-            else
-                await sql.ExecuteAsync("UPDATE EntryVote SET Type=@Type WHERE EntryId = @EntryId and UserId = @UserId",
-                new { EntryId = command.EntryId, UserId = command.UserId, Type = command.Type });
+            using (var connection = new SqlConnection(Configuration.GetConnectionString("SQLServer")))
+            {
+                var entity = connection.Query<object>("SELECT * FROM EntryVote WHERE EntryId = @EntryId and UserId = @UserId",
+                                        new { EntryId = command.EntryId, UserId = command.UserId }).ToList();
+                if (entity is not null && !entity.Any())
+                    await connection.ExecuteAsync("INSERT INTO EntryVote (EntryId,UserId,Type) VALUES (@EntryId,@UserId,@Type)",
+                    new { EntryId = command.EntryId, UserId = command.UserId, Type = command.Type });
+                else
+                    await connection.ExecuteAsync("UPDATE EntryVote SET Type=@Type WHERE EntryId = @EntryId and UserId = @UserId",
+                    new { EntryId = command.EntryId, UserId = command.UserId, Type = command.Type });
+            }
         }
     }
 }

@@ -12,7 +12,6 @@ namespace Application.Features.Commands.Entry.Favorite
         public override async Task<bool> Handle(EntryFavoriteCommand request, CancellationToken cancellationToken)
         {
             new QueuePublisher(QueueConstants.FavoriteExchange, QueueConstants.CreateEntryFavoriteQueue, QueueConstants.CreateEntryFavoriteQueue)
-            .AutoDeclare()
             .Publish(request);
             // var entity = await base.Repository.GetOneAsync(e => e.EntryId == request.EntryId && e.UserId == request.UserId);
             // if (entity == null)

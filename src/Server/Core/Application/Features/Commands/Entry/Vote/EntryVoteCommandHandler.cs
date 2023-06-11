@@ -12,7 +12,6 @@ namespace Application.Features.Commands.Entry.Vote
         public override async Task<bool> Handle(EntryVoteCommand request, CancellationToken cancellationToken)
         {
             new QueuePublisher(QueueConstants.VoteExchange, QueueConstants.CreateEntryVoteQueue, QueueConstants.CreateEntryVoteQueue)
-            .AutoDeclare()
             .Publish(request);
             // var entity = await base.Repository.GetOneAsync(e => e.EntryId == request.EntryId && e.UserId == request.UserId);
             // if (entity == null)
