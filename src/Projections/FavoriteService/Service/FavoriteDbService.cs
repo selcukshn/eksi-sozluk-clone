@@ -16,13 +16,13 @@ namespace FavoriteService.Service
         public async Task EntryFavoriteProcessAsync(EntryFavoriteCommand command)
         {
             using var sql = new SqlConnection(Configuration.GetConnectionString("SQLServer"));
-            var entity = sql.Query<object>("SELECT * FROM EntryFavorite WHERE EntryId = @EntryId and UserId = @UserId",
+            var entity = sql.Query<object>("SELECT * FROM EntryFavorites WHERE EntryId = @EntryId and UserId = @UserId",
             new { EntryId = command.EntryId, UserId = command.UserId }).ToList();
             if (entity is not null && !entity.Any())
-                await sql.ExecuteAsync("INSERT INTO EntryFavorite (EntryId,UserId) VALUES (@EntryId,@UserId)",
+                await sql.ExecuteAsync("INSERT INTO EntryFavorites (EntryId,UserId) VALUES (@EntryId,@UserId)",
                 new { EntryId = command.EntryId, UserId = command.UserId });
             else
-                await sql.ExecuteAsync("DELETE FROM EntryFavorite WHERE EntryId = @EntryId and UserId = @UserId ",
+                await sql.ExecuteAsync("DELETE FROM EntryFavorites WHERE EntryId = @EntryId and UserId = @UserId ",
                 new { EntryId = command.EntryId, UserId = command.UserId });
         }
     }
