@@ -1,6 +1,6 @@
 **Proje geliştirmesi devam ediyor...**
 # Ekşi Sözlük Clone
-Ekşi sözlük clone, Blazor ve REST API bilgilerinin pekiştirtirilmesi, Onion Architecture ve CQRS yapısının öğrenilmesi amacıyla geliştirildi.
+Ekşi sözlük clone, Blazor ve REST API bilgilerinin pekiştirilmesi, Onion Architecture ve CQRS yapısının öğrenilmesi amacıyla geliştirildi.
 
 
 ### Proje Yapısı
